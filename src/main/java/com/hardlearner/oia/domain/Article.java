@@ -8,4 +8,8 @@ public class Article {
         this.articleInfo = articleInfo;
         this.content = content;
     }
+
+    public String getTitle() {
+        return articleInfo.getTitle();
+    }
 }

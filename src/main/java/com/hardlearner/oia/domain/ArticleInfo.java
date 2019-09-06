@@ -12,4 +12,28 @@ public class ArticleInfo {
         this.title = title;
         this.dateTime = dateTime;
     }
+
+    public Member getWriter() {
+        return writer;
+    }
+
+    public void setWriter(Member writer) {
+        this.writer = writer;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
 }
