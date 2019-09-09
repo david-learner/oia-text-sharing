@@ -1,6 +1,6 @@
 package com.hardlearner.oia.domain;
 
-import java.util.List;
+import javax.naming.AuthenticationException;
 
 public class Article {
     ArticleInfo articleInfo;
@@ -20,5 +20,12 @@ public class Article {
         sb.append(articleInfo.toString());
         sb.append(content.print());
         return sb.toString();
+    }
+
+    public Article shareAllowed(Member writer) throws AuthenticationException {
+        if (!articleInfo.isSameWriter(writer)) {
+            throw new AuthenticationException("Only this article's writer can access");
+        }
+        return new Article(articleInfo, content.shareAllowed());
     }
 }

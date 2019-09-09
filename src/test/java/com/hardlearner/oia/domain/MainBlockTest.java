@@ -1,13 +1,12 @@
 package com.hardlearner.oia.domain;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class MainBlockTest {
     MainBlock mainBlock1;
@@ -35,17 +34,9 @@ public class MainBlockTest {
     }
 
     @Test
-    public void shareAllowed() {
-        List<SubBlock> shareAllowedSubBlocks = mainBlock1.shareAllowed();
-        int firstIndex = 0;
-        int endIndex = shareAllowedSubBlocks.size() - 1;
-
-        assertTrue(shareAllowedSubBlocks.get(firstIndex).canShare);
-        assertTrue(shareAllowedSubBlocks.get(endIndex).canShare);
-    }
-
-    @Test
-    public void shareNotAllowed() {
-
+    public void isSame() {
+        MainBlock mainBlockHasSameId = new MainBlock(1L, subBlocks1);
+        assertTrue(mainBlock1.isSame(mainBlockHasSameId));
+        assertFalse(mainBlock1.isSame(mainBlock2));
     }
 }

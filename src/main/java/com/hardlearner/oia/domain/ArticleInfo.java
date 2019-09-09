@@ -46,4 +46,8 @@ public class ArticleInfo {
                 ", dateTime=" + dateTime +
                 '}';
     }
+
+    public boolean isSameWriter(Member writer) {
+        return writer.equals(writer);
+    }
 }
