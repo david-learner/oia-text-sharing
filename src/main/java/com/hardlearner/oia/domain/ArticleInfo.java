@@ -1,6 +1,7 @@
 package com.hardlearner.oia.domain;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 public class ArticleInfo {
     Member writer;
@@ -35,5 +36,14 @@ public class ArticleInfo {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "ArticleInfo{" +
+                "writer=" + writer +
+                ", title='" + title + '\'' +
+                ", dateTime=" + dateTime +
+                '}';
     }
 }
