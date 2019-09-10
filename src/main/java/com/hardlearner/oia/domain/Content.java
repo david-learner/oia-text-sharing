@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Content {
-    List<MainBlock> mainBlocks;
+    private List<MainBlock> mainBlocks;
 
     public Content(List<MainBlock> mainBlocks) {
         this.mainBlocks = mainBlocks;
     }
 
-    public Content shareAllowed() {
+    public Content getShareAllowed() {
         List<MainBlock> mainBlocks = new ArrayList<>();
         for (MainBlock mainBlock : this.mainBlocks) {
-            mainBlocks.add(mainBlock.shareAllowed());
+            mainBlocks.add(mainBlock.getShareAllowed());
         }
         return new Content(mainBlocks);
     }

@@ -22,7 +22,7 @@ public class MainBlock {
         return sb.toString();
     }
 
-    public MainBlock shareAllowed() {
+    public MainBlock getShareAllowed() {
         List<SubBlock> shareAllowedSubBlocks = this.subBlocks.stream().filter(subBlock -> subBlock.canShare).collect(Collectors.toList());
         return new MainBlock(this.id, shareAllowedSubBlocks);
     }

@@ -22,10 +22,17 @@ public class Article {
         return sb.toString();
     }
 
-    public Article shareAllowed(Member writer) throws AuthenticationException {
+    public Article getShareAllowed(Member writer) throws AuthenticationException {
         if (!articleInfo.isSameWriter(writer)) {
             throw new AuthenticationException("Only this article's writer can access");
         }
-        return new Article(articleInfo, content.shareAllowed());
+        return new Article(articleInfo, content.getShareAllowed());
+    }
+
+    public Article getShareFull(Member writer) throws AuthenticationException {
+        if (!articleInfo.isSameWriter(writer)) {
+            throw new AuthenticationException("Only this article's writer can access");
+        }
+        return this;
     }
 }
