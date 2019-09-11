@@ -56,6 +56,12 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/pl.allegro.tech.boot/handlebars-spring-boot-starter -->
+        <dependency>
+            <groupId>pl.allegro.tech.boot</groupId>
+            <artifactId>handlebars-spring-boot-starter</artifactId>
+            <version>0.3.1</version>
+        </dependency>
     </dependencies>
 
     <build>
