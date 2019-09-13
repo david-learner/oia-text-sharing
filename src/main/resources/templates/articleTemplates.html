@@ -1,12 +1,17 @@
 <script id="main-block-template" type="text/template">
     <div class="main-block">
         <div style="margin-bottom: 15px">
-            <input type="number" style="display: inline-block;width: 60px;text-align: right" name="start" min="0">p ~
+            <input type="number" style="display: inline-block;width: 60px;text-align: right" name="start" min="0">p
+            ~
             <input type="number" style="display: inline-block;width: 60px;" name="end" min="0">p
-            <button style="display: inline-block;margin:0 10px 0 10px" name="add-main-block"><i class="fas fa-plus"></i></button>
-            <button style="display: inline-block;" name="remove-main-block"><i class="fas fa-minus"></i></button>
+            <button style="display: inline-block;margin:0 10px 0 10px" name="add-main-block">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button style="display: inline-block;">
+                <i class="fas fa-minus"></i>
+            </button>
         </div>
-        <div class="columns is-vcentered is-gapless sub-block" name="observation">
+        <div class="columns is-gapless sub-block" style="vertical-align: top" name="observation">
             <div class="column" style="text-align: right;margin-right: 10px">
                 <input type="checkbox">
             </div>
@@ -22,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="columns is-vcentered is-gapless sub-block" name="interpretation">
+        <div class="columns is-gapless sub-block" style="vertical-align: top" name="interpretation">
             <div class="column" style="text-align: right;margin-right: 10px">
                 <input type="checkbox">
             </div>
@@ -38,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="columns is-vcentered is-gapless sub-block" name="application">
+        <div class="columns is-gapless sub-block" style="vertical-align: top" name="application">
             <div class="column" style="text-align: right;margin-right: 10px">
                 <input type="checkbox">
             </div>
