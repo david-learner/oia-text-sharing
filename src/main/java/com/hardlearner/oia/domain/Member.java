@@ -1,8 +1,13 @@
 package com.hardlearner.oia.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class Member {
+    @Id @GeneratedValue
     Long id;
     String email;
     String pwd;

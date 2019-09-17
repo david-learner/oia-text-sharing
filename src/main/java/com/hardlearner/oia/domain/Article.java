@@ -1,9 +1,16 @@
 package com.hardlearner.oia.domain;
 
 import javax.naming.AuthenticationException;
+import javax.persistence.*;
 
+@Entity
 public class Article {
+    @Id @GeneratedValue
+    @Column(name = "ARTICLE_ID")
+    Long id;
+    @Embedded
     ArticleInfo articleInfo;
+    @Embedded
     Content content;
 
     public Article(ArticleInfo articleInfo, Content content) {

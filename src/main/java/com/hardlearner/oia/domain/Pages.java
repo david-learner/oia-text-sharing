@@ -1,5 +1,9 @@
 package com.hardlearner.oia.domain;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+
+@Embeddable
 public class Pages {
     int start;
     int end;

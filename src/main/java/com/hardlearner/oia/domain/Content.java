@@ -1,9 +1,12 @@
 package com.hardlearner.oia.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Embeddable
 public class Content {
+    @OneToMany(mappedBy = "article")
     private List<MainBlock> mainBlocks;
 
     public Content(List<MainBlock> mainBlocks) {

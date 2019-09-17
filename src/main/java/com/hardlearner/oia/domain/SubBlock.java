@@ -1,16 +1,32 @@
 package com.hardlearner.oia.domain;
 
-public class SubBlock {
+import javax.persistence.*;
+
+@Entity
+@AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(name = "SUB_BLOCK_ID"))
+})
+public class SubBlock extends Block {
+    @ManyToOne
+    @JoinColumn(name = "MAIN_BLOCK_ID")
+    private MainBlock mainBlock;
+    @Embedded
     Pages pages;
     boolean canShare;
+    @Embedded
     ContentCategory category;
     String content;
 
-    public SubBlock(Pages pages, boolean canShare, ContentCategory category, String content) {
+    public SubBlock(Long id, Pointers pointers, Pages pages, boolean canShare, ContentCategory category, String content) {
+        super(id, pointers);
         this.pages = pages;
         this.canShare = canShare;
         this.category = category;
         this.content = content;
+    }
+
+    public SubBlock(Pages pages, boolean canShare, ContentCategory category, String content) {
+        this(null, null, pages, canShare, category, content);
     }
 
     public String getContentCategory() {

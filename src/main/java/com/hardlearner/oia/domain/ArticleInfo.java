@@ -1,9 +1,12 @@
 package com.hardlearner.oia.domain;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
-
+@Embeddable
 public class ArticleInfo {
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
     Member writer;
     String title;
     LocalDateTime dateTime;
