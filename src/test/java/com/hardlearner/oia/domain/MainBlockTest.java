@@ -3,6 +3,7 @@ package com.hardlearner.oia.domain;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,5 +39,12 @@ public class MainBlockTest {
         MainBlock mainBlockHasSameId = new MainBlock(1L, subBlocks1);
         assertTrue(mainBlock1.isSame(mainBlockHasSameId));
         assertFalse(mainBlock1.isSame(mainBlock2));
+    }
+
+    @Test
+    public void create_DefaultMainBlock() {
+//        Member member = new Member("oia7@gmail.com", "oia7", "오아에");
+//        Content content = new Content(Arrays.asList(new MainBlock(null, 0, null, null, null)));
+//        Article article = new Article(new ArticleInfo(member, "스프링이 재밌는 이유", LocalDateTime.now()), content);
     }
 }

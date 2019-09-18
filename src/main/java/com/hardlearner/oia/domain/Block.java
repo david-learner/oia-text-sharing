@@ -23,4 +23,12 @@ public class Block {
     public Long getId() {
         return id;
     }
+
+    public Integer getSequenceId() {
+        return sequenceId;
+    }
+
+    public Pointers getPointers() {
+        return pointers;
+    }
 }

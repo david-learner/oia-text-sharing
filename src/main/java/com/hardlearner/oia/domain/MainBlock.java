@@ -1,7 +1,6 @@
 package com.hardlearner.oia.domain;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -12,20 +11,17 @@ import java.util.stream.Collectors;
         @AttributeOverride(name = "id", column = @Column(name = "MAIN_BLOCK_ID"))
 })
 public class MainBlock extends Block {
-    @ManyToOne
-    @JoinColumn(name = "ARTICLE_ID")
-    Article article;
-    @OneToMany(mappedBy = "mainBlock")
+    @OneToMany
+    @JoinColumn(name = "MAIN_BLOCK_ID")
     private List<SubBlock> subBlocks = new LinkedList<>();
 
-    public MainBlock(Long id, Integer sequenceId, Pointers pointers, Article article, List<SubBlock> subBlocks) {
+    public MainBlock(Long id, Integer sequenceId, Pointers pointers, List<SubBlock> subBlocks) {
         super(id, sequenceId, pointers);
-        this.article = article;
         this.subBlocks = subBlocks;
     }
 
     public MainBlock(Long id, List<SubBlock> subBlocks) {
-        this(id, null, null, null, subBlocks);
+        this(id, null, null, subBlocks);
     }
 
     public String print() {
