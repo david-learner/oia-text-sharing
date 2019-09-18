@@ -5,7 +5,8 @@ import javax.persistence.*;
 
 @Entity
 public class Article {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "ARTICLE_ID")
     Long id;
     @Embedded
@@ -41,5 +42,9 @@ public class Article {
             throw new AuthenticationException("Only this article's writer can access");
         }
         return this;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

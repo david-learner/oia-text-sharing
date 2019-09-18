@@ -2,11 +2,15 @@ package com.hardlearner.oia.domain;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import java.util.Objects;
 
 @Embeddable
 public class Pages {
     int start;
     int end;
+
+    public Pages() {
+    }
 
     // page 정의는 1이상의 자연수
     public Pages(int start, int end) {
@@ -39,5 +43,19 @@ public class Pages {
     @Override
     public String toString() {
         return start + " ~ " + end;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pages pages = (Pages) o;
+        return start == pages.start &&
+                end == pages.end;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(start, end);
     }
 }

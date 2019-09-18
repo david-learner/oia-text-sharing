@@ -11,6 +11,9 @@ public class ArticleInfo {
     String title;
     LocalDateTime dateTime;
 
+    public ArticleInfo() {
+    }
+
     public ArticleInfo(Member writer, String title, LocalDateTime dateTime) {
         this.writer = writer;
         this.title = title;

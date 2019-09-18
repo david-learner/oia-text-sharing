@@ -18,13 +18,14 @@ public class MainBlock extends Block {
     @OneToMany(mappedBy = "mainBlock")
     private List<SubBlock> subBlocks = new LinkedList<>();
 
-    public MainBlock(Long id, List<SubBlock> subBlocks, Pointers pointers) {
-        super(id, pointers);
+    public MainBlock(Long id, Integer sequenceId, Pointers pointers, Article article, List<SubBlock> subBlocks) {
+        super(id, sequenceId, pointers);
+        this.article = article;
         this.subBlocks = subBlocks;
     }
 
     public MainBlock(Long id, List<SubBlock> subBlocks) {
-        this(id, subBlocks, null);
+        this(id, null, null, null, subBlocks);
     }
 
     public String print() {

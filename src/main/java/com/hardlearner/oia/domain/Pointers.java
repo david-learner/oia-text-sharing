@@ -8,6 +8,9 @@ public class Pointers {
     private Integer prevPointer;
     private Integer nextPointer;
 
+    public Pointers() {
+    }
+
     public Pointers(Integer prevPointer, Integer nextPointer) {
         this.prevPointer = prevPointer;
         this.nextPointer = nextPointer;

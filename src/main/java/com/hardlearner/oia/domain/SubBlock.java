@@ -13,12 +13,13 @@ public class SubBlock extends Block {
     @Embedded
     Pages pages;
     boolean canShare;
-    @Embedded
+    @Enumerated(EnumType.STRING)
     ContentCategory category;
     String content;
 
-    public SubBlock(Long id, Pointers pointers, Pages pages, boolean canShare, ContentCategory category, String content) {
-        super(id, pointers);
+    public SubBlock(Long id, Integer sequenceId, Pointers pointers, MainBlock mainBlock, Pages pages, boolean canShare, ContentCategory category, String content) {
+        super(id, sequenceId, pointers);
+        this.mainBlock = mainBlock;
         this.pages = pages;
         this.canShare = canShare;
         this.category = category;
@@ -26,7 +27,7 @@ public class SubBlock extends Block {
     }
 
     public SubBlock(Pages pages, boolean canShare, ContentCategory category, String content) {
-        this(null, null, pages, canShare, category, content);
+        this(null, null, null, null, pages, canShare, category, content);
     }
 
     public String getContentCategory() {
