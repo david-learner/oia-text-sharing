@@ -1,12 +1,15 @@
 package com.hardlearner.oia.domain;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
 @Embeddable
 public class Content {
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "ARTICLE_ID")
     private List<MainBlock> mainBlocks;
 
@@ -25,8 +28,13 @@ public class Content {
     public String print() {
         StringBuilder sb = new StringBuilder();
         for (MainBlock mainBlock : mainBlocks) {
-            sb.append(mainBlock.print());
+            sb.append(mainBlock.toString());
         }
         return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return print();
     }
 }

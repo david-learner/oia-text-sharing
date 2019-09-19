@@ -2,11 +2,13 @@ package com.hardlearner.oia.domain;
 
 import javax.naming.AuthenticationException;
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Entity
 public class Article {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ARTICLE_ID")
     Long id;
     @Embedded
@@ -19,15 +21,25 @@ public class Article {
         this.content = content;
     }
 
+    public static Article getDefaultArticle(Member member, LocalDateTime dateTime) {
+        return new Article(new ArticleInfo(member, "제목없는 문서", dateTime), new Content(Arrays.asList(MainBlock.getDefaultMainBlock())));
+    }
+
     public String getTitle() {
         return articleInfo.getTitle();
     }
 
-    public String print() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(articleInfo.toString());
-        sb.append(content.print());
-        return sb.toString();
+    public Content getContent() {
+        return content;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", articleInfo=" + articleInfo.toString() +
+                ", content=" + content.toString() +
+                '}';
     }
 
     public Article getShareAllowed(Member writer) throws AuthenticationException {

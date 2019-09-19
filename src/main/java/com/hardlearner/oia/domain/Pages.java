@@ -1,7 +1,6 @@
 package com.hardlearner.oia.domain;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
 import java.util.Objects;
 
 @Embeddable
@@ -24,6 +23,10 @@ public class Pages {
         this.end = end;
     }
 
+    public static Pages getDefaultPage() {
+        return new Pages(1, 1);
+    }
+
     public int getStart() {
         return start;
     }
@@ -42,7 +45,10 @@ public class Pages {
 
     @Override
     public String toString() {
-        return start + " ~ " + end;
+        return "Pages{" +
+                "start=" + start +
+                ", end=" + end +
+                '}';
     }
 
     @Override

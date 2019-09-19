@@ -1,5 +1,8 @@
 package com.hardlearner.oia.domain;
 
+import lombok.Builder;
+import lombok.experimental.SuperBuilder;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +19,7 @@ public class SubBlock extends Block {
     ContentCategory category;
     String content;
 
+    @Builder
     public SubBlock(Long id, Integer sequenceId, Pointers pointers, Pages pages, boolean canShare, ContentCategory category, String content) {
         super(id, sequenceId, pointers);
         this.pages = pages;
@@ -30,21 +34,23 @@ public class SubBlock extends Block {
 
     public static List<SubBlock> getDefaultSubBlocks() {
         return Arrays.asList(
-            new SubBlock(null, 0, new Pointers(null, 1), null, false, ContentCategory.OBSERVATION, null),
-            new SubBlock(null, 0, new Pointers(0, 2), null, false, ContentCategory.INTERPRETATION, null),
-            new SubBlock(null, 0, new Pointers(1, null), null, false, ContentCategory.APPLICATION, null)
+                new SubBlock(null, 0, new Pointers(null, 1), Pages.getDefaultPage(), false, ContentCategory.OBSERVATION, null),
+                new SubBlock(null, 1, new Pointers(0, 2), Pages.getDefaultPage(), false, ContentCategory.INTERPRETATION, null),
+                new SubBlock(null, 2, new Pointers(1, null), Pages.getDefaultPage(), false, ContentCategory.APPLICATION, null)
         );
     }
+
     public String getContentCategory() {
         return category.getAlias();
     }
 
-    public String print() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("pages : " + pages.toString() + '\n');
-        sb.append("share : " + canShare  + '\n');
-        sb.append("category : " + category.getAlias() + '\n');
-        sb.append("content : " + content + '\n');
-        return sb.toString();
+    @Override
+    public String toString() {
+        return "SubBlock{" +
+                "pages=" + pages.toString() +
+                ", canShare=" + canShare +
+                ", category=" + category.getAlias() +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

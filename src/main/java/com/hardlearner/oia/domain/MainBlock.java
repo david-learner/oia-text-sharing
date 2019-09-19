@@ -1,5 +1,7 @@
 package com.hardlearner.oia.domain;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,10 +13,11 @@ import java.util.stream.Collectors;
         @AttributeOverride(name = "id", column = @Column(name = "MAIN_BLOCK_ID"))
 })
 public class MainBlock extends Block {
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "MAIN_BLOCK_ID")
     private List<SubBlock> subBlocks = new LinkedList<>();
 
+    @Builder
     public MainBlock(Long id, Integer sequenceId, Pointers pointers, List<SubBlock> subBlocks) {
         super(id, sequenceId, pointers);
         this.subBlocks = subBlocks;
@@ -24,12 +27,8 @@ public class MainBlock extends Block {
         this(id, null, null, subBlocks);
     }
 
-    public String print() {
-        StringBuilder sb = new StringBuilder();
-        for (SubBlock subBlock : subBlocks) {
-            sb.append(subBlock.print());
-        }
-        return sb.toString();
+    public static MainBlock getDefaultMainBlock() {
+        return new MainBlock(null, 0, new Pointers(null, null), SubBlock.getDefaultSubBlocks());
     }
 
     public MainBlock getShareAllowed() {
@@ -55,5 +54,16 @@ public class MainBlock extends Block {
     @Override
     public int hashCode() {
         return Objects.hash(super.getId());
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id: " + getId() + "\n");
+        sb.append("seq-id: " + getSequenceId() + "\n");
+        for (SubBlock subBlock : subBlocks) {
+            sb.append(subBlock.toString()).append("\n");
+        }
+        return sb.toString();
     }
 }

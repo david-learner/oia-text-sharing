@@ -24,7 +24,7 @@ public class SubBlockRepositoryTest {
         String text = "Spring 알아가는 재미가 쏠쏠하다";
         SubBlock subBlock = new SubBlock(pages, true, ContentCategory.OBSERVATION, text);
         SubBlock savedSubBlock = subBlockRepository.save(subBlock);
-        assertTrue(savedSubBlock.print().contains(text));
+        assertTrue(savedSubBlock.toString().contains(text));
         assertEquals(savedSubBlock.getContentCategory(), ContentCategory.OBSERVATION.getAlias());
     }
 }

@@ -5,10 +5,11 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 @Embeddable
 public class ArticleInfo {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MEMBER_ID")
     Member writer;
     String title;
+    @Column(columnDefinition = "TIMESTAMP")
     LocalDateTime dateTime;
 
     public ArticleInfo() {
@@ -47,7 +48,7 @@ public class ArticleInfo {
     @Override
     public String toString() {
         return "ArticleInfo{" +
-                "writer=" + writer +
+                "writer=" + writer.toString() +
                 ", title='" + title + '\'' +
                 ", dateTime=" + dateTime +
                 '}';

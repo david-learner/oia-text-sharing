@@ -42,9 +42,7 @@ public class MainBlockTest {
     }
 
     @Test
-    public void create_DefaultMainBlock() {
-//        Member member = new Member("oia7@gmail.com", "oia7", "오아에");
-//        Content content = new Content(Arrays.asList(new MainBlock(null, 0, null, null, null)));
-//        Article article = new Article(new ArticleInfo(member, "스프링이 재밌는 이유", LocalDateTime.now()), content);
+    public void getDefaultMainBlock() {
+        System.out.println(MainBlock.getDefaultMainBlock().toString());
     }
 }

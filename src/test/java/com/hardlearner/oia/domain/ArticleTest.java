@@ -22,12 +22,12 @@ public class ArticleTest {
         String title = "본깨적에 대한 이해";
         String dummyDataSubBlockContent = "본깨적이란 본 것과 깨달은 것 그리고 적용할 것입니다";
         ArticleInfo articleInfo = new ArticleInfo(writer, title, LocalDateTime.now());
-        Content content = new Content(DummyData.mainBlocks1);
+        Content content = new Content(DummyData.dummyMainBlocks1);
         Article article = new Article(articleInfo, content);
-        log.debug(article.print());
+        log.debug(article.toString());
 
-        assertTrue(article.print().contains(title));
-        assertTrue(article.print().contains(dummyDataSubBlockContent));
+        assertTrue(article.toString().contains(title));
+        assertTrue(article.toString().contains(dummyDataSubBlockContent));
     }
 
     @Test
@@ -46,9 +46,18 @@ public class ArticleTest {
         // when
         Article shareAllowedArticle = article.getShareAllowed(writer);
 
+        log.debug(shareAllowedArticle.toString());
         // then
-        assertTrue(shareAllowedArticle.print().contains("본 것은 책에 쓰여진 내용을"));
-        assertFalse(shareAllowedArticle.print().contains("처음부터 저자의 관점으로"));
-        assertTrue(shareAllowedArticle.print().contains("책 읽을 때 펜을 들고"));
+        assertTrue(shareAllowedArticle.toString().contains("본 것은 책에 쓰여진 내용을"));
+        assertFalse(shareAllowedArticle.toString().contains("처음부터 저자의 관점으로"));
+        assertTrue(shareAllowedArticle.toString().contains("책 읽을 때 펜을 들고"));
+    }
+
+    @Test
+    public void get_default_article_for_writing() {
+        Article defaultArticle = Article.getDefaultArticle(DummyData.dummyMember, LocalDateTime.now());
+        assertEquals(defaultArticle.getTitle(), "제목없는 문서");
+//        assertEquals(defaultArticle.getContent().toString(), );
+        // print와 toString을 구분해서 만들기
     }
 }
