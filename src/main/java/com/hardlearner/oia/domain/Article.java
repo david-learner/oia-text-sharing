@@ -1,5 +1,6 @@
 package com.hardlearner.oia.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -53,6 +54,7 @@ public class Article {
         return this;
     }
 
+    @JsonIgnore
     public String getTitle() {
         return articleInfo.getTitle();
     }

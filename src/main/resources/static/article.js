@@ -1,3 +1,5 @@
+var article;
+
 window.onload = function () {
     // 메인블록 추가/제거 버튼에 온클릭 메소드 붙이기
     var addMainBlockBtns = document.querySelectorAll("[name=add-main-block-btn]");
@@ -11,7 +13,7 @@ window.onload = function () {
     addOnClickToBlockBtns(addSubBlockBtns, addSubBlock);
     addOnClickToBlockBtns(removeSubBlockBtns,removeSubBlock);
 
-    // create();
+    create();
 };
 
 function addMainBlock(event) {
@@ -105,8 +107,34 @@ function create() {
         dataType: 'json',
         url: '/api/articles/new',
     }).done(function (data) {
-        consoleLog(data);
+        // article = JSON.parse(data);
+        // consoleLog(article.content);
+        jsonToObjectConverterForArticle(data);
     });
+}
+
+function jsonToObjectConverterForArticle(jsonData) {
+    var articleInfo = jsonData['articleInfo'];
+    var writerName = articleInfo.writer['name'];
+    var date = articleInfo.dateTime;
+    var title = articleInfo.title;
+    var normalDateTime = convertToYYMMDDHHmm(date);
+    document.querySelector('#writer-name').innerHTML = writerName;
+    document.querySelector('#date').innerHTML = normalDateTime;
+    document.querySelector('#title').value = title;
+    consoleLog(articleInfo.title);
+}
+
+function convertToYYMMDDHHmm(oldDateTime) {
+    // YYYY-MM-DDTHH:mm:ss.oo -> YYYY-MM-DD HH:mm
+    var newDateTime = new Date(oldDateTime);
+    var normalFormDateTime =
+        newDateTime.getFullYear() + '-'
+        + (newDateTime.getMonth()+1) +'-'
+        + newDateTime.getDate() + ' '
+        + newDateTime.getHours() +':'
+        + newDateTime.getMinutes();
+    return normalFormDateTime;
 }
 
 function consoleLog(data) {
