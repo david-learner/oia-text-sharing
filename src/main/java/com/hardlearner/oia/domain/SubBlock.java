@@ -1,7 +1,8 @@
 package com.hardlearner.oia.domain;
 
 import lombok.Builder;
-import lombok.experimental.SuperBuilder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -11,6 +12,8 @@ import java.util.List;
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "SUB_BLOCK_ID"))
 })
+@NoArgsConstructor
+@Getter
 public class SubBlock extends Block {
     @Embedded
     Pages pages;
@@ -34,9 +37,9 @@ public class SubBlock extends Block {
 
     public static List<SubBlock> getDefaultSubBlocks() {
         return Arrays.asList(
-                new SubBlock(null, 0, new Pointers(null, 1), Pages.getDefaultPage(), false, ContentCategory.OBSERVATION, null),
-                new SubBlock(null, 1, new Pointers(0, 2), Pages.getDefaultPage(), false, ContentCategory.INTERPRETATION, null),
-                new SubBlock(null, 2, new Pointers(1, null), Pages.getDefaultPage(), false, ContentCategory.APPLICATION, null)
+                new SubBlock(null, 0, new Pointers(null, 1), Pages.getDefaultPage(), false, ContentCategory.OBSERVATION, "관찰"),
+                new SubBlock(null, 1, new Pointers(0, 2), Pages.getDefaultPage(), false, ContentCategory.INTERPRETATION, "해석"),
+                new SubBlock(null, 2, new Pointers(1, null), Pages.getDefaultPage(), false, ContentCategory.APPLICATION, "적용")
         );
     }
 

@@ -1,5 +1,5 @@
 -- 다음과 같은 순으로 INSERT되어야 ID(FK)값 참조하지 못하는 상황을 방지할 수 있다 MEMBER -> ARTICLE -> MAIN_BLOCK -> SUB_BLOCK
-INSERT INTO MEMBER (EMAIL, NAME, PWD) VALUES ('springBoot@gmail.com', '황부트', 'bootpassword');
+INSERT INTO MEMBER (EMAIL, NAME, PWD) VALUES ('guest@gmail.com', '게스트', 'guestPwd');
 
 INSERT INTO ARTICLE (DATE_TIME, TITLE, MEMBER_ID) VALUES ('2019-09-19 12:34:56', '토비의 스프링 리뷰', 1);
 

@@ -1,6 +1,8 @@
 package com.hardlearner.oia.domain;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +11,11 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
+@Getter
 @Builder
+@NoArgsConstructor
 public class Member {
+    public static Member guest = new Member("guest@gmail.com", "guestPwd", "게스트");
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

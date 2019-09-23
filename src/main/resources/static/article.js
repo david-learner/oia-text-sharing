@@ -10,6 +10,8 @@ window.onload = function () {
     var removeSubBlockBtns = document.querySelectorAll("[name=remove-sub-block-btn]");
     addOnClickToBlockBtns(addSubBlockBtns, addSubBlock);
     addOnClickToBlockBtns(removeSubBlockBtns,removeSubBlock);
+
+    // create();
 };
 
 function addMainBlock(event) {
@@ -79,4 +81,34 @@ function addOnClickToBlockBtns(blockBtns, onClickMethod) {
         var blockBtn = blockBtns[index]
         blockBtn.onclick = onClickMethod;
     }
+}
+
+function save(callback) {
+    var articleInfo = {
+        title: document.querySelector("#title").value,
+        writer: null,
+        date: document.querySelector("#date").value
+    }
+
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(articleInfo),
+        url: '/api/articles/save',
+    }).done(callback);
+}
+
+function create() {
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: '/api/articles/new',
+    }).done(function (data) {
+        consoleLog(data);
+    });
+}
+
+function consoleLog(data) {
+    console.log(data);
 }

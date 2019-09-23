@@ -7,16 +7,17 @@
         <div class="article-info column">
             <div class="title">
                 <h1 class="article-title">
-                    Observation Interpretation Application
+                    <input id="title" class="input" type="text" value="제목없는 문서">
                 </h1>
             </div>
             <div class="subtitle">
-                <span class="article-writer">David</span>
-                <span class="article-date">19/09/14</span>
+                <!-- server로부터 제공받아야 하는 데이터 -->
+                <span id="writer" class="article-writer">David</span>
+                <span id="date" class="article-date">2019-09-20</span>
             </div>
         </div>
         <div class="column is-1">
-            <button name="save-btn" class="button is-medium">
+            <button name="save-btn" class="button is-medium" onclick="save(consoleLog)">
                 <i class="far fa-save"></i>
             </button>
         </div>

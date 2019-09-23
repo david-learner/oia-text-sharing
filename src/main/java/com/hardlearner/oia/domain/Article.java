@@ -1,11 +1,15 @@
 package com.hardlearner.oia.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.naming.AuthenticationException;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,16 +25,9 @@ public class Article {
         this.content = content;
     }
 
-    public static Article getDefaultArticle(Member member, LocalDateTime dateTime) {
-        return new Article(new ArticleInfo(member, "제목없는 문서", dateTime), new Content(Arrays.asList(MainBlock.getDefaultMainBlock())));
-    }
-
-    public String getTitle() {
-        return articleInfo.getTitle();
-    }
-
-    public Content getContent() {
-        return content;
+    public static Article getDefaultArticle(Member member, MainBlock mainBlock) {
+        return new Article(ArticleInfo.builder().writer(member).title("제목없는 문서").build()
+                , new Content(Arrays.asList(mainBlock)));
     }
 
     @Override
@@ -56,7 +53,7 @@ public class Article {
         return this;
     }
 
-    public Long getId() {
-        return id;
+    public String getTitle() {
+        return articleInfo.getTitle();
     }
 }

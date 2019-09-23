@@ -1,5 +1,9 @@
 package com.hardlearner.oia.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -8,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Embeddable
+@NoArgsConstructor
+@Getter
 public class Content {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "ARTICLE_ID")
@@ -17,6 +23,7 @@ public class Content {
         this.mainBlocks = mainBlocks;
     }
 
+    @JsonIgnore
     public Content getShareAllowed() {
         List<MainBlock> mainBlocks = new ArrayList<>();
         for (MainBlock mainBlock : this.mainBlocks) {

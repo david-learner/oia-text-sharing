@@ -47,6 +47,7 @@ public class DummyData {
                     .build()
     );
 
+    public static MainBlock dummyMainBlock1 = MainBlock.builder().sequenceId(1).subBlocks(dummySubBlocks1).build();
     public static List<MainBlock> dummyMainBlocks1 = Arrays.asList(MainBlock.builder().sequenceId(1).subBlocks(dummySubBlocks1).build());
     public static List<MainBlock> dummyMainBlocks2 = Arrays.asList(
             MainBlock.builder().sequenceId(1).subBlocks(dummySubBlocks1).build(),

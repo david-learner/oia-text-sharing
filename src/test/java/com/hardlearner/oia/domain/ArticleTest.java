@@ -55,9 +55,14 @@ public class ArticleTest {
 
     @Test
     public void get_default_article_for_writing() {
-        Article defaultArticle = Article.getDefaultArticle(DummyData.dummyMember, LocalDateTime.now());
+        Article defaultArticle = Article.getDefaultArticle(DummyData.dummyMember, DummyData.dummyMainBlock1);
         assertEquals(defaultArticle.getTitle(), "제목없는 문서");
 //        assertEquals(defaultArticle.getContent().toString(), );
         // print와 toString을 구분해서 만들기
+    }
+
+    @Test
+    public void createFullArticle() {
+        Article defaultArticle = new Article(DummyData.dummyArticleInfo, null);
     }
 }

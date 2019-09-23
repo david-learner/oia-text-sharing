@@ -1,9 +1,16 @@
 package com.hardlearner.oia.domain;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 @Embeddable
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ArticleInfo {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MEMBER_ID")
@@ -11,39 +18,6 @@ public class ArticleInfo {
     String title;
     @Column(columnDefinition = "TIMESTAMP")
     LocalDateTime dateTime;
-
-    public ArticleInfo() {
-    }
-
-    public ArticleInfo(Member writer, String title, LocalDateTime dateTime) {
-        this.writer = writer;
-        this.title = title;
-        this.dateTime = dateTime;
-    }
-
-    public Member getWriter() {
-        return writer;
-    }
-
-    public void setWriter(Member writer) {
-        this.writer = writer;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
 
     @Override
     public String toString() {

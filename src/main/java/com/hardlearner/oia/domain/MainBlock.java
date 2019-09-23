@@ -1,6 +1,9 @@
 package com.hardlearner.oia.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.LinkedList;
@@ -12,6 +15,8 @@ import java.util.stream.Collectors;
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "MAIN_BLOCK_ID"))
 })
+@NoArgsConstructor
+@Getter
 public class MainBlock extends Block {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "MAIN_BLOCK_ID")
@@ -27,10 +32,11 @@ public class MainBlock extends Block {
         this(id, null, null, subBlocks);
     }
 
-    public static MainBlock getDefaultMainBlock() {
-        return new MainBlock(null, 0, new Pointers(null, null), SubBlock.getDefaultSubBlocks());
+    public static MainBlock getDefaultMainBlock(List<SubBlock> subBlocks) {
+        return new MainBlock(null, 0, new Pointers(null, null), subBlocks);
     }
 
+    @JsonIgnore
     public MainBlock getShareAllowed() {
         // 공유용 블록들은 읽기 전용, 그렇기 때문에 포인터는 신경쓰지 않아도 괜찮다
         // 다만, 공동협업을 위해 공유한다면 포인터의 순서도 신경써야 한다.

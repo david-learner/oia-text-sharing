@@ -43,6 +43,6 @@ public class MainBlockTest {
 
     @Test
     public void getDefaultMainBlock() {
-        System.out.println(MainBlock.getDefaultMainBlock().toString());
+        System.out.println(MainBlock.getDefaultMainBlock(DummyData.dummySubBlocks1).toString());
     }
 }
