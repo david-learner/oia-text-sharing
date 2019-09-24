@@ -8,10 +8,7 @@ import com.hardlearner.oia.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,5 +33,12 @@ public class ApiArticleController {
         log.debug("articleDto is " + articleDto.toString());
         log.debug("guest is " + guest.toString());
         return null;
+    }
+
+    @GetMapping("/api/articles/{id}")
+    public Article load(@PathVariable Long id) {
+        Article article = articleService.getArticle(id);
+        log.debug("article is " + article.toString());
+        return article;
     }
 }

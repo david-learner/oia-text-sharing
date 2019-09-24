@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class Content {
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     @JoinColumn(name = "ARTICLE_ID")
     private List<MainBlock> mainBlocks;
 

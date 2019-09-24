@@ -14,6 +14,9 @@ window.onload = function () {
     addOnClickToBlockBtns(removeSubBlockBtns,removeSubBlock);
 
     create();
+
+    var articleInit = document.querySelector('#article-init').value;
+    consoleLog(articleInit);
 };
 
 function addMainBlock(event) {

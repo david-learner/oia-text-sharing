@@ -32,4 +32,10 @@ public class ArticleService {
         Article savedArticle = articleRepository.save(Article.getDefaultArticle(loginMember, mainBlock));
         return savedArticle;
     }
+
+
+    public Article getArticle(Long id) {
+        // return articleRepository.getOne(id); // LazyLoading 때문에 json타입으로 변환할 때 에러 발생
+        return articleRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
 }
