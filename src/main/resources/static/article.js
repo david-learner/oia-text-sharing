@@ -15,10 +15,12 @@ window.onload = function () {
 
     // create();
     // 서버로부터 받아온 article json data를 불러와서 template에 세팅
-    var articleJsonText = document.querySelector('#article-init').value;
+    // var articleJsonText = document.querySelector('#article-init').value;
     // input(text)태그에서 뽑아온 string은 JSON text로 인식되기 때문에 JSON text를 JSON object로 바꿔준다
-    var articleJsonObject = JSON.parse(articleJsonText);
-    jsonToObjectConverterForArticle(articleJsonObject);
+    // var articleJsonObject = JSON.parse(articleJsonText);
+    // jsonToObjectConverterForArticle(articleJsonObject);
+
+    getArticle(window.location.pathname);
 };
 
 function addMainBlock(event) {
@@ -106,14 +108,12 @@ function save(callback) {
     }).done(callback);
 }
 
-function create() {
+function getArticle(articlePath) {
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: '/api/articles/new',
+        url: '/api' + articlePath,
     }).done(function (data) {
-        // article = JSON.parse(data);
-        // consoleLog(article.content);
         jsonToObjectConverterForArticle(data);
     });
 }

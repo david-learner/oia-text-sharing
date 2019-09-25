@@ -42,21 +42,9 @@ public class ArticleController {
     }
 
     @GetMapping("/articles/{id}")
-    public ModelAndView getArticle(@PathVariable Long id, Member member) throws JsonProcessingException {
-        Article savedArticle = articleService.getArticle(id);
-
-        // Java Object to JSON string
-        ObjectMapper om = new ObjectMapper();
-        om.registerModule(new JavaTimeModule());
-        om.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        String json = om.writeValueAsString(savedArticle);
-
-        // 왜 굳이 JSON으로 내려보내나?
-        // Handlebars로 FE에서 데이터를 보여줄 수 있지만 특정 조건에 따라 Helper를 만들어야 하기 때문에 불편
-        // JSON으로 받아서 js로 데이터를 보여주는 게 편하다고 생각
-        ModelAndView mav = new ModelAndView("articleForm");
-        mav.addObject("article", json);
-
-        return mav;
+    public String getArticle(@PathVariable Long id, Member member) {
+        // member check
+        // service단에서 발생하는 exception 잡아서 FE로 보내고 alert 발생시키기 그리고 redirect-backward
+        return "articleForm";
     }
 }
