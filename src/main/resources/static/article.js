@@ -13,10 +13,12 @@ window.onload = function () {
     addOnClickToBlockBtns(addSubBlockBtns, addSubBlock);
     addOnClickToBlockBtns(removeSubBlockBtns,removeSubBlock);
 
-    create();
-
-    var articleInit = document.querySelector('#article-init').value;
-    consoleLog(articleInit);
+    // create();
+    // 서버로부터 받아온 article json data를 불러와서 template에 세팅
+    var articleJsonText = document.querySelector('#article-init').value;
+    // input(text)태그에서 뽑아온 string은 JSON text로 인식되기 때문에 JSON text를 JSON object로 바꿔준다
+    var articleJsonObject = JSON.parse(articleJsonText);
+    jsonToObjectConverterForArticle(articleJsonObject);
 };
 
 function addMainBlock(event) {
@@ -125,7 +127,9 @@ function jsonToObjectConverterForArticle(jsonData) {
     document.querySelector('#writer-name').innerHTML = writerName;
     document.querySelector('#date').innerHTML = normalDateTime;
     document.querySelector('#title').value = title;
-    consoleLog(articleInfo.title);
+
+    var blocks = jsonData['content'];
+    consoleLog(blocks);
 }
 
 function convertToYYMMDDHHmm(oldDateTime) {
@@ -138,6 +142,10 @@ function convertToYYMMDDHHmm(oldDateTime) {
         + newDateTime.getHours() +':'
         + newDateTime.getMinutes();
     return normalFormDateTime;
+}
+
+function createBlocks(blocks) {
+
 }
 
 function consoleLog(data) {
