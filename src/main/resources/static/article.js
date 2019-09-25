@@ -160,17 +160,22 @@ function createSubBlock(subBlock, mainBlockElement) {
     var subBlockContent = {};
     if (category === "OBSERVATION") {
         template = document.querySelector('#sub-block-observation-template2');
-        nodes = document.importNode(template.content, true);
-        subBlockContent = nodes.querySelector("textarea[name='sub-block-content']");
-        subBlockContent.innerHTML = subBlock['content'];
-        mainBlock.appendChild(nodes);
     }
-    // if (category === "INTERPRETATION") {
-    //     template = document.querySelector('#sub-block-observation-template2');
-    // }
-    // if (category === "APPLICATION") {
-    //     template = document.querySelector('#sub-block-observation-template2');
-    // }
+    if (category === "INTERPRETATION") {
+        template = document.querySelector('#sub-block-interpretation-template2');
+    }
+    if (category === "APPLICATION") {
+        template = document.querySelector('#sub-block-application-template2');
+    }
+
+    nodes = document.importNode(template.content, true);
+    // subBlock의 content 항목에 content할당
+    subBlockContent = nodes.querySelector("textarea[name='sub-block-content']");
+    subBlockContent.innerHTML = subBlock['content'];
+    addOnClickToBlockBtns(nodes.querySelectorAll("[name=add-sub-block-btn]"), addSubBlock);
+    addOnClickToBlockBtns(nodes.querySelectorAll("[name=remove-sub-block-btn]"), removeSubBlock);
+
+    mainBlock.appendChild(nodes);
 
     return mainBlockElement;
 }
