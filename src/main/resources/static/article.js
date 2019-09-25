@@ -13,13 +13,7 @@ window.onload = function () {
     addOnClickToBlockBtns(addSubBlockBtns, addSubBlock);
     addOnClickToBlockBtns(removeSubBlockBtns,removeSubBlock);
 
-    // create();
-    // 서버로부터 받아온 article json data를 불러와서 template에 세팅
-    // var articleJsonText = document.querySelector('#article-init').value;
-    // input(text)태그에서 뽑아온 string은 JSON text로 인식되기 때문에 JSON text를 JSON object로 바꿔준다
-    // var articleJsonObject = JSON.parse(articleJsonText);
-    // jsonToObjectConverterForArticle(articleJsonObject);
-
+    // path(/articles/id)를 전달해서 article data 요청
     getArticle(window.location.pathname);
 };
 
@@ -128,8 +122,57 @@ function jsonToObjectConverterForArticle(jsonData) {
     document.querySelector('#date').innerHTML = normalDateTime;
     document.querySelector('#title').value = title;
 
-    var blocks = jsonData['content'];
-    consoleLog(blocks);
+    var content = jsonData['content'];
+    var mainBlocks = content['mainBlocks'];
+    mainBlocks.forEach(createMainBlock);
+    // createMainBlock(null);
+}
+
+function createMainBlock(mainBlock) {
+    // #article-content 아래에 mainBlock들이 위치한다
+    var articleContent = document.querySelector('#article-content');
+
+    // template을 불러와 해당 html 정보를 node로 바꾼다
+    var mainBlockTemplate = document.querySelector('#main-block-template2');
+    // 외부문서에서 노드를 복사해온다 deep이 true면 자식노드까지 모두 복사해온다
+    var mainBlockElement = document.importNode(mainBlockTemplate.content, true);
+    // 복사된 노드들 중 main-block-id를 채워넣는다
+    var mainBlockId = mainBlockElement.querySelector("input[name='main-block-id']");
+    mainBlockId.value = mainBlock.id;
+
+    var subBlocks = mainBlock['subBlocks'];
+    // var subBlock = subBlocks[0];
+    // consoleLog(subBlock.id);
+    // mainBlockElement = createSubBlock(subBlocks, mainBlockElement);
+    for (var index = 0; index < subBlocks.length; index++) {
+        mainBlockElement = createSubBlock(subBlocks[index], mainBlockElement);
+    }
+
+    articleContent.appendChild(mainBlockElement);
+}
+
+function createSubBlock(subBlock, mainBlockElement) {
+    var mainBlock = mainBlockElement.querySelector("div[name='main-block']");
+
+    var category = subBlock['category'];
+    var template = {};
+    var nodes = {};
+    var subBlockContent = {};
+    if (category === "OBSERVATION") {
+        template = document.querySelector('#sub-block-observation-template2');
+        nodes = document.importNode(template.content, true);
+        subBlockContent = nodes.querySelector("textarea[name='sub-block-content']");
+        subBlockContent.innerHTML = subBlock['content'];
+        mainBlock.appendChild(nodes);
+    }
+    // if (category === "INTERPRETATION") {
+    //     template = document.querySelector('#sub-block-observation-template2');
+    // }
+    // if (category === "APPLICATION") {
+    //     template = document.querySelector('#sub-block-observation-template2');
+    // }
+
+    return mainBlockElement;
 }
 
 function convertToYYMMDDHHmm(oldDateTime) {
@@ -142,10 +185,6 @@ function convertToYYMMDDHHmm(oldDateTime) {
         + newDateTime.getHours() +':'
         + newDateTime.getMinutes();
     return normalFormDateTime;
-}
-
-function createBlocks(blocks) {
-
 }
 
 function consoleLog(data) {
