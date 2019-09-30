@@ -11,4 +11,5 @@ import java.time.LocalDateTime;
 public class ArticleDto {
     private String title;
     private LocalDateTime dateTime;
+    // FE에서 save할 때 어떤 것들을 받아들이고 저장할지
 }

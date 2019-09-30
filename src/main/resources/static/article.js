@@ -18,16 +18,27 @@ window.onload = function () {
 };
 
 function addMainBlock(event) {
-    var mainBlockTemplate = document.getElementById("main-block-template").innerHTML;
+    var mainBlockTemplate = document.getElementById("default-main-block-template");
+
+    // 외부문서에서 노드를 복사해온다 deep이 true면 자식노드까지 모두 복사해온다
+    var mainBlockElement = document.importNode(mainBlockTemplate.content, true);
+    var observationElement = document.importNode(document.getElementById("sub-block-observation-template2").content, true);
+    var interpretationElement = document.importNode(document.getElementById("sub-block-interpretation-template2").content, true);
+    var applicationElement = document.importNode(document.getElementById("sub-block-application-template2").content, true);
+
+    // 서브블록을 메인블록 아래에 붙인다
+    var mainBlock = mainBlockElement.querySelector("[name=main-block]");
+    mainBlock.append(observationElement);
+    mainBlock.append(interpretationElement);
+    mainBlock.append(applicationElement);
+
+    var tempParentForNode = document.createElement("div");
+    tempParentForNode.appendChild(mainBlockElement);
+
     // 클릭된 플러스 버튼이 속한 메인블록 아래에 메인블록이 추가된다
     var clickedMainBlock = event.target.closest(".main-block");
-    console.log(clickedMainBlock);
-    clickedMainBlock.insertAdjacentHTML('afterend', mainBlockTemplate);
-
-    // 인터벌 걸지 않고 그냥 show 클래스를 추가하면 css의 transition이 먹지 않는다 왜..
-    setInterval(function () {
-        createdMainBlock.classList.add("show");
-    }, 1)
+    consoleLog(clickedMainBlock);
+    clickedMainBlock.insertAdjacentHTML('afterend', tempParentForNode.innerHTML);
 
     // 새롭게 생성된 메인블록의 메인블록 생성/제거 버튼에 onClick 메소드 붙이기
     var createdMainBlock = clickedMainBlock.nextElementSibling;
@@ -43,7 +54,7 @@ function removeMainBlock(event) {
     var mainBlocks = document.querySelectorAll(".main-block");
 
     if (mainBlocks.length === 1) {
-        alert("메인블록이 1개일 때는 삭제할 수 없습니다")
+        alert("메인블록이 1개일 때는 삭제할 수 없습니다");
         return 0;
     }
 
@@ -76,7 +87,14 @@ function addSubBlock(event) {
 
 function removeSubBlock(event) {
     var clickedSubBlock = event.target.closest("[name=observation], [name=interpretation], [name=application]");
-    clickedSubBlock.remove();
+    // mainBlock은 main-block-info라는 자식을 기본으로 가지고 있다. 따라서 항상 chidren.length는 1이상이다
+    var mainBlockChildrenLength = event.target.closest("[name=main-block]").children.length;
+    if (mainBlockChildrenLength <= 2) {
+        removeMainBlock(event);
+    }
+    if (mainBlockChildrenLength > 2) {
+        clickedSubBlock.remove();
+    }
 }
 
 function addOnClickToBlockBtns(blockBtns, onClickMethod) {
@@ -108,11 +126,11 @@ function getArticle(articlePath) {
         dataType: 'json',
         url: '/api' + articlePath,
     }).done(function (data) {
-        jsonToObjectConverterForArticle(data);
+        ConvertJsonToArticle(data);
     });
 }
 
-function jsonToObjectConverterForArticle(jsonData) {
+function ConvertJsonToArticle(jsonData) {
     var articleInfo = jsonData['articleInfo'];
     var writerName = articleInfo.writer['name'];
     var date = articleInfo.dateTime;
@@ -140,10 +158,10 @@ function createMainBlock(mainBlock) {
     var mainBlockId = mainBlockElement.querySelector("input[name='main-block-id']");
     mainBlockId.value = mainBlock.id;
 
+    addOnClickToBlockBtns(mainBlockElement.querySelectorAll("[name=add-main-block-btn]"), addMainBlock);
+    addOnClickToBlockBtns(mainBlockElement.querySelectorAll("[name=remove-main-block-btn]"), removeMainBlock);
+
     var subBlocks = mainBlock['subBlocks'];
-    // var subBlock = subBlocks[0];
-    // consoleLog(subBlock.id);
-    // mainBlockElement = createSubBlock(subBlocks, mainBlockElement);
     for (var index = 0; index < subBlocks.length; index++) {
         mainBlockElement = createSubBlock(subBlocks[index], mainBlockElement);
     }
