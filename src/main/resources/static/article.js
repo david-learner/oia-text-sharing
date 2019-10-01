@@ -30,9 +30,22 @@ function addMainBlock(event) {
     interpretationElement.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
     applicationElement.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
 
-    // 서브블록을 메인블록 아래에 붙인다
+    // 앞뒤 블록 seq-id를 할당
+    var clickedMainBlock = event.target.closest(".main-block");
     var mainBlock = mainBlockElement.querySelector("[name=main-block]");
     mainBlock.dataset.blockSeqId = getSequence();
+    clickedMainBlock.dataset.nextBlockSeqId = mainBlock.dataset.blockSeqId;
+    // prevBlockSeqId
+    mainBlock.dataset.prevBlockSeqId = clickedMainBlock.dataset.blockSeqId;
+    // nextBlockSeqId
+    var nextMainBlock = event.target.closest(".main-block").nextElementSibling;
+    if (nextMainBlock != null) {
+        mainBlock.dataset.nextBlockSeqId = nextMainBlock.dataset.blockSeqId;
+        // nextBlock의 prevBlockSeqId 수정
+        nextMainBlock.dataset.prevBlockSeqId = mainBlock.dataset.blockSeqId;
+    }
+
+    // 서브블록들을 메인블록 아래에 붙인다
     mainBlock.append(observationElement);
     mainBlock.append(interpretationElement);
     mainBlock.append(applicationElement);
@@ -46,7 +59,6 @@ function addMainBlock(event) {
 
     // 클릭된 플러스 버튼이 속한 메인블록 아래에 메인블록이 추가된다
     var clickedMainBlock = event.target.closest(".main-block");
-    consoleLog(clickedMainBlock);
     clickedMainBlock.insertAdjacentHTML('afterend', tempParentForNode.innerHTML);
 
     // 새롭게 생성된 메인블록의 메인블록 생성/제거 버튼에 onClick 메소드 붙이기
@@ -77,12 +89,10 @@ function removeMainBlock(event) {
 function addSubBlock(event) {
     var subBlockTemplate;
     var clickedSubBlock = event.target.closest("[name=sub-block]");
-    // var clickedSubBlockName = clickedSubBlock.getAttribute("name");
     consoleLog(clickedSubBlock);
     var clickedSubBlockName = clickedSubBlock.dataset.contentCategory;
     if (clickedSubBlockName === "observation") {
         subBlockTemplate = document.importNode(document.getElementById("sub-block-observation-template").content, true);
-        // subBlockTemplate = document.getElementById("sub-block-observation-template").innerHTML;
     }
     if (clickedSubBlockName === "interpretation") {
         subBlockTemplate = document.importNode(document.getElementById("sub-block-interpretation-template").content, true);
@@ -127,7 +137,7 @@ function addOnClickToBlockBtns(blockBtns, onClickMethod) {
 function save(callback) {
     // JSON에 들어갈 객체
     var token = window.location.pathname.split("/");
-    var articleId = token[token.length -1];
+    var articleId = token[token.length - 1];
     var articleInfo = {
         title: document.querySelector("#title").value
     }
@@ -212,8 +222,6 @@ function createMainBlock(mainBlock) {
     var mainBlockElement = document.importNode(mainBlockTemplate.content, true);
     // mainblock에 seq-id를 넣어준다
     mainBlockElement.querySelector("[name=main-block]").dataset.blockSeqId = mainBlock.sequenceId;
-    // var mainBlockId = mainBlockElement.querySelector("input[name='main-block-id']");
-    // mainBlockId.value = mainBlock.id;
 
     addOnClickToBlockBtns(mainBlockElement.querySelectorAll("[name=add-main-block-btn]"), addMainBlock);
     addOnClickToBlockBtns(mainBlockElement.querySelectorAll("[name=remove-main-block-btn]"), removeMainBlock);
