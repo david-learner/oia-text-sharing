@@ -37,9 +37,9 @@ public class SubBlock extends Block {
 
     public static List<SubBlock> getDefaultSubBlocks() {
         return Arrays.asList(
-                new SubBlock(null, 0, new Pointers(null, 1), Pages.getDefaultPage(), false, ContentCategory.OBSERVATION, "관찰"),
-                new SubBlock(null, 1, new Pointers(0, 2), Pages.getDefaultPage(), false, ContentCategory.INTERPRETATION, "해석"),
-                new SubBlock(null, 2, new Pointers(1, null), Pages.getDefaultPage(), false, ContentCategory.APPLICATION, "적용")
+                new SubBlock(null, 2, new Pointers(null, 3), Pages.getDefaultPage(), false, ContentCategory.OBSERVATION, "관찰"),
+                new SubBlock(null, 3, new Pointers(2, 4), Pages.getDefaultPage(), false, ContentCategory.INTERPRETATION, "해석"),
+                new SubBlock(null, 4, new Pointers(3, null), Pages.getDefaultPage(), false, ContentCategory.APPLICATION, "적용")
         );
     }
 

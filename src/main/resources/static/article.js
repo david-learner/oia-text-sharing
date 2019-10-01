@@ -1,4 +1,5 @@
 var article;
+var sequence;
 
 window.onload = function () {
     // 메인블록 추가/제거 버튼에 온클릭 메소드 붙이기
@@ -160,7 +161,7 @@ function getArticle(articlePath) {
         dataType: 'json',
         url: '/api' + articlePath,
     }).done(function (data) {
-        consoleLog(data);
+        // consoleLog(data);
         ConvertJsonToArticle(data);
     });
 }
@@ -177,6 +178,7 @@ function ConvertJsonToArticle(jsonData) {
 
     var content = jsonData['content'];
     var mainBlocks = content['mainBlocks'];
+    sequence = content['sequence'];
     mainBlocks.forEach(createMainBlock);
     // createMainBlock(null);
 }
@@ -189,9 +191,10 @@ function createMainBlock(mainBlock) {
     var mainBlockTemplate = document.querySelector('#main-block-template2');
     // 외부문서에서 노드를 복사해온다 deep이 true면 자식노드까지 모두 복사해온다
     var mainBlockElement = document.importNode(mainBlockTemplate.content, true);
-    // 복사된 노드들 중 main-block-id를 채워넣는다
-    var mainBlockId = mainBlockElement.querySelector("input[name='main-block-id']");
-    mainBlockId.value = mainBlock.id;
+    // mainblock에 seq-id를 넣어준다
+    mainBlockElement.querySelector("[name=main-block]").dataset.blockSeqId = mainBlock.sequenceId;
+    // var mainBlockId = mainBlockElement.querySelector("input[name='main-block-id']");
+    // mainBlockId.value = mainBlock.id;
 
     addOnClickToBlockBtns(mainBlockElement.querySelectorAll("[name=add-main-block-btn]"), addMainBlock);
     addOnClickToBlockBtns(mainBlockElement.querySelectorAll("[name=remove-main-block-btn]"), removeMainBlock);
@@ -222,6 +225,8 @@ function createSubBlock(subBlock, mainBlockElement) {
     }
 
     nodes = document.importNode(template.content, true);
+    // sequenceId를 subBlock의 data-block-seq-id에 할당
+    nodes.querySelector("[name=sub-block]").dataset.blockSeqId = subBlock.sequenceId;
     // subBlock의 content 항목에 content할당
     subBlockContent = nodes.querySelector("textarea[name='sub-block-content']");
     subBlockContent.innerHTML = subBlock['content'];

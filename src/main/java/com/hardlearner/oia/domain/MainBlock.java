@@ -33,7 +33,7 @@ public class MainBlock extends Block {
     }
 
     public static MainBlock getDefaultMainBlock(List<SubBlock> subBlocks) {
-        return new MainBlock(null, 0, new Pointers(null, null), subBlocks);
+        return new MainBlock(null, 1, new Pointers(null, null), subBlocks);
     }
 
     @JsonIgnore

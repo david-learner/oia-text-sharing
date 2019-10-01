@@ -18,6 +18,8 @@ public class Content {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ARTICLE_ID")
     private List<MainBlock> mainBlocks;
+    // default value가 4인 이유는 처음 문서가 생성될 때 1개의 메인블록, 3개의 서브블록이 sequence를 사용하기 때문이다
+    private int sequence = 5;
 
     public Content(List<MainBlock> mainBlocks) {
         this.mainBlocks = mainBlocks;
