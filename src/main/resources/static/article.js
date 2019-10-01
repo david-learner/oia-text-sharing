@@ -19,20 +19,28 @@ window.onload = function () {
 };
 
 function addMainBlock(event) {
-    var mainBlockTemplate = document.getElementById("default-main-block-template");
-
     // 외부문서에서 노드를 복사해온다 deep이 true면 자식노드까지 모두 복사해온다
-    var mainBlockElement = document.importNode(mainBlockTemplate.content, true);
-    var observationElement = document.importNode(document.getElementById("sub-block-observation-template2").content, true);
-    var interpretationElement = document.importNode(document.getElementById("sub-block-interpretation-template2").content, true);
-    var applicationElement = document.importNode(document.getElementById("sub-block-application-template2").content, true);
+    var mainBlockElement = document.importNode(document.getElementById("main-block-template").content, true);
+    var observationElement = document.importNode(document.getElementById("sub-block-observation-template").content, true);
+    var interpretationElement = document.importNode(document.getElementById("sub-block-interpretation-template").content, true);
+    var applicationElement = document.importNode(document.getElementById("sub-block-application-template").content, true);
+
+    // 각 서브블록에 seq-id를 할당
+    observationElement.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
+    interpretationElement.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
+    applicationElement.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
 
     // 서브블록을 메인블록 아래에 붙인다
     var mainBlock = mainBlockElement.querySelector("[name=main-block]");
+    mainBlock.dataset.blockSeqId = getSequence();
     mainBlock.append(observationElement);
     mainBlock.append(interpretationElement);
     mainBlock.append(applicationElement);
 
+    // 왜 append 한 다음에는 dataset에 접근할 수 없는가?
+    // observationElement.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
+
+    // node는 innerHTML 속성을 가지지 않으므로 임의로 부모 element를 만들고 이를 사용하여 innerHTML을 사용한다
     var tempParentForNode = document.createElement("div");
     tempParentForNode.appendChild(mainBlockElement);
 
@@ -68,18 +76,29 @@ function removeMainBlock(event) {
 
 function addSubBlock(event) {
     var subBlockTemplate;
-    var clickedSubBlock = event.target.closest("[name=observation], [name=interpretation], [name=application]");
-    var clickedSubBlockName = clickedSubBlock.getAttribute("name");
+    var clickedSubBlock = event.target.closest("[name=sub-block]");
+    // var clickedSubBlockName = clickedSubBlock.getAttribute("name");
+    consoleLog(clickedSubBlock);
+    var clickedSubBlockName = clickedSubBlock.dataset.contentCategory;
     if (clickedSubBlockName === "observation") {
-        subBlockTemplate = document.getElementById("sub-block-observation-template").innerHTML;
+        subBlockTemplate = document.importNode(document.getElementById("sub-block-observation-template").content, true);
+        // subBlockTemplate = document.getElementById("sub-block-observation-template").innerHTML;
     }
     if (clickedSubBlockName === "interpretation") {
-        subBlockTemplate = document.getElementById("sub-block-interpretation-template").innerHTML;
+        subBlockTemplate = document.importNode(document.getElementById("sub-block-interpretation-template").content, true);
     }
     if (clickedSubBlockName === "application") {
-        subBlockTemplate = document.getElementById("sub-block-application-template").innerHTML;
+        subBlockTemplate = document.importNode(document.getElementById("sub-block-application-template").content, true);
     }
-    clickedSubBlock.insertAdjacentHTML("afterend", subBlockTemplate);
+
+    // 각 블록 seq-id 할당
+    subBlockTemplate.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
+
+    // 임시 부모 element를 통해 innerHTML 사용
+    var tempParentElementForNode = document.createElement("div");
+    tempParentElementForNode.appendChild(subBlockTemplate);
+
+    clickedSubBlock.insertAdjacentHTML("afterend", tempParentElementForNode.innerHTML);
 
     var createdSubBlock = clickedSubBlock.nextElementSibling;
     addOnClickToBlockBtns(createdSubBlock.querySelectorAll("[name=add-sub-block-btn]"), addSubBlock);
@@ -87,7 +106,7 @@ function addSubBlock(event) {
 }
 
 function removeSubBlock(event) {
-    var clickedSubBlock = event.target.closest("[name=observation], [name=interpretation], [name=application]");
+    var clickedSubBlock = event.target.closest("[name=sub-block]");
     // mainBlock은 main-block-info라는 자식을 기본으로 가지고 있다. 따라서 항상 chidren.length는 1이상이다
     var mainBlockChildrenLength = event.target.closest("[name=main-block]").children.length;
     if (mainBlockChildrenLength <= 2) {
@@ -188,7 +207,7 @@ function createMainBlock(mainBlock) {
     var articleContent = document.querySelector('#article-content');
 
     // template을 불러와 해당 html 정보를 node로 바꾼다
-    var mainBlockTemplate = document.querySelector('#main-block-template2');
+    var mainBlockTemplate = document.getElementById('main-block-template');
     // 외부문서에서 노드를 복사해온다 deep이 true면 자식노드까지 모두 복사해온다
     var mainBlockElement = document.importNode(mainBlockTemplate.content, true);
     // mainblock에 seq-id를 넣어준다
@@ -215,13 +234,13 @@ function createSubBlock(subBlock, mainBlockElement) {
     var nodes = {};
     var subBlockContent = {};
     if (category === "OBSERVATION") {
-        template = document.querySelector('#sub-block-observation-template2');
+        template = document.querySelector('#sub-block-observation-template');
     }
     if (category === "INTERPRETATION") {
-        template = document.querySelector('#sub-block-interpretation-template2');
+        template = document.querySelector('#sub-block-interpretation-template');
     }
     if (category === "APPLICATION") {
-        template = document.querySelector('#sub-block-application-template2');
+        template = document.querySelector('#sub-block-application-template');
     }
 
     nodes = document.importNode(template.content, true);
@@ -248,6 +267,11 @@ function convertToYYMMDDHHmm(oldDateTime) {
         + newDateTime.getHours() + ':'
         + newDateTime.getMinutes();
     return normalFormDateTime;
+}
+
+function getSequence() {
+    console.log("seq-" + sequence);
+    return sequence++;
 }
 
 function consoleLog(data) {
