@@ -28,13 +28,18 @@ public class ArticleInfo {
     @Override
     public String toString() {
         return "ArticleInfo{" +
-                "writer=" + writer.toString() +
+//                "writer=" + writer.toString() +
                 ", title='" + title + '\'' +
-                ", dateTime=" + dateTime +
+//                ", dateTime=" + dateTime +
                 '}';
     }
 
     public boolean isSameWriter(Member writer) {
         return writer.equals(writer);
+    }
+
+    public ArticleInfo update(ArticleInfo articleInfo) {
+        this.title = articleInfo.getTitle();
+        return this;
     }
 }

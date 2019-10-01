@@ -27,11 +27,15 @@ public class ApiArticleController {
         return articleService.create(guest);
     }
 
+    // save is update
     @PostMapping("/api/articles/save")
-    public Article save(@RequestBody ArticleDto articleDto, HttpSession session) {
-        Member guest = memberService.login(Member.guest);
-        log.debug("articleDto is " + articleDto.toString());
-        log.debug("guest is " + guest.toString());
+    public Article save(@RequestBody ArticleDto articleDto) {
+        // session에 있는 멤버 정보 가져와서 article 생성할 때 같이 넣어주기
+        Article article = articleService.getArticle(articleDto.getId());
+        article.update(articleDto);
+        Member loginMember = memberService.login(Member.guest);
+        articleService.save(article);
+        log.debug("article is " + article.toString());
         return null;
     }
 

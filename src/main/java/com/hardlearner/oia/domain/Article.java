@@ -22,7 +22,21 @@ public class Article {
     Content content;
 
     public Article(ArticleInfo articleInfo, Content content) {
+        this(null, articleInfo, content);
+    }
+
+    public Article(Long id, ArticleInfo articleInfo, Content content) {
+        this.id = id;
         this.articleInfo = articleInfo;
+        this.content = content;
+    }
+
+    public Article(Long id, ArticleInfo articleInfo, Content content, Member writer) {
+        this.id = id;
+        this.articleInfo = articleInfo;
+        if (!this.articleInfo.isSameWriter(writer)) {
+            throw new IllegalArgumentException("Doesn't match writer");
+        }
         this.content = content;
     }
 
@@ -57,5 +71,11 @@ public class Article {
     @JsonIgnore
     public String getTitle() {
         return articleInfo.getTitle();
+    }
+
+    public Article update(ArticleDto articleDto) {
+        articleInfo.update(articleDto.getArticleInfo());
+//        content.update(articleDto.getContent());
+        return this;
     }
 }

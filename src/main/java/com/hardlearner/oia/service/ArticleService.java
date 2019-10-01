@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,15 +26,15 @@ public class ArticleService {
     SubBlockService subBlockService;
 
     public Article create(Member loginMember) {
-        // sub
         List<SubBlock> subBlocks = subBlockService.saveAll(SubBlock.getDefaultSubBlocks());
-        // main
         MainBlock mainBlock = mainBlockService.save(MainBlock.getDefaultMainBlock(subBlocks));
-        // article
         Article savedArticle = articleRepository.save(Article.getDefaultArticle(loginMember, mainBlock));
         return savedArticle;
     }
 
+    public void save(Article article) {
+        articleRepository.save(article);
+    }
 
     public Article getArticle(Long id) {
         // return articleRepository.getOne(id); // LazyLoading 때문에 json타입으로 변환할 때 에러 발생

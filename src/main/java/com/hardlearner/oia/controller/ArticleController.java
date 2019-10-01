@@ -31,13 +31,12 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
     @Autowired
-    MemberRepository memberRepository;
+    MemberService memberService;
 
     @GetMapping("/articles/new")
     public String createArticle(Member member) {
 //        return "articleForm";
-        memberRepository.save(Member.guest);
-        Article savedArticle = articleService.create(Member.guest);
+        Article savedArticle = articleService.create(memberService.login(Member.guest));
         return "redirect:" + "/articles/" + savedArticle.getId();
     }
 

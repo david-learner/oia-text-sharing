@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 public class SubBlock extends Block {
     @Embedded
-    Pages pages;
+    Pages pages = Pages.getDefaultPage();
     boolean canShare;
     @Enumerated(EnumType.STRING)
     ContentCategory category;
@@ -50,9 +50,9 @@ public class SubBlock extends Block {
     @Override
     public String toString() {
         return "SubBlock{" +
-                "pages=" + pages.toString() +
+//                "pages=" + pages.toString() +
                 ", canShare=" + canShare +
-                ", category=" + category.getAlias() +
+//                ", category=" + category.getAlias() +
                 ", content='" + content + '\'' +
                 '}';
     }

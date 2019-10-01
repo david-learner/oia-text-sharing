@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Getter
 public class MainBlock extends Block {
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "MAIN_BLOCK_ID")
     private List<SubBlock> subBlocks = new LinkedList<>();
 

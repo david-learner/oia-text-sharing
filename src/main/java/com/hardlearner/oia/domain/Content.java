@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class Content {
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ARTICLE_ID")
     private List<MainBlock> mainBlocks;
 
@@ -43,5 +43,9 @@ public class Content {
     @Override
     public String toString() {
         return print();
+    }
+
+    public void update(Content content) {
+
     }
 }

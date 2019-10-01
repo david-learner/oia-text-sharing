@@ -11,7 +11,7 @@ window.onload = function () {
     var addSubBlockBtns = document.querySelectorAll("[name=add-sub-block-btn]");
     var removeSubBlockBtns = document.querySelectorAll("[name=remove-sub-block-btn]");
     addOnClickToBlockBtns(addSubBlockBtns, addSubBlock);
-    addOnClickToBlockBtns(removeSubBlockBtns,removeSubBlock);
+    addOnClickToBlockBtns(removeSubBlockBtns, removeSubBlock);
 
     // path(/articles/id)를 전달해서 article data 요청
     getArticle(window.location.pathname);
@@ -59,7 +59,7 @@ function removeMainBlock(event) {
     }
 
     var clickedMainBlock = event.target.closest(".main-block");
-        clickedMainBlock.classList.remove("show");
+    clickedMainBlock.classList.remove("show");
     setInterval(function () {
         clickedMainBlock.remove();
     }, 300)
@@ -105,17 +105,51 @@ function addOnClickToBlockBtns(blockBtns, onClickMethod) {
 }
 
 function save(callback) {
+    // JSON에 들어갈 객체
+    var token = window.location.pathname.split("/");
+    var articleId = token[token.length -1];
     var articleInfo = {
-        title: document.querySelector("#title").value,
-        writer: null,
-        date: document.querySelector("#date").value
+        title: document.querySelector("#title").value
     }
+    var mainBlocks = [];
+    var content = {mainBlocks: mainBlocks};
+    var article = {
+        id: articleId,
+        articleInfo: articleInfo,
+        content: content
+    }
+
+    // Element들을 찾아서 데이터 뽑아내서 객체로 만들기
+    var articleContent = document.querySelector("#article-content");
+    var mainBlocksElement = articleContent.querySelectorAll("[name=main-block]");
+
+    for (var mainBlockIndex = 0; mainBlockIndex < mainBlocksElement.length; mainBlockIndex++) {
+        var subBlocksElement = mainBlocksElement[mainBlockIndex].querySelectorAll("[name=sub-block]");
+
+        var subBlocks = [];
+        for (var subBlockIndex = 0; subBlockIndex < subBlocksElement.length; subBlockIndex++) {
+            var subBlockContent = subBlocksElement[subBlockIndex].querySelector("[name=sub-block-content]").value;
+            // UpperCase로 바꿔준 이유는 BE에서 ContentCategory에 해당하는 Enum의 요소 이름이 UpperCase로 되어 있기 때문에.
+            var subBlockContentCategory = subBlocksElement[subBlockIndex].dataset.contentCategory.toUpperCase();
+            var subBlock = {
+                category: subBlockContentCategory,
+                content: subBlockContent
+            }
+            subBlocks.push(subBlock);
+        }
+        var mainBlock = {
+            subBlocks: subBlocks
+        };
+        mainBlocks.push(mainBlock);
+    }
+
+    consoleLog(JSON.stringify(article));
 
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify(articleInfo),
+        data: JSON.stringify(article),
         url: '/api/articles/save',
     }).done(callback);
 }
@@ -126,6 +160,7 @@ function getArticle(articlePath) {
         dataType: 'json',
         url: '/api' + articlePath,
     }).done(function (data) {
+        consoleLog(data);
         ConvertJsonToArticle(data);
     });
 }
@@ -203,9 +238,9 @@ function convertToYYMMDDHHmm(oldDateTime) {
     var newDateTime = new Date(oldDateTime);
     var normalFormDateTime =
         newDateTime.getFullYear() + '-'
-        + (newDateTime.getMonth()+1) +'-'
+        + (newDateTime.getMonth() + 1) + '-'
         + newDateTime.getDate() + ' '
-        + newDateTime.getHours() +':'
+        + newDateTime.getHours() + ':'
         + newDateTime.getMinutes();
     return normalFormDateTime;
 }
