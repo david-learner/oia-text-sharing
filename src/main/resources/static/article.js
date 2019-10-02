@@ -90,6 +90,11 @@ function addMainBlock(event) {
     // 새롭게 생성된 메인블록의 서브블록 생성/제거 버튼에 onClick 메소드 붙이기
     addOnClickToBlockBtns(createdMainBlock.querySelectorAll("[name=add-sub-block-btn]"), addSubBlock);
     addOnClickToBlockBtns(createdMainBlock.querySelectorAll("[name=remove-sub-block-btn]"), removeSubBlock);
+
+    // 생성된 서브블록에 keydown 이벤트 붙이기
+    createdMainBlock.querySelectorAll("[name=sub-block-content]").forEach(function (value) {
+        value.addEventListener("keydown", expandTextArea);
+    });
 }
 
 function removeMainBlock(event) {
@@ -148,6 +153,7 @@ function addSubBlock(event) {
     var createdSubBlock = clickedSubBlock.nextElementSibling;
     addOnClickToBlockBtns(createdSubBlock.querySelectorAll("[name=add-sub-block-btn]"), addSubBlock);
     addOnClickToBlockBtns(createdSubBlock.querySelectorAll("[name=remove-sub-block-btn]"), removeSubBlock);
+    createdSubBlock.querySelector("[name=sub-block-content]").addEventListener("keydown", expandTextArea);
 }
 
 function removeSubBlock(event) {
@@ -349,12 +355,12 @@ function createSubBlock(subBlock, mainBlockElement) {
 
 function expandTextArea() {
     var el = this;
-    setTimeout(function(){
+    setTimeout(function () {
         el.style.cssText = 'height:auto; padding:10';
         // for box-sizing other than "content-box" use:
         // el.style.cssText = '-moz-box-sizing:content-box';
         el.style.cssText = 'height:' + el.scrollHeight + 'px';
-    },0);
+    }, 0);
 }
 
 function convertToYYMMDDHHmm(oldDateTime) {
