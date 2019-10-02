@@ -15,8 +15,15 @@ window.onload = function () {
     addOnClickToBlockBtns(removeSubBlockBtns, removeSubBlock);
 
     // path(/articles/id)를 전달해서 article data 요청
-    getArticle(window.location.pathname);
+    getArticle(window.location.pathname, fitToContent);
 };
+
+function fitToContent() {
+    var subBlockContentElements = document.querySelectorAll("[name=sub-block-content]");
+    subBlockContentElements.forEach((function (element) {
+        element.style.cssText = "height:" + element.scrollHeight + "px"
+    }));
+}
 
 function addMainBlock(event) {
     // 외부문서에서 노드를 복사해온다 deep이 true면 자식노드까지 모두 복사해온다
@@ -105,7 +112,7 @@ function removeMainBlock(event) {
 function addSubBlock(event) {
     var subBlockTemplate;
     var clickedSubBlock = event.target.closest("[name=sub-block]");
-    consoleLog(clickedSubBlock);
+
     var clickedSubBlockName = clickedSubBlock.dataset.contentCategory;
     if (clickedSubBlockName === "observation") {
         subBlockTemplate = document.importNode(document.getElementById("sub-block-observation-template").content, true);
@@ -244,14 +251,14 @@ function save(callback) {
     }).done(callback);
 }
 
-function getArticle(articlePath) {
+function getArticle(articlePath, callback) {
     $.ajax({
         type: 'GET',
         dataType: 'json',
         url: '/api' + articlePath,
     }).done(function (data) {
-        // consoleLog(data);
         ConvertJsonToArticle(data);
+        callback();
     });
 }
 
@@ -269,7 +276,6 @@ function ConvertJsonToArticle(jsonData) {
     var mainBlocks = content['mainBlocks'];
     sequence = content['sequence'];
     mainBlocks.forEach(createMainBlock);
-    // createMainBlock(null);
 }
 
 function createMainBlock(mainBlock) {
@@ -313,9 +319,9 @@ function createSubBlock(subBlock, mainBlockElement) {
     }
 
     nodes = document.importNode(template.content, true);
+
     // sequenceId를 subBlock의 data-block-seq-id에 할당
     var subBlockElement = nodes.querySelector("[name=sub-block]");
-
     var prevBlockSeqId = subBlock['pointers']['prevPointer'];
     if (prevBlockSeqId == null) {
         prevBlockSeqId = '0';
@@ -328,14 +334,27 @@ function createSubBlock(subBlock, mainBlockElement) {
     subBlockElement.dataset.prevBlockSeqId = prevBlockSeqId;
     subBlockElement.dataset.nextBlockSeqId = nextBlockSeqId;
     // subBlock의 content 항목에 content할당
-    subBlockContent = nodes.querySelector("textarea[name='sub-block-content']");
+    subBlockContent = nodes.querySelector("[name=sub-block-content]");
     subBlockContent.innerHTML = subBlock['content'];
+    // auto expand textarea
+    subBlockContent.addEventListener("keydown", expandTextArea);
+
     addOnClickToBlockBtns(nodes.querySelectorAll("[name=add-sub-block-btn]"), addSubBlock);
     addOnClickToBlockBtns(nodes.querySelectorAll("[name=remove-sub-block-btn]"), removeSubBlock);
 
     mainBlock.appendChild(nodes);
 
     return mainBlockElement;
+}
+
+function expandTextArea() {
+    var el = this;
+    setTimeout(function(){
+        el.style.cssText = 'height:auto; padding:10';
+        // for box-sizing other than "content-box" use:
+        // el.style.cssText = '-moz-box-sizing:content-box';
+        el.style.cssText = 'height:' + el.scrollHeight + 'px';
+    },0);
 }
 
 function convertToYYMMDDHHmm(oldDateTime) {
