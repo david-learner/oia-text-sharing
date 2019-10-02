@@ -80,6 +80,24 @@ function removeMainBlock(event) {
     }
 
     var clickedMainBlock = event.target.closest(".main-block");
+    var prevMainBlock = clickedMainBlock.previousElementSibling;
+    var nextMainBlock = clickedMainBlock.nextElementSibling;
+
+    if (prevMainBlock == null) {
+        nextMainBlock.dataset.prevBlockSeqId = clickedMainBlock.dataset.prevBlockSeqId;
+    }
+    if (nextMainBlock == null) {
+        prevMainBlock.dataset.nextBlockSeqId = clickedMainBlock.dataset.nextBlockSeqId
+    }
+
+    if (prevMainBlock != null) {
+        prevMainBlock.dataset.nextBlockSeqId = clickedMainBlock.dataset.nextBlockSeqId;
+    }
+
+    if (nextMainBlock != null) {
+        nextMainBlock.dataset.prevBlockSeqId = clickedMainBlock.dataset.prevBlockSeqId;
+    }
+
     clickedMainBlock.classList.remove("show");
     setInterval(function () {
         clickedMainBlock.remove();
