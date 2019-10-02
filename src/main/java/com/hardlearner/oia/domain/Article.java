@@ -75,7 +75,7 @@ public class Article {
 
     public Article update(ArticleDto articleDto) {
         articleInfo.update(articleDto.getArticleInfo());
-//        content.update(articleDto.getContent());
+        content.update(articleDto.getContent());
         return this;
     }
 }

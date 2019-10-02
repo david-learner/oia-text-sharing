@@ -55,6 +55,11 @@ function addMainBlock(event) {
         nextMainBlock.dataset.prevBlockSeqId = mainBlock.dataset.blockSeqId;
     }
 
+    // pages할당 : 왜 여기서 할당해도 rendering될 때는 값이 세팅되지 않는지 모르겠다
+    // mainBlock.querySelector("[name=end-page]").value = 1; // 이 구문은 동작하지 않는다
+    mainBlock.querySelector("[name=start-page]").setAttribute('value', '1');
+    mainBlock.querySelector("[name=end-page]").setAttribute('value', '1');
+
     // 서브블록들을 메인블록 아래에 붙인다
     mainBlock.append(observationElement);
     mainBlock.append(interpretationElement);
@@ -68,7 +73,6 @@ function addMainBlock(event) {
     tempParentForNode.appendChild(mainBlockElement);
 
     // 클릭된 플러스 버튼이 속한 메인블록 아래에 메인블록이 추가된다
-    var clickedMainBlock = event.target.closest(".main-block");
     clickedMainBlock.insertAdjacentHTML('afterend', tempParentForNode.innerHTML);
 
     // 새롭게 생성된 메인블록의 메인블록 생성/제거 버튼에 onClick 메소드 붙이기
@@ -114,8 +118,19 @@ function addSubBlock(event) {
     }
 
     // 각 블록 seq-id 할당
-    subBlockTemplate.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
+    var createdSubBlock = subBlockTemplate.querySelector("[name=sub-block]");
+    createdSubBlock.dataset.blockSeqId = getSequence();
     // todo 할당된 블록 앞뒤로 reset seq-id
+    clickedSubBlock.dataset.nextBlockSeqId = createdSubBlock.dataset.blockSeqId;
+    createdSubBlock.dataset.prevBlockSeqId = clickedSubBlock.dataset.blockSeqId;
+    var nextSubBlock = clickedSubBlock.nextElementSibling;
+    if (nextSubBlock == null) {
+        createdSubBlock.dataset.nextBlockSeqId = '0';
+    }
+    if (nextSubBlock != null) {
+        nextSubBlock.dataset.prevBlockSeqId = createdSubBlock.dataset.blockSeqId;
+        createdSubBlock.dataset.nextBlockSeqId = nextSubBlock.dataset.blockSeqId;
+    }
 
     // 임시 부모 element를 통해 innerHTML 사용
     var tempParentElementForNode = document.createElement("div");
@@ -176,7 +191,10 @@ function save(callback) {
         title: document.querySelector("#title").value
     }
     var mainBlocks = [];
-    var content = {mainBlocks: mainBlocks};
+    var content = {
+        sequence: sequence,
+        mainBlocks: mainBlocks
+    };
     var article = {
         id: articleId,
         articleInfo: articleInfo,
@@ -193,9 +211,17 @@ function save(callback) {
         var subBlocks = [];
         for (var subBlockIndex = 0; subBlockIndex < subBlocksElement.length; subBlockIndex++) {
             var subBlockContent = subBlocksElement[subBlockIndex].querySelector("[name=sub-block-content]").value;
+            var subBlockSeqId = subBlocksElement[subBlockIndex].dataset.blockSeqId;
+            var prevBlockSeqId = subBlocksElement[subBlockIndex].dataset.prevBlockSeqId;
+            var nextBlockSeqId = subBlocksElement[subBlockIndex].dataset.nextBlockSeqId;
             // UpperCase로 바꿔준 이유는 BE에서 ContentCategory에 해당하는 Enum의 요소 이름이 UpperCase로 되어 있기 때문에.
             var subBlockContentCategory = subBlocksElement[subBlockIndex].dataset.contentCategory.toUpperCase();
             var subBlock = {
+                sequenceId: subBlockSeqId,
+                pointers: {
+                    prevPointer: prevBlockSeqId,
+                    nextPointer: nextBlockSeqId
+                },
                 category: subBlockContentCategory,
                 content: subBlockContent
             }
@@ -249,7 +275,6 @@ function ConvertJsonToArticle(jsonData) {
 function createMainBlock(mainBlock) {
     // #article-content 아래에 mainBlock들이 위치한다
     var articleContent = document.querySelector('#article-content');
-
     // template을 불러와 해당 html 정보를 node로 바꾼다
     var mainBlockTemplate = document.getElementById('main-block-template');
     // 외부문서에서 노드를 복사해온다 deep이 true면 자식노드까지 모두 복사해온다
@@ -269,8 +294,9 @@ function createMainBlock(mainBlock) {
 }
 
 function createSubBlock(subBlock, mainBlockElement) {
-    // console.log(subBlock['pointers']['prevPointer']);
     var mainBlock = mainBlockElement.querySelector("div[name='main-block']");
+    mainBlock.querySelector("[name=start-page]").value = subBlock['pages']['start'];
+    mainBlock.querySelector("[name=end-page]").value = subBlock['pages']['end'];
 
     var category = subBlock['category'];
     var template = {};
@@ -289,6 +315,7 @@ function createSubBlock(subBlock, mainBlockElement) {
     nodes = document.importNode(template.content, true);
     // sequenceId를 subBlock의 data-block-seq-id에 할당
     var subBlockElement = nodes.querySelector("[name=sub-block]");
+
     var prevBlockSeqId = subBlock['pointers']['prevPointer'];
     if (prevBlockSeqId == null) {
         prevBlockSeqId = '0';
