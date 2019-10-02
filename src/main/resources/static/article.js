@@ -26,12 +26,22 @@ function addMainBlock(event) {
     var applicationElement = document.importNode(document.getElementById("sub-block-application-template").content, true);
 
     // 각 서브블록에 seq-id를 할당
-    observationElement.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
-    interpretationElement.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
-    applicationElement.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
+    var observationSubBlock = observationElement.querySelector("[name=sub-block]");
+    observationSubBlock.dataset.blockSeqId = getSequence();
+    var interpretationSubBlock = interpretationElement.querySelector("[name=sub-block]");
+    interpretationSubBlock.dataset.blockSeqId = getSequence();
+    var applicationSubBlock = applicationElement.querySelector("[name=sub-block]");
+    applicationSubBlock.dataset.blockSeqId = getSequence();
+    // 서브블록 앞뒤 seq-id 할당
+    observationSubBlock.dataset.prevBlockSeqId = '0';
+    observationSubBlock.dataset.nextBlockSeqId = interpretationSubBlock.dataset.blockSeqId;
+    interpretationSubBlock.dataset.prevBlockSeqId = observationSubBlock.dataset.blockSeqId;
+    interpretationSubBlock.dataset.nextBlockSeqId = applicationSubBlock.dataset.blockSeqId;
+    applicationSubBlock.dataset.prevBlockSeqId = interpretationSubBlock.dataset.blockSeqId;
+    applicationSubBlock.dataset.nextBlockSeqId = '0';
 
-    // 앞뒤 블록 seq-id를 할당
-    var clickedMainBlock = event.target.closest(".main-block");
+    // 메인블록 앞뒤 seq-id를 할당
+    var clickedMainBlock = event.target.closest("[name=main-block]");
     var mainBlock = mainBlockElement.querySelector("[name=main-block]");
     mainBlock.dataset.blockSeqId = getSequence();
     clickedMainBlock.dataset.nextBlockSeqId = mainBlock.dataset.blockSeqId;
@@ -72,31 +82,15 @@ function addMainBlock(event) {
 }
 
 function removeMainBlock(event) {
-    var mainBlocks = document.querySelectorAll(".main-block");
+    var mainBlocks = document.querySelectorAll("[name=main-block]");
 
     if (mainBlocks.length === 1) {
         alert("메인블록이 1개일 때는 삭제할 수 없습니다");
         return 0;
     }
 
-    var clickedMainBlock = event.target.closest(".main-block");
-    var prevMainBlock = clickedMainBlock.previousElementSibling;
-    var nextMainBlock = clickedMainBlock.nextElementSibling;
-
-    if (prevMainBlock == null) {
-        nextMainBlock.dataset.prevBlockSeqId = clickedMainBlock.dataset.prevBlockSeqId;
-    }
-    if (nextMainBlock == null) {
-        prevMainBlock.dataset.nextBlockSeqId = clickedMainBlock.dataset.nextBlockSeqId
-    }
-
-    if (prevMainBlock != null) {
-        prevMainBlock.dataset.nextBlockSeqId = clickedMainBlock.dataset.nextBlockSeqId;
-    }
-
-    if (nextMainBlock != null) {
-        nextMainBlock.dataset.prevBlockSeqId = clickedMainBlock.dataset.prevBlockSeqId;
-    }
+    var clickedMainBlock = event.target.closest("[name=main-block]");
+    resetBlockSeqId(clickedMainBlock);
 
     clickedMainBlock.classList.remove("show");
     setInterval(function () {
@@ -121,6 +115,7 @@ function addSubBlock(event) {
 
     // 각 블록 seq-id 할당
     subBlockTemplate.querySelector("[name=sub-block]").dataset.blockSeqId = getSequence();
+    // todo 할당된 블록 앞뒤로 reset seq-id
 
     // 임시 부모 element를 통해 innerHTML 사용
     var tempParentElementForNode = document.createElement("div");
@@ -141,7 +136,28 @@ function removeSubBlock(event) {
         removeMainBlock(event);
     }
     if (mainBlockChildrenLength > 2) {
+        resetBlockSeqId(clickedSubBlock);
         clickedSubBlock.remove();
+    }
+}
+
+function resetBlockSeqId(clickedBlock) {
+    var prevBlock = clickedBlock.previousElementSibling;
+    var nextBlock = clickedBlock.nextElementSibling;
+
+    if (prevBlock == null) {
+        nextBlock.dataset.prevBlockSeqId = clickedBlock.dataset.prevBlockSeqId;
+    }
+    if (nextBlock == null) {
+        prevBlock.dataset.nextBlockSeqId = clickedBlock.dataset.nextBlockSeqId
+    }
+
+    if (prevBlock != null) {
+        prevBlock.dataset.nextBlockSeqId = clickedBlock.dataset.nextBlockSeqId;
+    }
+
+    if (nextBlock != null) {
+        nextBlock.dataset.prevBlockSeqId = clickedBlock.dataset.prevBlockSeqId;
     }
 }
 
@@ -253,6 +269,7 @@ function createMainBlock(mainBlock) {
 }
 
 function createSubBlock(subBlock, mainBlockElement) {
+    // console.log(subBlock['pointers']['prevPointer']);
     var mainBlock = mainBlockElement.querySelector("div[name='main-block']");
 
     var category = subBlock['category'];
@@ -271,7 +288,18 @@ function createSubBlock(subBlock, mainBlockElement) {
 
     nodes = document.importNode(template.content, true);
     // sequenceId를 subBlock의 data-block-seq-id에 할당
-    nodes.querySelector("[name=sub-block]").dataset.blockSeqId = subBlock.sequenceId;
+    var subBlockElement = nodes.querySelector("[name=sub-block]");
+    var prevBlockSeqId = subBlock['pointers']['prevPointer'];
+    if (prevBlockSeqId == null) {
+        prevBlockSeqId = '0';
+    }
+    var nextBlockSeqId = subBlock['pointers']['nextPointer'];
+    if (nextBlockSeqId == null) {
+        nextBlockSeqId = '0';
+    }
+    subBlockElement.dataset.blockSeqId = subBlock.sequenceId;
+    subBlockElement.dataset.prevBlockSeqId = prevBlockSeqId;
+    subBlockElement.dataset.nextBlockSeqId = nextBlockSeqId;
     // subBlock의 content 항목에 content할당
     subBlockContent = nodes.querySelector("textarea[name='sub-block-content']");
     subBlockContent.innerHTML = subBlock['content'];

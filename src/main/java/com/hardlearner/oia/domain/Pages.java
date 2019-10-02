@@ -1,9 +1,14 @@
 package com.hardlearner.oia.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
 @Embeddable
+@Getter
+@Setter
 public class Pages {
     int start;
     int end;
@@ -25,22 +30,6 @@ public class Pages {
 
     public static Pages getDefaultPage() {
         return new Pages(1, 1);
-    }
-
-    public int getStart() {
-        return start;
-    }
-
-    public void setStart(int start) {
-        this.start = start;
-    }
-
-    public int getEnd() {
-        return end;
-    }
-
-    public void setEnd(int end) {
-        this.end = end;
     }
 
     @Override
