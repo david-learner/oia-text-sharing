@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-
 @RestController
 public class ApiArticleController {
     private static final Logger log = LoggerFactory.getLogger(ApiArticleController.class);
@@ -21,7 +19,7 @@ public class ApiArticleController {
     @Autowired
     ArticleService articleService;
 
-    @GetMapping("/api/articles/new")
+    @PostMapping("/api/articles/new")
     public Article create() {
         Member guest = memberService.login(Member.guest);
         return articleService.create(guest);
@@ -42,7 +40,6 @@ public class ApiArticleController {
     @GetMapping("/api/articles/{id}")
     public Article load(@PathVariable Long id) {
         Article article = articleService.getArticle(id);
-        log.debug("article is " + article.toString());
         return article;
     }
 }
