@@ -10,11 +10,18 @@
         <p class="subtitle">
             Let's write your insight with O.I.A.
         </p>
+        {{#if loginMember}}
+        <button class="button" onclick="logout()">로그아웃</button>
+        {{else}}
+        <button class="button" onclick="login()">로그인</button>
+        <button class="button" onclick="join()">회원가입</button>
+        {{/if}}
         <button class="button" onclick="createArticle()">WRITE</button>
     </div>
 </section>
 </body>
 <footer>
+    <script src="../common.js"></script>
     <script>
         function createArticle() {
             var jqXHR = $.ajax({
