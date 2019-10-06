@@ -16,6 +16,8 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Member {
     public static Member guest = new Member("guest@gmail.com", "guestPwd", "게스트");
+    public static final GuestMember GUEST_MEMBER = new GuestMember();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -65,5 +67,16 @@ public class Member {
 
     public MemberDto toMemberDto() {
         return new MemberDto(name, email);
+    }
+
+    public boolean isGuest() {
+        return false;
+    }
+
+    public static class GuestMember extends Member {
+        @Override
+        public boolean isGuest() {
+            return true;
+        }
     }
 }

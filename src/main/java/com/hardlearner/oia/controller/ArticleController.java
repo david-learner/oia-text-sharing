@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hardlearner.oia.domain.Article;
 import com.hardlearner.oia.domain.Member;
 import com.hardlearner.oia.repository.MemberRepository;
+import com.hardlearner.oia.security.LoginMember;
 import com.hardlearner.oia.service.ArticleService;
 import com.hardlearner.oia.service.MemberService;
 import org.slf4j.Logger;
@@ -43,8 +44,10 @@ public class ArticleController {
 
     // /api/articles/new랑 중복
     @PostMapping("/articles/new")
-    public ResponseEntity createArticle(Member member) throws URISyntaxException {
-        Article savedArticle = articleService.create(memberService.login(Member.guest));
+    public ResponseEntity createArticle(@LoginMember Member loginMember) throws URISyntaxException {
+        log.debug("loginUser : {}", loginMember.toString());
+//        Article savedArticle = articleService.create(memberService.login(Member.guest));
+        Article savedArticle = articleService.create(memberService.login(loginMember));
         return ResponseEntity.status(HttpStatus.CREATED).location(new URI("/articles/"+savedArticle.getId())).build();
     }
 
