@@ -17,6 +17,18 @@ public class MemberService {
         return loginMember;
     }
 
+    public Member login(String email, String password) {
+        Member loginMember = memberRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
+        if(loginMember.isValidPassword(password)) {
+            return loginMember;
+        }
+        throw new IllegalArgumentException("아이디 또는 비밀번호가 잘못되었습니다");
+    }
+
+    public void save(Member joinMember) {
+        memberRepository.save(joinMember);
+    }
+
     public boolean isValid(String email) {
         return !memberRepository.findByEmail(email).isPresent();
     }

@@ -20,19 +20,19 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String email;
-    String pwd;
+    String password;
     String name;
 
-    public Member(String email, String pwd, String name) {
+    public Member(String email, String password, String name) {
         this.email = email;
-        this.pwd = pwd;
+        this.password = password;
         this.name = name;
     }
 
-    public Member(Long id, String email, String pwd, String name) {
+    public Member(Long id, String email, String password, String name) {
         this.id = id;
         this.email = email;
-        this.pwd = pwd;
+        this.password = password;
         this.name = name;
     }
 
@@ -54,8 +54,16 @@ public class Member {
     public String toString() {
         return "Member{" +
                 "email='" + email + '\'' +
-                ", pwd='" + pwd + '\'' +
+                ", pwd='" + password + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public boolean isValidPassword(String password) {
+        return this.password.equals(password);
+    }
+
+    public MemberDto toMemberDto() {
+        return new MemberDto(name, email);
     }
 }

@@ -7,11 +7,11 @@
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                    <form action="" class="box">
+                    <form id="loginForm" method="post" class="box">
                         <div class="field">
                             <label for="" class="label">Email</label>
                             <div class="control has-icons-left">
-                                <input type="email" placeholder="text@sharing.com" class="input" required>
+                                <input name="email" type="email" placeholder="text@sharing.com" class="input" required>
                                 <span class="icon is-small is-left">
                   <i class="fa fa-envelope"></i>
                 </span>
@@ -20,27 +20,16 @@
                         <div class="field">
                             <label for="" class="label">Password</label>
                             <div class="control has-icons-left">
-                                <input type="password" placeholder="*******" class="input" required>
+                                <input name="password" type="password" placeholder="*******" class="input" required>
                                 <span class="icon is-small is-left">
                   <i class="fa fa-lock"></i>
                 </span>
                             </div>
                         </div>
-                        <!--                        <div class="field">-->
-                        <!--                            <label for="" class="checkbox">-->
-                        <!--                                <input type="checkbox">-->
-                        <!--                                로그인 정보 기억하기-->
-                        <!--                            </label>-->
-                        <!--                        </div>-->
                         <div class="field">
-                            <button class="button is-success">
+                            <button class="button is-success" onclick="login()">
                                 로그인
                             </button>
-                            <button class="button is-success">
-                                회원가입
-                            </button>
-                        </div>
-                        <div class="field">
                             <button class="button is-info">
                                 게스트로 로그인
                             </button>
@@ -50,28 +39,9 @@
             </div>
         </div>
     </div>
-    <!--    <div class="container">-->
-    <!--        <h1 class="title">-->
-    <!--            Observation Interpretation Application-->
-    <!--        </h1>-->
-    <!--        <p class="subtitle">-->
-    <!--            Let's write your insight with O.I.A.-->
-    <!--        </p>-->
-    <!--        <button class="button" onclick="createArticle()">WRITE</button>-->
-    <!--    </div>-->
 </section>
 </body>
 <footer>
-    <!--    <script>-->
-    <!--        function createArticle() {-->
-    <!--            var jqXHR = $.ajax({-->
-    <!--                type: "POST",-->
-    <!--                url: '/articles/new',-->
-    <!--            }).done(function (data, textStatus, xhr) {-->
-    <!--                    window.location.href = xhr.getResponseHeader("Location");-->
-    <!--                }-->
-    <!--            );-->
-    <!--        }-->
-    <!--    </script>-->
+    <script src="../common.js"></script>
 </footer>
 </html>

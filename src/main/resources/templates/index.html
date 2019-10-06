@@ -12,11 +12,11 @@
         </p>
         {{#if loginMember}}
         <button class="button" onclick="logout()">로그아웃</button>
-        {{else}}
-        <button class="button" onclick="login()">로그인</button>
-        <button class="button" onclick="join()">회원가입</button>
-        {{/if}}
         <button class="button" onclick="createArticle()">WRITE</button>
+        {{else}}
+        <button class="button" onclick="window.location.href = '/login'">로그인</button>
+        <button class="button" onclick="window.location.href = '/members/join'">회원가입</button>
+        {{/if}}
     </div>
 </section>
 </body>

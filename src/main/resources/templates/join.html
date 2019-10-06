@@ -7,11 +7,20 @@
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                    <form action="" class="box">
+                    <div id="join-form" class="box">
+                        <div class="field">
+                            <label for="" class="label">Name</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input name="name" type="text" placeholder="이름" class="input" required>
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            </div>
+                        </div>
                         <div class="field">
                             <label for="" class="label">Email</label>
                             <div class="control has-icons-left has-icons-right">
-                                <input type="email" placeholder="text@sharing.com" class="input"
+                                <input name="email" type="email" placeholder="text@sharing.com" class="input"
                                        onkeyup="checkValidEmail(event)" required>
                                 <span class="icon is-small is-left">
                                     <i class="fa fa-envelope"></i>
@@ -39,11 +48,11 @@
                             </div>
                         </div>
                         <div class="field">
-                            <button class="button is-success">
+                            <button class="button is-success" onclick="join()">
                                 회원가입
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

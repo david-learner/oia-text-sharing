@@ -2,12 +2,46 @@ function loginGuest() {
 
 }
 
+function logout() {
+    $.ajax({
+        type: 'GET',
+        url: '/logout'
+    }).done(function () {
+        window.location.href = "/";
+    });
+}
+
 function login() {
-    window.location.href = "/login";
+    $.ajax({
+        type: 'POST',
+        data: $('#loginForm').serialize(),
+        contentType: 'application/x-www-form-urlencoded',
+        url: '/login'
+    }).done(function () {
+        window.location.href = "/";
+    });
 }
 
 function join() {
-    window.location.href = "/members/join";
+    var form = document.querySelector("#join-form");
+    var formData = {
+        name: form.querySelector("[name=name]").value,
+        email: form.querySelector("[name=email]").value,
+        password: form.querySelector("[name=password-original]").value,
+        passwordConfirmed: form.querySelector("[name=password-confirmed]").value
+    };
+
+    console.log(formData);
+
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(formData),
+        contentType: 'application/json',
+        url: '/members/join'
+    }).done(function (data) {
+        alert("회원가입 완료되었습니다");
+        window.location.href = "/";
+    });
 }
 
 function checkValidPassword(event) {
@@ -16,8 +50,6 @@ function checkValidPassword(event) {
     var reTyped = parent.querySelector("[name=password-confirmed]");
 
     if (typed.value != reTyped.value) {
-
-        console.log(parent.querySelector("[name=isValid]"));
         parent.querySelector("[name=isValid]").style.cssText = "display: none";
         parent.querySelector("[name=isNotValid]").style.cssText = "display:";
     } else {
@@ -27,6 +59,7 @@ function checkValidPassword(event) {
 }
 
 var timer = null;
+
 function checkValidEmail(event) {
     var email = event.target.value;
     clearTimeout(timer);
@@ -38,7 +71,7 @@ function checkValidEmail(event) {
             },
             url: '/members/valid/email',
         }).done(function (data) {
-            if (data) {
+            if (data && email != "") {
                 event.target.parentElement.querySelector("[name=isValid]").style.cssText = "display:";
                 event.target.parentElement.querySelector("[name=isNotValid]").style.cssText = "display: none";
             } else {
