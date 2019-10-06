@@ -1,6 +1,7 @@
 package com.hardlearner.oia.security;
 
 import com.hardlearner.oia.domain.Member;
+import com.hardlearner.oia.exception.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -23,7 +24,7 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         Member loginMember = HttpSessionUtils.getMemberFromSession(nativeWebRequest);
         if(loginMember == null) {
-            throw new IllegalArgumentException("Please Login");
+            throw new UnauthorizedException("Please Login");
         }
         if(!loginMember.isGuest()) {
             return loginMember;
@@ -31,8 +32,8 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
 
         LoginMember loginMemberAnnotation = methodParameter.getMethodAnnotation(LoginMember.class);
         if (loginMemberAnnotation.required()) {
-            // unauthorized exception 만들기
-            throw new IllegalArgumentException("Please Login");
+            // todo unauthorized exception 만들기
+            throw new UnauthorizedException("Please Login");
         }
         return loginMember;
     }

@@ -24,13 +24,15 @@
     <script src="../common.js"></script>
     <script>
         function createArticle() {
-            var jqXHR = $.ajax({
+            $.ajax({
                 type: "POST",
-                url: '/articles/new',
-            }).done(function (data, textStatus, xhr) {
+                url: '/articles/new'
+            })
+                .done(function (data, textStatus, xhr) {
                     window.location.href = xhr.getResponseHeader("Location");
-                }
-            );
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            });
         }
     </script>
 </footer>
