@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DummyData {
-    public static Member dummyMember = new Member("dummy7@gmail.com", "dummy7", "황더미");
+    public static Member dummyMember = new Member("dummydata@gmail.com", "dummy7", "황더미");
 
     public static List<SubBlock> dummySubBlocks1 = Arrays.asList(
             SubBlock.builder()
@@ -19,7 +19,7 @@ public class DummyData {
                     .pages(new Pages(1, 2))
                     .canShare(false)
                     .category(ContentCategory.INTERPRETATION)
-                    .content("사실 본깨적은 성경을 보고 해석하고 삶에 적용하는 방법을 심플하게 만든 것이다")
+                    .content("사실 본깨적은 성경을 관찰하고 해석하여 삶에 적용하는 방법을 심플하게 만든 것이다")
                     .sequenceId(2).build()
     );
 

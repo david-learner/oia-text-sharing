@@ -25,8 +25,8 @@ public class MemberService {
         throw new IllegalArgumentException("아이디 또는 비밀번호가 잘못되었습니다");
     }
 
-    public void save(Member joinMember) {
-        memberRepository.save(joinMember);
+    public Member save(Member joinMember) {
+        return memberRepository.save(joinMember);
     }
 
     public boolean isValid(String email) {

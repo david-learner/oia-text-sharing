@@ -265,6 +265,8 @@ function getArticle(articlePath, callback) {
     }).done(function (data) {
         ConvertJsonToArticle(data);
         callback();
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        alert(jqXHR.responseText);
     });
 }
 

@@ -73,6 +73,11 @@ public class Article {
         return articleInfo.getTitle();
     }
 
+    @JsonIgnore
+    public boolean isSameWriter(Member member) {
+        return articleInfo.isSameWriter(member);
+    }
+
     public Article update(ArticleDto articleDto) {
         articleInfo.update(articleDto.getArticleInfo());
         content.update(articleDto.getContent());

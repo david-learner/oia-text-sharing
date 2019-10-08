@@ -1,3 +1,25 @@
+window.onload = function () {
+    var boardNavigation = document.querySelector("[name=board-navigation]");
+    console.log("boardNavigation : " + boardNavigation);
+    if (boardNavigation != null) {
+        highlightCurrentPageNavigationItem();
+    }
+}
+
+function highlightCurrentPageNavigationItem() {
+    var url = new URL(window.location.href);
+    // page의 시작은 0 따라서 offset value로 +1
+    var pageParamValue = url.searchParams.get("page")
+    // String 앞에 +를 붙여서 숫자로 캐스팅
+    var currentPage = +pageParamValue + 1;
+    var paginationItems = document.querySelectorAll("[name=pagination-item]");
+    for (var index = 0; index < paginationItems.length; index++) {
+        if (paginationItems[index].text == currentPage) {
+            paginationItems[index].classList.add("is-current");
+        }
+    }
+}
+
 function loginGuest() {
 
 }
@@ -18,7 +40,7 @@ function login() {
         contentType: 'application/x-www-form-urlencoded',
         url: '/login'
     }).done(function () {
-        window.location.href = "/";
+        window.location.href = "/main?page=0";
     });
 }
 

@@ -4,18 +4,56 @@
 <body>
 <section class="section">
     <div class="container">
-        <h1 class="title">
-            Observation Interpretation Application
-        </h1>
-        <p class="subtitle">
-            Let's write your insight with O.I.A.
-        </p>
+        <div name="title">
+            <h1 class="title">
+                Observation Interpretation Application
+            </h1>
+            <p class="subtitle">
+                Let's write your insight with O.I.A.
+            </p>
+        </div>
+        <div name="menu">
+            {{#if loginMember}}
+            <button class="button" onclick="logout()">로그아웃</button>
+            {{else}}
+            <button class="button" onclick="window.location.href = '/login'">로그인</button>
+            <button class="button" onclick="window.location.href = '/members/join'">회원가입</button>
+            {{/if}}
+            <button class="button" onclick="createArticle()">WRITE</button>
+        </div>
         {{#if loginMember}}
-        <button class="button" onclick="logout()">로그아웃</button>
-        {{else}}
-        <button class="button" onclick="window.location.href = '/login'">로그인</button>
-        <button class="button" onclick="window.location.href = '/members/join'">회원가입</button>
-        <button class="button" onclick="createArticle()">WRITE</button>
+        <div name="article-board-title" class="title">
+            내가 쓴 글
+        </div>
+        <div name="article-board">
+            <table class="table is-fullwidth is-hoverable is-striped">
+                <thead>
+                <th>No</th>
+                <th class="is-7">Title</th>
+                <th>Writer</th>
+                </thead>
+                <tbody>
+                {{#each articles}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td><a href="/articles/{{this.id}}">{{this.articleInfo.title}}</a></td>
+                    <td>{{this.articleInfo.writer.name}}</td>
+                </tr>
+                </tbody>
+                {{/each}}
+            </table>
+            <nav name="board-navigation" class="pagination" role="navigation" aria-label="pagination">
+                <a class="pagination-previous">Previous</a>
+                <a class="pagination-next">Next page</a>
+                <ul class="pagination-list">
+                    {{#each pages.currentBlock}}
+                    <li>
+                        <a name="pagination-item" class="pagination-link" href="/main?page={{offset this}}">{{this}}</a>
+                    </li>
+                    {{/each}}
+                </ul>
+            </nav>
+        </div>
         {{/if}}
     </div>
 </section>

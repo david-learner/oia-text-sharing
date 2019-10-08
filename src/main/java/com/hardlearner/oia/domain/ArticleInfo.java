@@ -35,7 +35,7 @@ public class ArticleInfo {
     }
 
     public boolean isSameWriter(Member writer) {
-        return writer.equals(writer);
+        return this.writer.equals(writer);
     }
 
     public ArticleInfo update(ArticleInfo articleInfo) {
