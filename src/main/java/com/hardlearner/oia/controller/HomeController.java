@@ -43,7 +43,7 @@ public class HomeController {
         }
         mav.setViewName("index");
         mav.addObject("articles", articleService.getArticles(loginMember, page));
-        mav.addObject("pages", articleService.getArticlesPages(loginMember, page));
+        mav.addObject("pages", articleService.getArticlesPageInfo(loginMember, page));
         mav.addObject("loginMember", loginMember);
         return mav;
     }

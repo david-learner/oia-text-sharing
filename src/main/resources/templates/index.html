@@ -43,14 +43,20 @@
                 {{/each}}
             </table>
             <nav name="board-navigation" class="pagination" role="navigation" aria-label="pagination">
-                <a class="pagination-previous">Previous</a>
-                <a class="pagination-next">Next page</a>
-                <ul class="pagination-list">
+                <ul class="pagination-list" style="justify-content: center">
+                    <!-- handlebars의 if의 반대는 !if가 아니라 unless-->
+                    {{#unless (isFirst pages)}}
+                        <li><a class="pagination-previous" href="/main?page={{pages.prevPage}}">Previous</a></li>
+                    {{/unless}}
                     {{#each pages.currentBlock}}
                     <li>
                         <a name="pagination-item" class="pagination-link" href="/main?page={{offset this}}">{{this}}</a>
                     </li>
                     {{/each}}
+                    {{#unless (isLast pages)}}
+                    <li><a class="pagination-next" href="/main?page={{pages.nextPage}}">Next page</a></li>
+                    {{/unless}}
+
                 </ul>
             </nav>
         </div>

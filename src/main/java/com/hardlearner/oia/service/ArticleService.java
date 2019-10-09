@@ -57,7 +57,7 @@ public class ArticleService {
         return articleRepository.findAllByArticleInfo_Writer(loginMember, pageable);
     }
 
-    public PageInfo getArticlesPages(Member loginMember, int currentPage) {
+    public PageInfo getArticlesPageInfo(Member loginMember, int currentPage) {
         int count = articleRepository.findAllByArticleInfo_Writer(loginMember).size();
         return new PageInfo(count, currentPage, 4);
     }
