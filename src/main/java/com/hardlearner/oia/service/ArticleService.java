@@ -53,12 +53,12 @@ public class ArticleService {
     }
 
     public List<Article> getArticles(Member loginMember, int page) {
-        PageRequest pageable = PageRequest.of(page, 4);
+        PageRequest pageable = PageRequest.of(page, PageInfo.PAGE_BLOCK_SIZE);
         return articleRepository.findAllByArticleInfo_Writer(loginMember, pageable);
     }
 
     public PageInfo getArticlesPageInfo(Member loginMember, int currentPage) {
         int count = articleRepository.findAllByArticleInfo_Writer(loginMember).size();
-        return new PageInfo(count, currentPage, 4);
+        return new PageInfo(count, currentPage, PageInfo.PAGE_BLOCK_SIZE);
     }
 }
