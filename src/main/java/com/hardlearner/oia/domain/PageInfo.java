@@ -5,62 +5,74 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Getter
 public class PageInfo {
-    private static final Logger log =  LoggerFactory.getLogger(PageInfo.class);
-
+    private static final Logger log = LoggerFactory.getLogger(PageInfo.class);
     public static int PAGE_BLOCK_SIZE = 10;
+    private int FIRST_PAGE = 1;
 
-    private int first = 1;
-    private int last;
     // currentPage is zero-based
-    private int prevPage;
     private int currentPage;
+    private int previousPage;
     private int nextPage;
-    private List<Integer> currentBlock = new ArrayList<>();
-
+    private List<Integer> currentPageBlock;
 
     public PageInfo(int total, int currentPage, int blockSize) {
-        this.last = total / blockSize;
-        if (total % blockSize > 0) {
-            this.last++;
-        }
         this.currentPage = currentPage;
-        if (currentPage != (first - 1)) {
-            this.prevPage = currentPage - 1;
-        }
-        if (currentPage != (last - 1)) {
-            nextPage = currentPage + 1;
-        }
+        this.previousPage = getPreviousPage(currentPage);
+        this.currentPageBlock = generateCurrentPageBlock(total, currentPage, blockSize);
+        this.nextPage = getNextPage(currentPage, getCurrentBlockLastPage());
+    }
 
-        int currentBlockStart = 0;
-        int offsetCurrentPage = currentPage+1;
-        if ((offsetCurrentPage % blockSize) == 0) {
-            currentBlockStart = offsetCurrentPage - blockSize + 1;
-        }
-        if ((offsetCurrentPage % blockSize) > 0) {
-            currentBlockStart = ((offsetCurrentPage / blockSize) * blockSize) + 1;
-        }
-        log.debug("currentPage : {}, offsetCurrentPage : {}, currentBlockStart : {}", currentPage, offsetCurrentPage, currentBlockStart);
+    // 무조건 블록 사이즈만큼 뽑아짐, 토탈에 맞게 뽑히게 변경
+    private List<Integer> generateCurrentPageBlock(int total, int currentPage, int blockSize) {
+        List<Integer> currentPageBlock = new ArrayList<>();
+        int currentBlockStart = getCurrentBlockStartPage(currentPage, blockSize);
+        int currentBlockLast = currentBlockStart + blockSize - 1;
         for (int index = 0; index < blockSize; index++) {
-            int blockItem = index + currentBlockStart;
-            if (blockItem > last) {
+            int pageInBlock = index + currentBlockStart;
+            if (pageInBlock > currentBlockLast) {
                 break;
             }
-            this.currentBlock.add(blockItem);
+            currentPageBlock.add(pageInBlock);
         }
+        return currentPageBlock;
+    }
 
-        log.debug(Arrays.toString(currentBlock.toArray()));
+    private int getCurrentBlockStartPage(int currentPage, int blockSize) {
+        int offsetCurrentPage = currentPage + 1;
+        int remainder = (currentPage + 1) % blockSize;
+
+        if (remainder > 0) {
+            return ((offsetCurrentPage / blockSize) * blockSize) + 1;
+        }
+        if (remainder == 0) {
+            return offsetCurrentPage - blockSize + 1;
+        }
+        throw new IllegalArgumentException("Please check page");
+    }
+
+    public int getCurrentBlockLastPage() {
+        return currentPageBlock.get(currentPageBlock.size() - 1);
+    }
+
+    public int getPreviousPage(int currentPage) {
+        if (currentPage > 0) {
+            return currentPage - 1;
+        }
+        throw new IllegalArgumentException("Previous Page : Page should be bigger than 0");
+    }
+
+    public int getNextPage(int currentPage, int currentBlockLastPage) {
+        if (currentPage < currentBlockLastPage) {
+            return currentPage + 1;
+        }
+        throw new IllegalArgumentException("Next Page : Page can't be equal or bigger than last page");
     }
 
     public boolean isFirst() {
-        return first == (currentPage + 1);
-    }
-
-    public boolean isLast() {
-        return last == (currentPage + 1);
+        return FIRST_PAGE == (currentPage + 1);
     }
 }
