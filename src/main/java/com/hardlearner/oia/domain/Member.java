@@ -74,6 +74,11 @@ public class Member {
     }
 
     public static class GuestMember extends Member {
+
+        public GuestMember() {
+            super("guest@gmail.com", "guest", "게스트");
+        }
+
         @Override
         public boolean isGuest() {
             return true;

@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,9 +58,9 @@ public class HomeController {
     }
 
     @PostMapping("login")
-    public ResponseEntity login(@RequestBody @Valid MemberLoginDto memberLoginDto, BindingResult result, HttpSession session) {
-        if(result.hasErrors()) {
-            return ResponseEntity.badRequest().body(result.getAllErrors());
+    public ResponseEntity login(@Valid MemberLoginDto memberLoginDto, Errors errors, HttpSession session) {
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors);
         }
         session.setAttribute("loginMember", memberService.login(memberLoginDto));
         return ResponseEntity.status(HttpStatus.OK).build();

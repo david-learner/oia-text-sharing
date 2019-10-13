@@ -16,7 +16,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -51,7 +50,7 @@ public class MemberControllerTest {
     }
 
     @Test
-    public void join_invalid_email() throws Exception {
+    public void join_invalid_input() throws Exception {
         MemberJoinDto memberJoinDto = MemberJoinDto.builder()
                 .name("데이빗")
                 .email("davidgmail.com")
@@ -64,6 +63,9 @@ public class MemberControllerTest {
                 .content(objectMapper.writeValueAsString(memberJoinDto)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$[0].field").exists())
+                .andExpect(jsonPath("$[0].objectName").exists())
+                .andExpect(jsonPath("$[0].code").exists())
+                .andExpect(jsonPath("$[0].defaultMessage").exists())
                 .andDo(print());
     }
 }
