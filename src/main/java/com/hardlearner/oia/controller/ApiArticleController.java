@@ -1,7 +1,7 @@
 package com.hardlearner.oia.controller;
 
 import com.hardlearner.oia.domain.Article;
-import com.hardlearner.oia.domain.ArticleDto;
+import com.hardlearner.oia.dto.ArticleDto;
 import com.hardlearner.oia.domain.Member;
 import com.hardlearner.oia.exception.AuthenticationException;
 import com.hardlearner.oia.security.LoginMember;

@@ -1,6 +1,7 @@
 package com.hardlearner.oia.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hardlearner.oia.dto.ArticleDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

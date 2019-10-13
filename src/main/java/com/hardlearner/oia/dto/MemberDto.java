@@ -1,4 +1,4 @@
-package com.hardlearner.oia.domain;
+package com.hardlearner.oia.dto;
 
 public class MemberDto {
     private String name;

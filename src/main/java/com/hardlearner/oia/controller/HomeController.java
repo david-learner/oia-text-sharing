@@ -1,6 +1,7 @@
 package com.hardlearner.oia.controller;
 
 import com.hardlearner.oia.domain.Member;
+import com.hardlearner.oia.dto.MemberLoginDto;
 import com.hardlearner.oia.security.HttpSessionUtils;
 import com.hardlearner.oia.service.ArticleService;
 import com.hardlearner.oia.service.MemberService;
@@ -10,12 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 public class HomeController {
@@ -54,8 +59,11 @@ public class HomeController {
     }
 
     @PostMapping("login")
-    public ResponseEntity login(@RequestParam String email, @RequestParam String password, HttpSession session) {
-        session.setAttribute("loginMember", memberService.login(email, password));
+    public ResponseEntity login(@RequestBody @Valid MemberLoginDto memberLoginDto, BindingResult result, HttpSession session) {
+        if(result.hasErrors()) {
+            return ResponseEntity.badRequest().body(result.getAllErrors());
+        }
+        session.setAttribute("loginMember", memberService.login(memberLoginDto));
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

@@ -1,5 +1,6 @@
 package com.hardlearner.oia.domain;
 
+import com.hardlearner.oia.dto.ArticleDto;
 import org.junit.Test;
 
 import java.time.LocalDateTime;

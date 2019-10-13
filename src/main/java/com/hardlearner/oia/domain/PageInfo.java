@@ -30,7 +30,7 @@ public class PageInfo {
         List<Integer> currentPageBlock = new ArrayList<>();
         int currentBlockStart = getCurrentBlockStartPage(currentPage, blockSize);
         int nextBlockStart = currentBlockStart + blockSize;
-        int currentBlockLast = nextBlockStart -1;
+        int currentBlockLast = nextBlockStart - 1;
         if (total < nextBlockStart) {
             currentBlockLast = total;
         }
@@ -75,5 +75,9 @@ public class PageInfo {
 
     public boolean isFirst() {
         return FIRST_PAGE == (currentPage + 1);
+    }
+
+    public boolean isLast() {
+        return currentPage == getCurrentBlockLastPage();
     }
 }

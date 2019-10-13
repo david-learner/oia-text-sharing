@@ -1,5 +1,9 @@
-package com.hardlearner.oia.domain;
+package com.hardlearner.oia.dto;
 
+import com.hardlearner.oia.domain.Article;
+import com.hardlearner.oia.domain.ArticleInfo;
+import com.hardlearner.oia.domain.Content;
+import com.hardlearner.oia.domain.Member;
 import lombok.*;
 
 @Getter

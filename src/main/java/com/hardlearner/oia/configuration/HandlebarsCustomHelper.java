@@ -14,7 +14,7 @@ public class HandlebarsCustomHelper {
         return pageInfo.isFirst();
     }
 
-//    public static boolean isLast(PageInfo pageInfo) {
-//        return pageInfo.getCurrentBlockLastPage();
-//    }
+    public static boolean isLast(PageInfo pageInfo) {
+        return pageInfo.isLast();
+    }
 }
