@@ -29,7 +29,7 @@ public class ApiArticleController {
 
     @PostMapping("/api/articles/new")
     public Article create() {
-        Member guest = memberService.login(Member.guest);
+        Member guest = memberService.login(Member.GUEST_MEMBER);
         return articleService.create(guest);
     }
 
@@ -38,7 +38,7 @@ public class ApiArticleController {
         // session에 있는 멤버 정보 가져와서 article 생성할 때 같이 넣어주기
         Article article = articleService.getArticle(articleDto.getId());
         article.update(articleDto);
-        Member loginMember = memberService.login(Member.guest);
+        Member loginMember = memberService.login(Member.GUEST_MEMBER);
         articleService.save(article);
         log.debug("article is " + article.toString());
         return null;

@@ -15,7 +15,7 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 public class Member {
-    public static Member guest = new Member("guest@gmail.com", "guestPwd", "게스트");
+    //    public static Member guest = new Member("guest@gmail.com", "guestPwd", "게스트");
     public static final GuestMember GUEST_MEMBER = new GuestMember();
 
     @Id

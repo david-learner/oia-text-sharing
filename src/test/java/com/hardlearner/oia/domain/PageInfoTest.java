@@ -27,9 +27,24 @@ public class PageInfoTest {
     }
 
     @Test
-    public void getCurrentBlockStartPage() {
+    public void getCurrentBlockStartPage_꽉_채워진_블록() {
+        int total = 32;
+        int currentPage = 15;
+        int blockSize = 10;
+        PageInfo pageInfo = new PageInfo(total, currentPage, blockSize);
         List<Integer> currentPageBlock = pageInfo.getCurrentPageBlock();
         List<Integer> pageBlock = new ArrayList<>(Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20));
-        assertEquals(currentPageBlock, pageBlock);
+        assertEquals(pageBlock, currentPageBlock);
+    }
+
+    @Test
+    public void getCurrentBlockStartPage_꽉_채워지지_않은_블록() {
+        int total = 18;
+        int currentPage = 15;
+        int blockSize = 10;
+        PageInfo pageInfo = new PageInfo(total, currentPage, blockSize);
+        List<Integer> currentPageBlock = pageInfo.getCurrentPageBlock();
+        List<Integer> pageBlock = new ArrayList<>(Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18));
+        assertEquals(pageBlock, currentPageBlock);
     }
 }

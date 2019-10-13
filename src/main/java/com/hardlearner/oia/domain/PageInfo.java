@@ -26,16 +26,16 @@ public class PageInfo {
         this.nextPage = getNextPage(currentPage, getCurrentBlockLastPage());
     }
 
-    // 무조건 블록 사이즈만큼 뽑아짐, 토탈에 맞게 뽑히게 변경
     private List<Integer> generateCurrentPageBlock(int total, int currentPage, int blockSize) {
         List<Integer> currentPageBlock = new ArrayList<>();
         int currentBlockStart = getCurrentBlockStartPage(currentPage, blockSize);
-        int currentBlockLast = currentBlockStart + blockSize - 1;
-        for (int index = 0; index < blockSize; index++) {
+        int nextBlockStart = currentBlockStart + blockSize;
+        int currentBlockLast = nextBlockStart -1;
+        if (total < nextBlockStart) {
+            currentBlockLast = total;
+        }
+        for (int index = 0; index <= currentBlockLast - currentBlockStart; index++) {
             int pageInBlock = index + currentBlockStart;
-            if (pageInBlock > currentBlockLast) {
-                break;
-            }
             currentPageBlock.add(pageInBlock);
         }
         return currentPageBlock;
@@ -51,6 +51,7 @@ public class PageInfo {
         if (remainder == 0) {
             return offsetCurrentPage - blockSize + 1;
         }
+
         throw new IllegalArgumentException("Please check page");
     }
 

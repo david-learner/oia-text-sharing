@@ -25,15 +25,6 @@ public class ArticleInfo {
     @Column(columnDefinition = "TIMESTAMP")
     LocalDateTime dateTime = LocalDateTime.now();
 
-    @Override
-    public String toString() {
-        return "ArticleInfo{" +
-//                "writer=" + writer.toString() +
-                ", title='" + title + '\'' +
-//                ", dateTime=" + dateTime +
-                '}';
-    }
-
     public boolean isSameWriter(Member writer) {
         return this.writer.equals(writer);
     }
@@ -41,5 +32,14 @@ public class ArticleInfo {
     public ArticleInfo update(ArticleInfo articleInfo) {
         this.title = articleInfo.getTitle();
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ArticleInfo{" +
+                "writer=" + writer +
+                ", title='" + title + '\'' +
+                ", dateTime=" + dateTime +
+                '}';
     }
 }
