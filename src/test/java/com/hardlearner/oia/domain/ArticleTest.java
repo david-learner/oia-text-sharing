@@ -11,12 +11,11 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-
 public class ArticleTest {
-    private static final Logger log = LoggerFactory.getLogger(ArticleTest.class);
-
     @Test
-    public void shareAllowed() throws AuthenticationException {
-
+    public void delete() {
+        assertFalse(DummyData.dummyArticle.isDeleted());
+        DummyData.dummyArticle.delete();
+        assertTrue(DummyData.dummyArticle.isDeleted());
     }
 }

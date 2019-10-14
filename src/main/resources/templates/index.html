@@ -28,13 +28,16 @@
         <div name="article-board">
             <table class="table is-fullwidth is-hoverable is-striped">
                 <thead>
-                <th>No</th>
+                <th colspan="2">No</th>
                 <th class="is-7">Title</th>
                 <th>Writer</th>
                 </thead>
                 <tbody>
                 {{#each articles}}
                 <tr>
+                    <td>
+                        <input type="checkbox">
+                    </td>
                     <td>{{this.id}}</td>
                     <td><a href="/articles/{{this.id}}">{{this.articleInfo.title}}</a></td>
                     <td>{{this.articleInfo.writer.name}}</td>
@@ -46,11 +49,11 @@
                 <ul class="pagination-list" style="justify-content: center">
                     <!-- handlebars의 if의 반대는 !if가 아니라 unless-->
                     {{#unless (isFirst pages)}}
-                        <li><a class="pagination-previous" href="/main?page={{pages.prevPage}}">Previous</a></li>
+                        <li><a class="pagination-previous" href="/main?page={{pages.previousPage}}">Previous</a></li>
                     {{/unless}}
-                    {{#each pages.currentBlock}}
+                    {{#each pages.block}}
                     <li>
-                        <a name="pagination-item" class="pagination-link" href="/main?page={{offset this}}">{{this}}</a>
+                        <a name="pagination-item" class="pagination-link" href="/main?page={{this}}">{{this}}</a>
                     </li>
                     {{/each}}
                     {{#unless (isLast pages)}}

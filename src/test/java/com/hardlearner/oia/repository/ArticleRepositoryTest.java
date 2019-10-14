@@ -1,21 +1,16 @@
 package com.hardlearner.oia.repository;
 
 import com.hardlearner.oia.domain.*;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import sun.applet.Main;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,8 +56,8 @@ public class ArticleRepositoryTest {
     @Test
     public void pageable() {
         Member member = memberRepository.findById(1L).orElseThrow(NullPointerException::new);
-        Pageable first = PageRequest.of(0, PageInfo.PAGE_BLOCK_SIZE);
+        Pageable first = PageRequest.of(0, PageInfo.BLOCK_SIZE);
         List<Article> articles = articleRepository.findAllByArticleInfo_Writer(member, first);
-        assertTrue(articles.size() == PageInfo.PAGE_BLOCK_SIZE);
+        assertTrue(articles.size() == PageInfo.BLOCK_SIZE);
     }
 }

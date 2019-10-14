@@ -21,6 +21,7 @@ public class Article {
     ArticleInfo articleInfo;
     @Embedded
     Content content;
+    boolean deleted = false;
 
     public Article(ArticleInfo articleInfo, Content content) {
         this(null, articleInfo, content);
@@ -83,5 +84,9 @@ public class Article {
         articleInfo.update(articleDto.getArticleInfo());
         content.update(articleDto.getContent());
         return this;
+    }
+
+    public void delete() {
+        deleted = true;
     }
 }

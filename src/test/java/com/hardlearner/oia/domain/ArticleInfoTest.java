@@ -23,7 +23,7 @@ public class ArticleInfoTest {
         ArticleDto articleDto = new ArticleDto(1L, DummyData.dummyArticleInfo, DummyData.dummyContent);
         Article article = new Article(1L,
                 new ArticleInfo(Member.GUEST_MEMBER, "변경되기 전 제목", LocalDateTime.now()),
-                new Content(DummyData.dummyMainBlocks1));
+                new Content(DummyData.dummyMainBlocks));
 
         Article updatedArticle = article.update(articleDto);
 

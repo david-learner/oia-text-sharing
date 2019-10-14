@@ -7,7 +7,7 @@ import java.util.List;
 public class DummyData {
     public static Member dummyMember = new Member("dummydata@gmail.com", "dummypassword", "김더미");
 
-    public static List<SubBlock> dummySubBlocks1 = Arrays.asList(
+    public static List<SubBlock> dummySubBlocks = Arrays.asList(
             SubBlock.builder()
                     .pages(new Pages(8, 8))
                     .canShare(true)
@@ -48,10 +48,10 @@ public class DummyData {
                     .build()
     );
 
-    public static MainBlock dummyMainBlock1 = MainBlock.builder().sequenceId(1).subBlocks(dummySubBlocks1).build();
-    public static List<MainBlock> dummyMainBlocks1 = Arrays.asList(MainBlock.builder().sequenceId(1).subBlocks(dummySubBlocks1).build());
+    public static MainBlock dummyMainBlock = MainBlock.builder().sequenceId(1).subBlocks(dummySubBlocks).build();
+    public static List<MainBlock> dummyMainBlocks = Arrays.asList(dummyMainBlock);
 
-    public static Content dummyContent = new Content(dummyMainBlocks1);
+    public static Content dummyContent = new Content(dummyMainBlocks);
 
     public static ArticleInfo dummyArticleInfo = new ArticleInfo(dummyMember, "Dummy Title", LocalDateTime.now());
     public static Article dummyArticle = new Article(dummyArticleInfo, dummyContent);

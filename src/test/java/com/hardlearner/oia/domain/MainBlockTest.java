@@ -3,7 +3,6 @@ package com.hardlearner.oia.domain;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,6 +42,6 @@ public class MainBlockTest {
 
     @Test
     public void getDefaultMainBlock() {
-        System.out.println(MainBlock.getDefaultMainBlock(DummyData.dummySubBlocks1).toString());
+        System.out.println(MainBlock.getDefaultMainBlock(DummyData.dummySubBlocks).toString());
     }
 }

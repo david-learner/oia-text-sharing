@@ -35,7 +35,11 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String index() {
+    public String index(HttpSession session) {
+        Member loginMember = HttpSessionUtils.getMemberFromSession(session);
+        if (loginMember != null) {
+            return "redirect:/main?page=1";
+        }
         return "index";
     }
 

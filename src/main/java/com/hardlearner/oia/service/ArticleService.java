@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -33,8 +32,7 @@ public class ArticleService {
         return savedArticle;
     }
 
-    public Article save(Article article)
-    {
+    public Article save(Article article) {
         return articleRepository.save(article);
     }
 
@@ -53,12 +51,14 @@ public class ArticleService {
     }
 
     public List<Article> getArticles(Member loginMember, int page) {
-        PageRequest pageable = PageRequest.of(page, PageInfo.PAGE_BLOCK_SIZE);
+        // PageRequest의 page는 zero-based
+        int offsetPage = page - 1;
+        PageRequest pageable = PageRequest.of(page - 1, PageInfo.BLOCK_SIZE);
         return articleRepository.findAllByArticleInfo_Writer(loginMember, pageable);
     }
 
     public PageInfo getArticlesPageInfo(Member loginMember, int currentPage) {
-        int count = articleRepository.findAllByArticleInfo_Writer(loginMember).size();
-        return new PageInfo(count, currentPage, PageInfo.PAGE_BLOCK_SIZE);
+        int total = articleRepository.findAllByArticleInfo_Writer(loginMember).size();
+        return new PageInfo(total, currentPage);
     }
 }

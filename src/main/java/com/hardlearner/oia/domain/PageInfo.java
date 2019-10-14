@@ -10,74 +10,81 @@ import java.util.List;
 @Getter
 public class PageInfo {
     private static final Logger log = LoggerFactory.getLogger(PageInfo.class);
-    public static int PAGE_BLOCK_SIZE = 10;
+    public static final int BLOCK_SIZE = 10;
+    public static final int PAGE_SIZE = 10;
     private int FIRST_PAGE = 1;
 
-    // currentPage is zero-based
-    private int currentPage;
-    private int previousPage;
-    private int nextPage;
-    private List<Integer> currentPageBlock;
+    private int articlesTotalCount;
+    private Integer currentPage;
+    private Integer previousPage;
+    private Integer nextPage;
+    private List<Integer> block;
 
-    public PageInfo(int total, int currentPage, int blockSize) {
+    public PageInfo(int articlesTotalCount, int currentPage) {
+        this.articlesTotalCount = articlesTotalCount;
         this.currentPage = currentPage;
-        this.previousPage = getPreviousPage(currentPage);
-        this.currentPageBlock = generateCurrentPageBlock(total, currentPage, blockSize);
-        this.nextPage = getNextPage(currentPage, getCurrentBlockLastPage());
+        if (!isFirst()) {
+            this.previousPage = getPreviousPage();
+        }
+        if (!isLast()) {
+            this.nextPage = getNextPage();
+        }
+        this.block = getBlock();
     }
 
-    private List<Integer> generateCurrentPageBlock(int total, int currentPage, int blockSize) {
-        List<Integer> currentPageBlock = new ArrayList<>();
-        int currentBlockStart = getCurrentBlockStartPage(currentPage, blockSize);
-        int nextBlockStart = currentBlockStart + blockSize;
-        int currentBlockLast = nextBlockStart - 1;
-        if (total < nextBlockStart) {
-            currentBlockLast = total;
+    public List<Integer> getBlock() {
+        List<Integer> block = new ArrayList<>();
+        int blockStartPage = getBlockStartPage();
+        int blockLastPage = getBlockLastPage();
+        for (int index = blockStartPage; index <= blockLastPage; index++) {
+            block.add(index);
         }
-        for (int index = 0; index <= currentBlockLast - currentBlockStart; index++) {
-            int pageInBlock = index + currentBlockStart;
-            currentPageBlock.add(pageInBlock);
-        }
-        return currentPageBlock;
+        return block;
     }
 
-    private int getCurrentBlockStartPage(int currentPage, int blockSize) {
-        int offsetCurrentPage = currentPage + 1;
-        int remainder = (currentPage + 1) % blockSize;
-
-        if (remainder > 0) {
-            return ((offsetCurrentPage / blockSize) * blockSize) + 1;
+    public Integer getBlockStartPage() {
+        if ((currentPage % PAGE_SIZE == 0)) {
+            return (((currentPage / PAGE_SIZE) - 1) * PAGE_SIZE) + 1;
         }
-        if (remainder == 0) {
-            return offsetCurrentPage - blockSize + 1;
-        }
-
-        throw new IllegalArgumentException("Please check page");
+        return ((currentPage / PAGE_SIZE) * PAGE_SIZE) + 1;
     }
 
-    public int getCurrentBlockLastPage() {
-        return currentPageBlock.get(currentPageBlock.size() - 1);
+    public Integer getBlockLastPage() {
+        int blockLastPage = getBlockStartPage() + (PAGE_SIZE - 1);
+        int lastPage = getTotalLastPage();
+        if (lastPage < blockLastPage) {
+            return lastPage;
+        }
+        return blockLastPage;
     }
 
-    public int getPreviousPage(int currentPage) {
-        if (currentPage > 0) {
+    public Integer getTotalLastPage() {
+        int lastPage = articlesTotalCount / PAGE_SIZE;
+        if (articlesTotalCount % PAGE_SIZE > 0) {
+            lastPage = articlesTotalCount / PAGE_SIZE + 1;
+        }
+        return lastPage;
+    }
+
+    public Integer getPreviousPage() {
+        if (currentPage > 1) {
             return currentPage - 1;
         }
-        throw new IllegalArgumentException("Previous Page : Page should be bigger than 0");
+        throw new IllegalArgumentException("Page should be over 1");
     }
 
-    public int getNextPage(int currentPage, int currentBlockLastPage) {
-        if (currentPage < currentBlockLastPage) {
+    public Integer getNextPage() {
+        if (!isLast()) {
             return currentPage + 1;
         }
-        throw new IllegalArgumentException("Next Page : Page can't be equal or bigger than last page");
+        throw new IllegalArgumentException("Page should be under last page");
     }
 
     public boolean isFirst() {
-        return FIRST_PAGE == (currentPage + 1);
+        return currentPage == 1;
     }
 
     public boolean isLast() {
-        return currentPage == getCurrentBlockLastPage();
+        return getTotalLastPage() == currentPage;
     }
 }
