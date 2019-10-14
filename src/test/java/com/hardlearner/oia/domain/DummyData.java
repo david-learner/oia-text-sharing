@@ -50,10 +50,6 @@ public class DummyData {
 
     public static MainBlock dummyMainBlock1 = MainBlock.builder().sequenceId(1).subBlocks(dummySubBlocks1).build();
     public static List<MainBlock> dummyMainBlocks1 = Arrays.asList(MainBlock.builder().sequenceId(1).subBlocks(dummySubBlocks1).build());
-//    public static List<MainBlock> dummyMainBlocks2 = Arrays.asList(
-//            MainBlock.builder().sequenceId(1).subBlocks(dummySubBlocks1).build(),
-//            MainBlock.builder().sequenceId(2).subBlocks(dummySubBlocks2).build()
-//    );
 
     public static Content dummyContent = new Content(dummyMainBlocks1);
 

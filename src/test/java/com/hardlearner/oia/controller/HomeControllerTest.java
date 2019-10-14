@@ -22,9 +22,6 @@ public class HomeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Test
     public void login() throws Exception {
         mockMvc.perform(post("/login")

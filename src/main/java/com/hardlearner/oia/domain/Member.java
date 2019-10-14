@@ -5,10 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -21,8 +19,12 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @NotNull
+    @Column(unique = true)
     String email;
+    @NotNull
     String password;
+    @NotNull
     String name;
 
     public Member(String email, String password, String name) {
@@ -41,15 +43,21 @@ public class Member {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+        // todo 중복 걷어내기 for Guest
+        if (o.getClass() == GUEST_MEMBER.getClass()) {
+            Member member = (Member) o;
+            return Objects.equals(email, member.email) &&
+                    Objects.equals(name, member.name);
+        }
         if (o == null || getClass() != o.getClass()) return false;
         Member member = (Member) o;
-        return Objects.equals(id, member.id) &&
-                Objects.equals(email, member.email);
+        return Objects.equals(email, member.email) &&
+                Objects.equals(name, member.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email);
+        return Objects.hash(name, email);
     }
 
     @Override

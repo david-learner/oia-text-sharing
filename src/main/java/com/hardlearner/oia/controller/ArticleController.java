@@ -35,7 +35,6 @@ public class ArticleController {
     // /api/articles/new랑 중복
     @PostMapping("/articles/new")
     public ResponseEntity createArticle(@LoginMember Member loginMember) throws URISyntaxException {
-        log.debug("loginUser : {}", loginMember.toString());
         Article savedArticle = articleService.create(memberService.login(loginMember));
         return ResponseEntity.status(HttpStatus.CREATED).location(new URI("/articles/" + savedArticle.getId())).build();
     }

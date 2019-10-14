@@ -1,6 +1,7 @@
 package com.hardlearner.oia.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hardlearner.oia.domain.DummyData;
 import com.hardlearner.oia.dto.MemberJoinDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -29,18 +32,27 @@ public class MemberControllerTest {
     @Test
     public void checkValidEmail() throws Exception {
         mockMvc.perform(get("/members/valid/email")
-                .param("email", "guest@gmail.com"))
+                .param("email", "valid@gmail.com"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }
 
     @Test
+    public void checkValidEmail_fail() throws Exception {
+        mockMvc.perform(get("/members/valid/email")
+                .param("email", "guest@gmail.com"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("false"));
+    }
+
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     public void join() throws Exception {
         MemberJoinDto memberJoinDto = MemberJoinDto.builder()
-                .name("데이빗")
-                .email("david@gmail.com")
-                .password("david1234")
-                .passwordConfirmed("david1234")
+                .name(DummyData.dummyMember.getName())
+                .email(DummyData.dummyMember.getEmail())
+                .password(DummyData.dummyMember.getPassword())
+                .passwordConfirmed(DummyData.dummyMember.getPassword())
                 .build();
 
         mockMvc.perform(post("/members/join")

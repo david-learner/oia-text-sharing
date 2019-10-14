@@ -29,6 +29,9 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
         if(!loginMember.isGuest()) {
             return loginMember;
         }
+        if (loginMember.isGuest()) {
+            return Member.GUEST_MEMBER;
+        }
 
         LoginMember loginMemberAnnotation = methodParameter.getMethodAnnotation(LoginMember.class);
         if (loginMemberAnnotation.required()) {

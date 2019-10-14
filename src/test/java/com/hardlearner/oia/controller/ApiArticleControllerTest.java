@@ -39,14 +39,11 @@ public class ApiArticleControllerTest {
 
     @Test
     public void getOwnArticles() throws Exception {
-        Member member = Member.builder().email("david@gmail.com").name("david").password("david1234").build();
-        Member savedMember = memberService.save(member);
-        log.debug("savedMember : " + savedMember.getId());
-        Article article = new Article(new ArticleInfo(member, "테스트 아티클 제목", LocalDateTime.now()), DummyData.dummyContent);
+        Member savedMember = memberService.save(DummyData.dummyMember);
+        Article article = new Article(new ArticleInfo(DummyData.dummyMember, "테스트 아티클 제목", LocalDateTime.now()), DummyData.dummyContent);
         Article savedArticle = articleService.save(article);
-        log.debug("savedArticle : " + savedArticle.getId());
 
-        mockMvc.perform(get("/api/articles/members/" + savedMember.getId()).sessionAttr("loginMember", member))
+        mockMvc.perform(get("/api/articles/members/" + savedMember.getId()).sessionAttr("loginMember", savedMember))
                 .andExpect(jsonPath("$[0].id").value(savedArticle.getId()));
     }
 }
