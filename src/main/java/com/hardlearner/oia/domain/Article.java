@@ -16,12 +16,12 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ARTICLE_ID")
-    Long id;
+    private Long id;
     @Embedded
-    ArticleInfo articleInfo;
+    private ArticleInfo articleInfo;
     @Embedded
-    Content content;
-    boolean deleted = false;
+    private Content content;
+    private boolean deleted = false;
 
     public Article(ArticleInfo articleInfo, Content content) {
         this(null, articleInfo, content);
@@ -56,14 +56,14 @@ public class Article {
                 '}';
     }
 
-    public Article getShareAllowed(Member writer) throws AuthenticationException {
+    public Article getShareAllowedArticle(Member writer) throws AuthenticationException {
         if (!articleInfo.isSameWriter(writer)) {
             throw new AuthenticationException("Only this article's writer can access");
         }
-        return new Article(articleInfo, content.getShareAllowed());
+        return new Article(articleInfo, content.getShareAllowedContent());
     }
 
-    public Article getShareFull(Member writer) throws AuthenticationException {
+    public Article getShareFullArticle(Member writer) throws AuthenticationException {
         if (!articleInfo.isSameWriter(writer)) {
             throw new AuthenticationException("Only this article's writer can access");
         }

@@ -37,16 +37,16 @@ public class MainBlock extends Block {
     }
 
     @JsonIgnore
-    public MainBlock getShareAllowed() {
+    public MainBlock getShareAllowedMainBlock() {
         // 공유용 블록들은 읽기 전용, 그렇기 때문에 포인터는 신경쓰지 않아도 괜찮다
         // 다만, 공동협업을 위해 공유한다면 포인터의 순서도 신경써야 한다.
         // 지금 구조로 협업을 하려면 협업용 글을 따로 만드는 수 밖에 없다. 이를 위해 시스템에서 글 자체를 사본으로 만들어줄 수 있어야 한다
-        List<SubBlock> shareAllowedSubBlocks = this.subBlocks.stream().filter(subBlock -> subBlock.canShare).collect(Collectors.toList());
+        List<SubBlock> shareAllowedSubBlocks = this.subBlocks.stream().filter(subBlock -> subBlock.canShare()).collect(Collectors.toList());
         return new MainBlock(super.getId(), shareAllowedSubBlocks);
     }
 
-    public boolean isSame(MainBlock otherBlock) {
-        return this.equals(otherBlock);
+    public boolean isEmpty() {
+        return subBlocks.isEmpty();
     }
 
     @Override

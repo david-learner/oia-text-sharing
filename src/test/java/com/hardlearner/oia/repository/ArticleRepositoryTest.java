@@ -31,7 +31,7 @@ public class ArticleRepositoryTest {
         List<SubBlock> subBlocks = Arrays.asList(
                 SubBlock.builder()
                         .pages(new Pages(1, 1))
-                        .canShare(false)
+                        .share(false)
                         .category(ContentCategory.OBSERVATION)
                         .content("코드로 익히는 객체지향 설계").build());
         List<MainBlock> mainBlocks = Arrays.asList(

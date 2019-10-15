@@ -16,23 +16,23 @@ import java.util.List;
 @Getter
 public class SubBlock extends Block {
     @Embedded
-    Pages pages = Pages.getDefaultPage();
-    boolean canShare;
+    private Pages pages = Pages.getDefaultPage();
+    private boolean share;
     @Enumerated(EnumType.STRING)
-    ContentCategory category;
-    String content;
+    private ContentCategory category;
+    private String content;
 
     @Builder
-    public SubBlock(Long id, Integer sequenceId, Pointers pointers, Pages pages, boolean canShare, ContentCategory category, String content) {
+    public SubBlock(Long id, Integer sequenceId, Pointers pointers, Pages pages, boolean share, ContentCategory category, String content) {
         super(id, sequenceId, pointers);
         this.pages = pages;
-        this.canShare = canShare;
+        this.share = share;
         this.category = category;
         this.content = content;
     }
 
-    public SubBlock(Pages pages, boolean canShare, ContentCategory category, String content) {
-        this(null, null, null, pages, canShare, category, content);
+    public SubBlock(Pages pages, boolean share, ContentCategory category, String content) {
+        this(null, null, null, pages, share, category, content);
     }
 
     public static List<SubBlock> getDefaultSubBlocks() {
@@ -47,12 +47,16 @@ public class SubBlock extends Block {
         return category.getAlias();
     }
 
+    public boolean canShare() {
+        return share;
+    }
+
     @Override
     public String toString() {
         return "SubBlock{" +
-//                "pages=" + pages.toString() +
-                ", canShare=" + canShare +
-//                ", category=" + category.getAlias() +
+                "pages=" + pages +
+                ", canShare=" + share +
+                ", category=" + category +
                 ", content='" + content + '\'' +
                 '}';
     }

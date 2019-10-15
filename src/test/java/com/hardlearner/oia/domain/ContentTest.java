@@ -7,9 +7,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class MainBlockTest {
+public class ContentTest {
     @Test
-    public void getShareAllowedMainBlock() {
+    public void getShareAllowedContent_has_mainBlock() {
         List<SubBlock> subBlocks = Arrays.asList(
                 SubBlock.builder()
                         .pages(new Pages(1, 1))
@@ -25,12 +25,13 @@ public class MainBlockTest {
                 .pointers(new Pointers(null, null))
                 .subBlocks(subBlocks).build();
 
-        assertEquals(2, mainBlock.getSubBlocks().size());
-        assertEquals(1, mainBlock.getShareAllowedMainBlock().getSubBlocks().size());
+        Content content = new Content(Arrays.asList(mainBlock));
+        Content shareAllowedContent = content.getShareAllowedContent();
+        assertEquals(1, shareAllowedContent.getMainBlocks().size());
     }
 
     @Test
-    public void getShareAllowedMainBlock_has_no_subBlocks() {
+    public void getShareAllowedContent_has_no_mainBlock() {
         List<SubBlock> subBlocks = Arrays.asList(
                 SubBlock.builder()
                         .pages(new Pages(1, 1))
@@ -46,6 +47,8 @@ public class MainBlockTest {
                 .pointers(new Pointers(null, null))
                 .subBlocks(subBlocks).build();
 
-        assertEquals(0, mainBlock.getShareAllowedMainBlock().getSubBlocks().size());
+        Content content = new Content(Arrays.asList(mainBlock));
+        Content shareAllowedContent = content.getShareAllowedContent();
+        assertEquals(0, shareAllowedContent.getMainBlocks().size());
     }
 }

@@ -26,10 +26,14 @@ public class Content {
     }
 
     @JsonIgnore
-    public Content getShareAllowed() {
+    public Content getShareAllowedContent() {
         List<MainBlock> mainBlocks = new ArrayList<>();
         for (MainBlock mainBlock : this.mainBlocks) {
-            mainBlocks.add(mainBlock.getShareAllowed());
+            MainBlock shareAllowedMainBlock = mainBlock.getShareAllowedMainBlock();
+            if (shareAllowedMainBlock.isEmpty()) {
+                continue;
+            }
+            mainBlocks.add(shareAllowedMainBlock);
         }
         return new Content(mainBlocks);
     }
