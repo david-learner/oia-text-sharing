@@ -43,6 +43,7 @@ public class ArticleService {
 
     public Article getShareAllowedArticle(Long id) {
         Article article = articleRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        log.debug(article.toString());
         return article.getShareAllowedArticle();
     }
 
@@ -51,6 +52,7 @@ public class ArticleService {
         return article.isSameWriter(loginMember);
     }
 
+    // todo getArticles 기존 것 사용하는 것으로 만들기
     public List<Article> getArticles(Member loginMember) {
         return articleRepository.findAllByArticleInfo_Writer(loginMember);
     }

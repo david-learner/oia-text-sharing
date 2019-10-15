@@ -4,87 +4,87 @@ INSERT INTO MEMBER (EMAIL, NAME, PASSWORD) VALUES ('david@gmail.com', '데이빗
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 01', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 1);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', '스프링은 프레임워크다. 프레임워크는 개발자의 코드가 이미 만들어진 코드에 편승되어 동작하게 한다', 1, 2, 1);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '라이브러리와의 차이점을 명확하게 깨달았다.', 1, 2, 1);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '프레임워크와 라이브러리의 차이를 다이어그램으로 표현해보기', 1, 2, 1);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, false , 'OBSERVATION', '스프링은 프레임워크다. 프레임워크는 개발자의 코드가 이미 만들어진 코드에 편승되어 동작하게 한다', 1, 2, 1);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '라이브러리와의 차이점을 명확하게 깨달았다.', 1, 2, 1);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, false , 'APPLICATION', '프레임워크와 라이브러리의 차이를 다이어그램으로 표현해보기', 1, 2, 1);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 02', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 2);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 2);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 2);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 2);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 2);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 2);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 2);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 03', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 3);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 3);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 3);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 3);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 3);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 3);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 3);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 04', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 4);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 4);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 4);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 4);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 4);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 4);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 4);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 05', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 5);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 5);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 5);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 5);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 5);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 5);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 5);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 06', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 6);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 6);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 6);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 6);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 6);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 6);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 6);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 07', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 7);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 7);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 7);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 7);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 7);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 7);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 7);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 08', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 8);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 8);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 8);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 8);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 8);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 8);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 8);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 09', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 9);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 9);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 9);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 9);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 9);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 9);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 9);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 10', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 10);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 10);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 10);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 10);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 10);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 10);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 10);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 11', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 11);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 11);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 11);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 11);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 11);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 11);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 11);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 12', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 12);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 12);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 12);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 12);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 12);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 12);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 12);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 13', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 13);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 13);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 13);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 13);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 13);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 13);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 13);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 14', 1, 5, false);
 INSERT INTO MAIN_BLOCK (NEXT_POINTER, PREV_POINTER, SEQUENCE_ID, ARTICLE_ID) VALUES (null, null, 1, 14);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 14);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 14);
-INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, CAN_SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 14);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (null, 3, 2, true, 'OBSERVATION', 'Handler Method Argument Resolver는 Controller의 Method의 Parameter를 확인하여 특정 동작을 수행할 수 있다', 4, 3, 14);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (2, 4, 3, true, 'INTERPRETATION', '찾아보니깐 Method의 Parameter이외에도 Method 자체를 확인할 수 있다.', 4, 3, 14);
+INSERT INTO SUB_BLOCK (PREV_POINTER, NEXT_POINTER, SEQUENCE_ID, SHARE, CATEGORY, CONTENT, END, START, MAIN_BLOCK_ID) VALUES (3, null, 4, true, 'APPLICATION', '로그인 코드의 중복이 Controller들의 메소드에 퍼져있는데 Handler Method Argument Resolver를 통해 걷어내보자', 4, 3, 14);
 
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2019-02-14 14:59:36', 'Handler Method Argument Resolver의 이해 시리즈 14', 1, 5, false);
 insert into ARTICLE (DATE_TIME, TITLE, MEMBER_ID, SEQUENCE, DELETED) values ('2018-10-31 21:59:02', 'Handler Method Argument Resolver의 이해 시리즈 12', 1, 5, false);

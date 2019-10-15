@@ -49,7 +49,7 @@ public class Article {
 
     @JsonIgnore
     public Article getShareAllowedArticle() {
-        return new Article(articleInfo, content.getShareAllowedContent());
+        return new Article(id, articleInfo, content.getShareAllowedContent());
     }
 
     public Article getShareFullArticle(Member writer) throws AuthenticationException {
