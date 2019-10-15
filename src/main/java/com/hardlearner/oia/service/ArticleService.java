@@ -41,6 +41,11 @@ public class ArticleService {
         return articleRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
+    public Article getShareAllowedArticle(Long id) {
+        Article article = articleRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return article.getShareAllowedArticle();
+    }
+
     public boolean isSameWriter(Long id, Member loginMember) {
         Article article = articleRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         return article.isSameWriter(loginMember);
@@ -51,8 +56,6 @@ public class ArticleService {
     }
 
     public List<Article> getArticles(Member loginMember, int page) {
-        // PageRequest의 page는 zero-based
-        int offsetPage = page - 1;
         PageRequest pageable = PageRequest.of(page - 1, PageInfo.BLOCK_SIZE);
         return articleRepository.findAllByArticleInfo_Writer(loginMember, pageable);
     }

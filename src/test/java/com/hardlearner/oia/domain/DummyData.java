@@ -23,31 +23,6 @@ public class DummyData {
                     .sequenceId(2).build()
     );
 
-
-    public static List<SubBlock> dummySubBlocks2 = Arrays.asList(
-            SubBlock.builder()
-                    .pages(new Pages(17, 17))
-                    .share(true)
-                    .category(ContentCategory.OBSERVATION)
-                    .content("설계의 목표는 객체 사이의 결합도를 낮춰 변경이 용이한 설계를 만드는 것이어야 한다")
-                    .sequenceId(1)
-                    .build(),
-            SubBlock.builder()
-                    .pages(new Pages(17, 17))
-                    .share(false)
-                    .category(ContentCategory.INTERPRETATION)
-                    .content("변경에 용이한 설계가 왜 중요한지는 토이프로젝트를 진행하며 조그마한 요구사항이 변경되었을 때 확실히 알 수 있었다")
-                    .sequenceId(2)
-                    .build(),
-            SubBlock.builder()
-                    .pages(new Pages(17, 17))
-                    .share(true)
-                    .category(ContentCategory.APPLICATION)
-                    .content("변경에 용이한 설계를 위해 객체지향 5대 원칙을 최대한 적용하여 개발하도록 하자")
-                    .sequenceId(3)
-                    .build()
-    );
-
     public static MainBlock dummyMainBlock = MainBlock.builder().sequenceId(1).subBlocks(dummySubBlocks).build();
     public static List<MainBlock> dummyMainBlocks = Arrays.asList(dummyMainBlock);
 

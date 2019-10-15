@@ -19,11 +19,11 @@ import java.time.LocalDateTime;
 public class ArticleInfo {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MEMBER_ID")
-    Member writer;
-    String title;
+    private Member writer;
+    private String title;
     @Builder.Default
     @Column(columnDefinition = "TIMESTAMP")
-    LocalDateTime dateTime = LocalDateTime.now();
+    private LocalDateTime dateTime = LocalDateTime.now();
 
     public boolean isSameWriter(Member writer) {
         return this.writer.equals(writer);

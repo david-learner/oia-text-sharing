@@ -47,19 +47,8 @@ public class Article {
                 , new Content(Arrays.asList(mainBlock)));
     }
 
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", articleInfo=" + articleInfo.toString() +
-                ", content=" + content.toString() +
-                '}';
-    }
-
-    public Article getShareAllowedArticle(Member writer) throws AuthenticationException {
-        if (!articleInfo.isSameWriter(writer)) {
-            throw new AuthenticationException("Only this article's writer can access");
-        }
+    @JsonIgnore
+    public Article getShareAllowedArticle() {
         return new Article(articleInfo, content.getShareAllowedContent());
     }
 
@@ -88,5 +77,15 @@ public class Article {
 
     public void delete() {
         deleted = true;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", articleInfo=" + articleInfo +
+                ", content=" + content +
+                ", deleted=" + deleted +
+                '}';
     }
 }

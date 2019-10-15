@@ -10,8 +10,8 @@ import java.util.Objects;
 @Getter
 @Setter
 public class Pages {
-    int start;
-    int end;
+    private int start;
+    private int end;
 
     public Pages() {
     }

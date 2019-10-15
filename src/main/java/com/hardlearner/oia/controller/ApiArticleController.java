@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/articles")
 public class ApiArticleController {
     private static final Logger log = LoggerFactory.getLogger(ApiArticleController.class);
 
@@ -27,13 +28,13 @@ public class ApiArticleController {
         this.articleService = articleService;
     }
 
-    @PostMapping("/api/articles/new")
+    @PostMapping("/new")
     public Article create() {
         Member guest = memberService.login(Member.GUEST_MEMBER);
         return articleService.create(guest);
     }
 
-    @PostMapping("/api/articles/save")
+    @PostMapping("/save")
     public Article save(@RequestBody ArticleDto articleDto) {
         // session에 있는 멤버 정보 가져와서 article 생성할 때 같이 넣어주기
         Article article = articleService.getArticle(articleDto.getId());
@@ -44,7 +45,7 @@ public class ApiArticleController {
         return null;
     }
 
-    @GetMapping("/api/articles/{id}")
+    @GetMapping("/{id}")
     public Article getArticle(@PathVariable Long id, @LoginMember Member loginMember) {
         if (!articleService.isSameWriter(id, loginMember)) {
             throw new AuthenticationException();
@@ -53,8 +54,13 @@ public class ApiArticleController {
         return article;
     }
 
-    @GetMapping("/api/articles/members/{id}")
+    @GetMapping("/members/{id}")
     public List<Article> getArticles(@PathVariable Long id, @LoginMember Member loginMember) {
         return articleService.getArticles(loginMember);
+    }
+
+    @GetMapping("/{id}/share")
+    public Article getShareAllowedArticle(@PathVariable Long id) {
+        return articleService.getShareAllowedArticle(id);
     }
 }

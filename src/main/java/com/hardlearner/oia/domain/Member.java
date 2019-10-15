@@ -18,14 +18,14 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @NotNull
     @Column(unique = true)
-    String email;
+    private String email;
     @NotNull
-    String password;
+    private String password;
     @NotNull
-    String name;
+    private String name;
 
     public Member(String email, String password, String name) {
         this.email = email;
