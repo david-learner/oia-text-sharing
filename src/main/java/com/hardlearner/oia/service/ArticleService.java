@@ -43,7 +43,6 @@ public class ArticleService {
 
     public Article getShareAllowedArticle(Long id) {
         Article article = articleRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        log.debug(article.toString());
         return article.getShareAllowedArticle();
     }
 

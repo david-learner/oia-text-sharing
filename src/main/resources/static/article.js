@@ -196,6 +196,25 @@ function addOnClickToBlockBtns(blockBtns, onClickMethod) {
     }
 }
 
+function share(callback) {
+    // /articles/1/share
+    var shareLinkRequestUrl = "/api" + window.location.pathname + "/share";
+    $.ajax({
+        type: 'POST',
+        url: shareLinkRequestUrl,
+    }).done(function (data) {
+        var temp = document.createElement("input");
+        // http://localhost:8080 + /articles/1/share?key=[encodedString]
+        temp.value = window.location.origin + data;
+        document.body.appendChild(temp);
+        temp.select();
+        if(document.execCommand("copy")) {
+            document.body.removeChild(temp);
+            alert("공유 주소가 복사되었습니다");
+        }
+    });
+}
+
 function save(callback) {
     // JSON에 들어갈 객체
     var token = window.location.pathname.split("/");

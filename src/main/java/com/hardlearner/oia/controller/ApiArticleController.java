@@ -1,6 +1,7 @@
 package com.hardlearner.oia.controller;
 
 import com.hardlearner.oia.domain.Article;
+import com.hardlearner.oia.domain.ShareLinkUtils;
 import com.hardlearner.oia.dto.ArticleDto;
 import com.hardlearner.oia.domain.Member;
 import com.hardlearner.oia.exception.AuthenticationException;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -62,5 +64,10 @@ public class ApiArticleController {
     @GetMapping("/{id}/share")
     public Article getShareAllowedArticle(@PathVariable Long id) {
         return articleService.getShareAllowedArticle(id);
+    }
+
+    @PostMapping("/{id}/share")
+    public String getArticleShareLink(@LoginMember Member member, HttpServletRequest request) {
+        return ShareLinkUtils.generate(request.getRequestURI());
     }
 }
