@@ -33,7 +33,7 @@ public class ArticleController {
     }
 
     // /api/articles/new랑 중복
-    @PostMapping("/articles/new")
+    @PostMapping("/articles")
     public ResponseEntity createArticle(@LoginMember Member loginMember) throws URISyntaxException {
         Article savedArticle = articleService.create(memberService.login(loginMember));
         return ResponseEntity.status(HttpStatus.CREATED).location(new URI("/articles/" + savedArticle.getId())).build();
@@ -41,9 +41,14 @@ public class ArticleController {
 
     @GetMapping("/articles/{id}")
     public String getArticle(@PathVariable Long id, @LoginMember Member loginMember) {
-        if(!articleService.isSameWriter(id, loginMember)) {
+        if (!articleService.isSameWriter(id, loginMember)) {
             throw new AuthenticationException();
         }
+        return "articleForm";
+    }
+
+    @GetMapping("/articles/{id}/share")
+    public String getShareAllowedArticle(@PathVariable Long id) {
         return "articleForm";
     }
 }

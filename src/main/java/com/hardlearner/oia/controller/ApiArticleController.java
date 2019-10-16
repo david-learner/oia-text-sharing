@@ -28,7 +28,7 @@ public class ApiArticleController {
         this.articleService = articleService;
     }
 
-    @PostMapping("/new")
+    @PostMapping
     public Article create() {
         Member guest = memberService.login(Member.GUEST_MEMBER);
         return articleService.create(guest);

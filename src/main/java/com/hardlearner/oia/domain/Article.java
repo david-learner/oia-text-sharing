@@ -52,13 +52,6 @@ public class Article {
         return new Article(id, articleInfo, content.getShareAllowedContent());
     }
 
-    public Article getShareFullArticle(Member writer) throws AuthenticationException {
-        if (!articleInfo.isSameWriter(writer)) {
-            throw new AuthenticationException("Only this article's writer can access");
-        }
-        return this;
-    }
-
     @JsonIgnore
     public String getTitle() {
         return articleInfo.getTitle();

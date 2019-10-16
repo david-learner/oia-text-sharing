@@ -37,14 +37,14 @@ public class ArticleControllerTest {
 
     @Test
     public void create() throws Exception {
-        mockMvc.perform(post("/articles/new").session(session))
+        mockMvc.perform(post("/articles").session(session))
                 .andExpect(status().isCreated())
                 .andExpect(header().exists(HttpHeaders.LOCATION));
     }
 
     @Test
     public void getArticle() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(post("/articles/new").session(session))
+        MvcResult mvcResult = mockMvc.perform(post("/articles").session(session))
                 .andExpect(status().isCreated())
                 .andExpect(header().exists(HttpHeaders.LOCATION))
                 .andReturn();

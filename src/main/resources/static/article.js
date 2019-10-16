@@ -14,7 +14,7 @@ window.onload = function () {
     addOnClickToBlockBtns(addSubBlockBtns, addSubBlock);
     addOnClickToBlockBtns(removeSubBlockBtns, removeSubBlock);
 
-    // path(/articles/id)를 전달해서 article data 요청
+    // path(/articles/id 또는 /articles/id/share)를 전달해서 article data 요청
     getArticle(window.location.pathname, fitToContent);
 };
 

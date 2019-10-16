@@ -73,7 +73,7 @@
         function createArticle() {
             $.ajax({
                 type: "POST",
-                url: '/articles/new'
+                url: '/articles'
             })
                 .done(function (data, textStatus, xhr) {
                     window.location.href = xhr.getResponseHeader("Location");
