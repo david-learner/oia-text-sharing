@@ -4,7 +4,6 @@ import com.hardlearner.oia.domain.Article;
 import com.hardlearner.oia.domain.ArticleInfo;
 import com.hardlearner.oia.domain.DummyData;
 import com.hardlearner.oia.domain.Member;
-import com.hardlearner.oia.repository.ArticleRepository;
 import com.hardlearner.oia.service.ArticleService;
 import com.hardlearner.oia.service.MemberService;
 import org.junit.Before;
@@ -20,12 +19,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ApiArticleControllerTest {
-    private static final Logger log =  LoggerFactory.getLogger(ApiArticleControllerTest.class);
+    private static final Logger log = LoggerFactory.getLogger(ApiArticleControllerTest.class);
     @Autowired
     private MockMvc mockMvc;
     @Autowired

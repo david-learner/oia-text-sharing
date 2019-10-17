@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,7 +58,7 @@ public class ArticleService {
     }
 
     public List<Article> getArticles(Member loginMember, int page) {
-        PageRequest pageable = PageRequest.of(page - 1, PageInfo.BLOCK_SIZE);
+        PageRequest pageable = PageRequest.of(page - 1, PageInfo.BLOCK_SIZE, new Sort(Sort.Direction.DESC, "articleInfo.dateTime"));
         return articleRepository.findAllByArticleInfo_Writer(loginMember, pageable);
     }
 

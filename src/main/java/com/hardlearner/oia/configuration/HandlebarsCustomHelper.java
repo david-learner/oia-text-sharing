@@ -8,7 +8,6 @@ public class HandlebarsCustomHelper {
     public static boolean isFirst(PageInfo pageInfo) {
         return pageInfo.isFirst();
     }
-
     public static boolean isLast(PageInfo pageInfo) {
         return pageInfo.isLast();
     }

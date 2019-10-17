@@ -267,12 +267,13 @@ function save(callback) {
 
     consoleLog(JSON.stringify(article));
 
+    var apiSaveRequestUrl = window.location.origin + "/api" + window.location.pathname + "/save";
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify(article),
-        url: '/api/articles/save',
+        url: apiSaveRequestUrl,
     }).done(callback);
 }
 
