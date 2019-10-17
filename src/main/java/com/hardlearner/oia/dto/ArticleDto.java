@@ -12,9 +12,9 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class ArticleDto {
-    Long id;
-    ArticleInfo articleInfo;
-    Content content;
+    private Long id;
+    private ArticleInfo articleInfo;
+    private Content content;
 
     public Article toArticle(Member writer) {
         articleInfo.setWriter(writer);

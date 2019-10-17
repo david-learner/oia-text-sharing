@@ -19,7 +19,10 @@
             <button class="button" onclick="window.location.href = '/login'">로그인</button>
             <button class="button" onclick="window.location.href = '/members/join'">회원가입</button>
             {{/if}}
-            <button class="button" onclick="createArticle()">WRITE</button>
+            <button class="button" onclick="createArticle()">글쓰기</button>
+            {{#if loginMember}}
+            <button class="button" onclick="deleteArticle()">글삭제</button>
+            {{/if}}
         </div>
         {{#if loginMember}}
         <div name="article-board-title" class="title">
@@ -36,9 +39,9 @@
                 {{#each articles}}
                 <tr>
                     <td>
-                        <input type="checkbox">
+                        <input name="checkbox" type="checkbox">
                     </td>
-                    <td>{{this.id}}</td>
+                    <td name="article-id">{{this.id}}</td>
                     <td><a href="/articles/{{this.id}}">{{this.articleInfo.title}}</a></td>
                     <td>{{this.articleInfo.writer.name}}</td>
                 </tr>

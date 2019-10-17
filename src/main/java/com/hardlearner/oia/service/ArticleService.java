@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -65,5 +66,10 @@ public class ArticleService {
     public PageInfo getArticlesPageInfo(Member loginMember, int currentPage) {
         int total = articleRepository.findAllByArticleInfo_Writer(loginMember).size();
         return new PageInfo(total, currentPage);
+    }
+
+//    @Transactional
+    public void deleteArticles(List<Long> ids) {
+        articleRepository.deleteAllById(ids);
     }
 }

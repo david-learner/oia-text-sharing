@@ -38,6 +38,8 @@ function login() {
         url: '/login'
     }).done(function () {
         window.location.href = "/main?page=1";
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        alert(jqXHR.responseText);
     });
 }
 
@@ -99,4 +101,28 @@ function checkValidEmail(event) {
             }
         });
     }, 1000)
+}
+
+function deleteArticle() {
+    var checkBoxElements = document.querySelectorAll("[name=checkbox]");
+    var checkedElements = [];
+    checkBoxElements.forEach(function (element) {
+        if(element.checked) {
+            var articleIdElement = element.parentElement.nextElementSibling;
+            checkedElements.push(parseInt(articleIdElement.innerHTML));
+        }
+    })
+    if (checkedElements.length === 0) {
+        return alert("삭제할 아티클을 선택해주세요");
+    }
+
+    $.ajax({
+        type: 'DELETE',
+        data: JSON.stringify(checkedElements),
+        contentType: 'application/json',
+        url: '/articles'
+    }).done(function (data) {
+        alert("삭제되었습니다");
+        window.location.href = "/index";
+    });
 }

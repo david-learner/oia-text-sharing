@@ -14,14 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class ArticleController {
@@ -53,11 +52,18 @@ public class ArticleController {
 
     @GetMapping("/articles/{id}/share")
     public String getShareAllowedArticle(@PathVariable Long id, @RequestParam String key, HttpServletRequest request) {
-        if(!ShareLinkUtils.authorize(request.getRequestURI(), key)) {
+        if (!ShareLinkUtils.authorize(request.getRequestURI(), key)) {
             throw new UnauthorizedException("존재하지 않는 글입니다");
         }
-        log.debug("share req : {}", request.getRequestURI());
-        log.debug("share link key : {}", key);
         return "articleForm";
+    }
+
+    @DeleteMapping("/articles")
+    public ResponseEntity deleteArticles(@RequestBody List<Long> ids, @LoginMember Member member) throws URISyntaxException {
+        // getArticles id로
+        // deleted()
+        // save
+        articleService.deleteArticles(ids);
+        return ResponseEntity.status(HttpStatus.FOUND).location(new URI("/")).build();
     }
 }
