@@ -18,7 +18,16 @@ function highlightCurrentPageNavigationItem() {
 }
 
 function loginGuest() {
+    event.preventDefault();
 
+    $.ajax({
+        type: 'POST',
+        url: '/login/guest'
+    }).done(function () {
+        window.location.href = "/main?page=1";
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        alert(jqXHR.responseText);
+    });
 }
 
 function logout() {
@@ -31,6 +40,8 @@ function logout() {
 }
 
 function login() {
+    event.preventDefault();
+
     $.ajax({
         type: 'POST',
         data: $('#loginForm').serialize(),

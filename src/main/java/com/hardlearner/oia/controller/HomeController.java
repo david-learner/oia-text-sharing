@@ -37,6 +37,7 @@ public class HomeController {
     @GetMapping("/")
     public String index(HttpSession session) {
         Member loginMember = HttpSessionUtils.getMemberFromSession(session);
+
         if (loginMember != null) {
             return "redirect:/main?page=1";
         }
@@ -46,6 +47,7 @@ public class HomeController {
     @GetMapping("/main")
     public ModelAndView main(@RequestParam int page, ModelAndView mav, HttpSession session) {
         Member loginMember = HttpSessionUtils.getMemberFromSession(session);
+
         if (loginMember == null) {
             return new ModelAndView("redirect:/");
         }
@@ -67,6 +69,12 @@ public class HomeController {
             return ResponseEntity.badRequest().body(errors);
         }
         session.setAttribute("loginMember", memberService.login(memberLoginDto));
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("login/guest")
+    public ResponseEntity loginGuest(HttpSession session) {
+        session.setAttribute("loginMember", memberService.loginGuest());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

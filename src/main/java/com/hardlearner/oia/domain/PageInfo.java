@@ -61,7 +61,7 @@ public class PageInfo {
     public Integer getTotalLastPage() {
         int lastPage = articlesTotalCount / PAGE_SIZE;
         if (articlesTotalCount % PAGE_SIZE > 0) {
-            lastPage = articlesTotalCount / PAGE_SIZE + 1;
+            lastPage = (articlesTotalCount / PAGE_SIZE) + 1;
         }
         return lastPage;
     }
@@ -85,6 +85,9 @@ public class PageInfo {
     }
 
     public boolean isLast() {
+        if (getTotalLastPage() == 0) {
+            return true;
+        }
         return getTotalLastPage() == currentPage;
     }
 }

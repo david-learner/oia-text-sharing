@@ -4,6 +4,7 @@ import com.hardlearner.oia.domain.Member;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class HttpSessionUtils {
