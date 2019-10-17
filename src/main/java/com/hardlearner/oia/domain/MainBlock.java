@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.LinkedList;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 @Getter
 public class MainBlock extends Block {
     @OneToMany(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "MAIN_BLOCK_ID")
     private List<SubBlock> subBlocks = new LinkedList<>();
 

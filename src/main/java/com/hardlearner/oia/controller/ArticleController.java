@@ -60,10 +60,7 @@ public class ArticleController {
 
     @DeleteMapping("/articles")
     public ResponseEntity deleteArticles(@RequestBody List<Long> ids, @LoginMember Member member) throws URISyntaxException {
-        // getArticles id로
-        // deleted()
-        // save
         articleService.deleteArticles(ids);
-        return ResponseEntity.status(HttpStatus.FOUND).location(new URI("/")).build();
+        return ResponseEntity.status(HttpStatus.OK).location(new URI("/")).build();
     }
 }

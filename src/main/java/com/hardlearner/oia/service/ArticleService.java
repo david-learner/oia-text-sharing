@@ -70,6 +70,7 @@ public class ArticleService {
 
 //    @Transactional
     public void deleteArticles(List<Long> ids) {
+//        subBlockService.deleteAllBy
         articleRepository.deleteAllById(ids);
     }
 }

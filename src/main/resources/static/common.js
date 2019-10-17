@@ -121,8 +121,8 @@ function deleteArticle() {
         data: JSON.stringify(checkedElements),
         contentType: 'application/json',
         url: '/articles'
-    }).done(function (data) {
+    }).done(function (data, textStatus, xhr) {
         alert("삭제되었습니다");
-        window.location.href = "/index";
+        window.location.href = xhr.getResponseHeader("Location");
     });
 }
