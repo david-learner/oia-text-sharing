@@ -24,7 +24,7 @@ import javax.validation.Valid;
 @Controller
 public class HomeController {
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
-
+    public static final String LOGIN_URL = "/login";
     private MemberService memberService;
     private ArticleService articleService;
 

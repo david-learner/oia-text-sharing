@@ -24,7 +24,7 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         Member loginMember = HttpSessionUtils.getMemberFromSession(nativeWebRequest);
         if(loginMember == null) {
-            throw new UnauthorizedException("Please Login");
+            throw new UnauthorizedException();
         }
         if(!loginMember.isGuest()) {
             return loginMember;
@@ -35,8 +35,7 @@ public class LoginMemberHandlerMethodArgumentResolver implements HandlerMethodAr
 
         LoginMember loginMemberAnnotation = methodParameter.getMethodAnnotation(LoginMember.class);
         if (loginMemberAnnotation.required()) {
-            // todo unauthorized exception 만들기
-            throw new UnauthorizedException("Please Login");
+            throw new UnauthorizedException();
         }
         return loginMember;
     }

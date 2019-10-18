@@ -3,16 +3,17 @@
 {{> header }}
 <body>
 <section class="section">
-    <div class="container">
+    <div class="container" style="text-align: center">
         <div name="title">
             <h1 class="title">
-                Observation Interpretation Application
+                <p>Observation Interpretation Application</p>
             </h1>
             <p class="subtitle">
-                Let's write your insight with O.I.A.
+            <p>인사이트 넘치는 글을 쓰고</p>
+            <p>공유하고 싶은 부분만 공유하세요:)</p>
             </p>
         </div>
-        <div name="menu">
+        <div name="menu" style="margin-top:20px">
             {{#if loginMember}}
             <button class="button" onclick="logout()">로그아웃</button>
             {{else}}
@@ -25,7 +26,7 @@
             {{/if}}
         </div>
         {{#if loginMember}}
-        <div name="article-board-title" class="title">
+        <div name="article-board-title" class="title" style="margin-top:20px">
             내가 쓴 글
         </div>
         <div name="article-board">
@@ -52,7 +53,7 @@
                 <ul class="pagination-list" style="justify-content: center">
                     <!-- handlebars의 if의 반대는 !if가 아니라 unless-->
                     {{#unless (isFirst pages)}}
-                        <li><a class="pagination-previous" href="/main?page={{pages.previousPage}}">Previous</a></li>
+                    <li><a class="pagination-previous" href="/main?page={{pages.previousPage}}">Previous</a></li>
                     {{/unless}}
                     {{#each pages.block}}
                     <li>
@@ -72,18 +73,5 @@
 </body>
 <footer>
     <script src="../common.js"></script>
-    <script>
-        function createArticle() {
-            $.ajax({
-                type: "POST",
-                url: '/articles'
-            })
-                .done(function (data, textStatus, xhr) {
-                    window.location.href = xhr.getResponseHeader("Location");
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                alert(jqXHR.responseText);
-            });
-        }
-    </script>
 </footer>
 </html>

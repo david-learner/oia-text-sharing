@@ -1,3 +1,16 @@
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.saving {
+    animation-name: spin;
+    animation-duration: .5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
 .main-block {
     margin: 10px;
     transition: opacity 400ms;

@@ -11,6 +11,8 @@ import com.hardlearner.oia.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,12 +39,11 @@ public class ApiArticleController {
     }
 
     @PostMapping("/{id}/save")
-    public Article save(@PathVariable Long id, @RequestBody ArticleDto articleDto, @LoginMember Member member) {
-        log.debug("id : {}", id);
+    public ResponseEntity save(@PathVariable Long id, @RequestBody ArticleDto articleDto, @LoginMember Member member) {
         Article article = articleService.getArticle(articleDto.getId());
         article.update(articleDto);
         articleService.save(article);
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body("OKAY");
     }
 
     @GetMapping("/{id}")

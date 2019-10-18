@@ -29,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ApiArticleControllerTest {
-    private static final Logger log = LoggerFactory.getLogger(ApiArticleControllerTest.class);
     @Autowired
     private MockMvc mockMvc;
     @Autowired

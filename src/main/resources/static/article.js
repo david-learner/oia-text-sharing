@@ -208,14 +208,17 @@ function share(callback) {
         temp.value = window.location.origin + data;
         document.body.appendChild(temp);
         temp.select();
-        if(document.execCommand("copy")) {
+        if (document.execCommand("copy")) {
             document.body.removeChild(temp);
             alert("공유 주소가 복사되었습니다");
         }
     });
 }
 
-function save(callback) {
+function save(event) {
+    // save animation start
+    document.querySelector("[name=save-icon]").classList.add("saving");
+
     // JSON에 들어갈 객체
     var token = window.location.pathname.split("/");
     var articleId = token[token.length - 1];
@@ -243,6 +246,8 @@ function save(callback) {
         var subBlocks = [];
         for (var subBlockIndex = 0; subBlockIndex < subBlocksElement.length; subBlockIndex++) {
             var subBlockContent = subBlocksElement[subBlockIndex].querySelector("[name=sub-block-content]").value;
+            var subBlockShare = subBlocksElement[subBlockIndex].querySelector("[name=share-check-box]").checked;
+            // var subBlockShare = subBlocksElement[subBlockIndex].querySelector("[name=sub-block-content]").value;
             var subBlockSeqId = subBlocksElement[subBlockIndex].dataset.blockSeqId;
             var prevBlockSeqId = subBlocksElement[subBlockIndex].dataset.prevBlockSeqId;
             var nextBlockSeqId = subBlocksElement[subBlockIndex].dataset.nextBlockSeqId;
@@ -255,7 +260,8 @@ function save(callback) {
                     nextPointer: nextBlockSeqId
                 },
                 category: subBlockContentCategory,
-                content: subBlockContent
+                content: subBlockContent,
+                share: subBlockShare
             }
             subBlocks.push(subBlock);
         }
@@ -265,16 +271,24 @@ function save(callback) {
         mainBlocks.push(mainBlock);
     }
 
-    consoleLog(JSON.stringify(article));
-
     var apiSaveRequestUrl = window.location.origin + "/api" + window.location.pathname + "/save";
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        dataType: 'json',
         data: JSON.stringify(article),
         url: apiSaveRequestUrl,
-    }).done(callback);
+    }).done(function () {
+        setTimeout(function () {
+            document.querySelector("[name=save-icon]").classList.remove("saving");
+            document.querySelector("[name=save-icon]").classList.remove("far", "fa-save");
+            document.querySelector("[name=save-icon]").classList.add("fas", "fa-check");
+        }, 500);
+
+        var timeOut = setTimeout(function () {
+            document.querySelector("[name=save-icon]").classList.remove("fas", "fa-check");
+            document.querySelector("[name=save-icon]").classList.add("far", "fa-save");
+        }, 1000);
+    });
 }
 
 function getArticle(articlePath, callback) {
@@ -366,6 +380,10 @@ function createSubBlock(subBlock, mainBlockElement) {
     subBlockContent.innerHTML = subBlock['content'];
     // auto expand textarea
     subBlockContent.addEventListener("keydown", expandTextArea);
+    // subBlock share checkbox
+    if (subBlock['share']) {
+        subBlockElement.querySelector("[name=share-check-box]").checked = true;
+    }
 
     addOnClickToBlockBtns(nodes.querySelectorAll("[name=add-sub-block-btn]"), addSubBlock);
     addOnClickToBlockBtns(nodes.querySelectorAll("[name=remove-sub-block-btn]"), removeSubBlock);

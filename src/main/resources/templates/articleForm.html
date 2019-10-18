@@ -3,7 +3,7 @@
 {{> header }}
 <body>
 <div class="container">
-    <div class="columns">
+    <div class="columns" style="text-align: center">
         <div class="article-info column">
             <div class="title">
                 <h1 class="article-title">
@@ -16,12 +16,12 @@
                 <span id="date" class="article-date">2019-09-20</span>
             </div>
         </div>
-        <div class="column is-1">
-            <button name="share-btn" class="button is-medium" onclick="share(consoleLog)">
+        <div class="column is-2">
+            <button name="share-btn" class="button is-medium" onclick="share(event)">
                 <i class="fas fa-share-alt"></i>
             </button>
-            <button name="save-btn" class="button is-medium" onclick="save(consoleLog)">
-                <i class="far fa-save"></i>
+            <button name="save-btn" class="button is-medium" onclick="save(event)">
+                <i name="save-icon" class="far fa-save"></i>
             </button>
         </div>
     </div>

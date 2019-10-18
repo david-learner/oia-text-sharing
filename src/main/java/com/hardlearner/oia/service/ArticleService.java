@@ -1,6 +1,7 @@
 package com.hardlearner.oia.service;
 
 import com.hardlearner.oia.domain.*;
+import com.hardlearner.oia.exception.ArticleNotFoundException;
 import com.hardlearner.oia.repository.ArticleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -39,17 +39,16 @@ public class ArticleService {
     }
 
     public Article getArticle(Long id) {
-        // return articleRepository.getOne(id); // LazyLoading 때문에 json타입으로 변환할 때 에러 발생
-        return articleRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return articleRepository.findById(id).orElseThrow(ArticleNotFoundException::new);
     }
 
     public Article getShareAllowedArticle(Long id) {
-        Article article = articleRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Article article = articleRepository.findById(id).orElseThrow(ArticleNotFoundException::new);
         return article.getShareAllowedArticle();
     }
 
     public boolean isSameWriter(Long id, Member loginMember) {
-        Article article = articleRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Article article = articleRepository.findById(id).orElseThrow(ArticleNotFoundException::new);
         return article.isSameWriter(loginMember);
     }
 
@@ -68,9 +67,7 @@ public class ArticleService {
         return new PageInfo(total, currentPage);
     }
 
-//    @Transactional
     public void deleteArticles(List<Long> ids) {
-//        subBlockService.deleteAllBy
         articleRepository.deleteAllById(ids);
     }
 }

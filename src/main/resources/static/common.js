@@ -50,6 +50,7 @@ function login() {
     }).done(function () {
         window.location.href = "/main?page=1";
     }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.responseText);
         alert(jqXHR.responseText);
     });
 }
@@ -135,5 +136,18 @@ function deleteArticle() {
     }).done(function (data, textStatus, xhr) {
         alert("삭제되었습니다");
         window.location.href = xhr.getResponseHeader("Location");
+    });
+}
+
+function createArticle() {
+    $.ajax({
+        type: "POST",
+        url: '/articles'
+    })
+        .done(function (data, textStatus, xhr) {
+            window.location.href = xhr.getResponseHeader("Location");
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+        alert(jqXHR.responseText);
+        window.location.href = jqXHR.getResponseHeader("Location");
     });
 }
