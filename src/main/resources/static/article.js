@@ -241,6 +241,9 @@ function save(event) {
     var mainBlocksElement = articleContent.querySelectorAll("[name=main-block]");
 
     for (var mainBlockIndex = 0; mainBlockIndex < mainBlocksElement.length; mainBlockIndex++) {
+        var startPage = mainBlocksElement[mainBlockIndex].querySelector("[name=start-page]").value;
+        var endPage = mainBlocksElement[mainBlockIndex].querySelector("[name=end-page]").value;
+
         var subBlocksElement = mainBlocksElement[mainBlockIndex].querySelectorAll("[name=sub-block]");
 
         var subBlocks = [];
@@ -255,6 +258,10 @@ function save(event) {
             var subBlockContentCategory = subBlocksElement[subBlockIndex].dataset.contentCategory.toUpperCase();
             var subBlock = {
                 sequenceId: subBlockSeqId,
+                pages: {
+                    start: startPage,
+                    end: endPage
+                },
                 pointers: {
                     prevPointer: prevBlockSeqId,
                     nextPointer: nextBlockSeqId

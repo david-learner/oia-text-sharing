@@ -20,6 +20,7 @@ public class SubBlock extends Block {
     private boolean share;
     @Enumerated(EnumType.STRING)
     private ContentCategory category;
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @Builder
