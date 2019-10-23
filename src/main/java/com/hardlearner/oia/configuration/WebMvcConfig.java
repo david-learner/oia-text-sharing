@@ -1,6 +1,7 @@
 package com.hardlearner.oia.configuration;
 
 import com.hardlearner.oia.security.LoginMemberHandlerMethodArgumentResolver;
+import com.hardlearner.oia.service.MemberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -12,7 +13,7 @@ import java.util.List;
 public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public LoginMemberHandlerMethodArgumentResolver loginMemberArgumentResolver() {
-        return new LoginMemberHandlerMethodArgumentResolver();
+        return new LoginMemberHandlerMethodArgumentResolver(new MemberService());
     }
 
     @Override

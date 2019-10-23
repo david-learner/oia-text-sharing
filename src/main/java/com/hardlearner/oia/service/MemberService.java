@@ -38,4 +38,8 @@ public class MemberService {
     public boolean isValid(String email) {
         return !memberRepository.findByEmail(email).isPresent();
     }
+
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email).orElseThrow(MemberNotFoundException::new);
+    }
 }
