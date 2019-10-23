@@ -3,6 +3,7 @@ package com.hardlearner.oia.controller;
 import com.hardlearner.oia.domain.Member;
 import com.hardlearner.oia.dto.MemberLoginDto;
 import com.hardlearner.oia.security.HttpSessionUtils;
+import com.hardlearner.oia.security.JwtUtil;
 import com.hardlearner.oia.service.ArticleService;
 import com.hardlearner.oia.service.MemberService;
 import org.slf4j.Logger;
@@ -64,11 +65,13 @@ public class HomeController {
     }
 
     @PostMapping("login")
-    public ResponseEntity login(@Valid MemberLoginDto memberLoginDto, Errors errors, HttpSession session) {
+    public ResponseEntity login(@Valid MemberLoginDto memberLoginDto, Errors errors) {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors);
         }
-        session.setAttribute("loginMember", memberService.login(memberLoginDto));
+
+        memberService.login(memberLoginDto);
+//        JwtUtil.createToken();
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
