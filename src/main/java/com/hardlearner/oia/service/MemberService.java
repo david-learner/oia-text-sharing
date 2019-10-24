@@ -19,10 +19,10 @@ public class MemberService {
         return loginMember;
     }
 
-    public boolean login(MemberLoginDto memberLoginDto) {
+    public Member login(MemberLoginDto memberLoginDto) {
         Member loginMember = memberRepository.findByEmail(memberLoginDto.getEmail()).orElseThrow(MemberNotFoundException::new);
         if(loginMember.isValidPassword(memberLoginDto.getPassword())) {
-            return true;
+            return loginMember;
         }
         throw new IllegalArgumentException("아이디 또는 비밀번호가 잘못되었습니다");
     }

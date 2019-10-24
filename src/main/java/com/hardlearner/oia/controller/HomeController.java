@@ -21,6 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.time.Instant;
+import java.util.Date;
 
 @Controller
 public class HomeController {
@@ -65,14 +68,13 @@ public class HomeController {
     }
 
     @PostMapping("login")
-    public ResponseEntity login(@Valid MemberLoginDto memberLoginDto, Errors errors) {
+    public ResponseEntity login(@Valid MemberLoginDto memberLoginDto, Errors errors) throws UnsupportedEncodingException {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors);
         }
 
-        memberService.login(memberLoginDto);
-//        JwtUtil.createToken();
-        return ResponseEntity.status(HttpStatus.OK).build();
+        Member loginMember = memberService.login(memberLoginDto);
+        return ResponseEntity.status(HttpStatus.OK).body(JwtUtil.generateToken(loginMember.getEmail(), Date.from(Instant.now())));
     }
 
     @PostMapping("login/guest")

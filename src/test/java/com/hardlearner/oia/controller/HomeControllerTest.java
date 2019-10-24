@@ -1,6 +1,7 @@
 package com.hardlearner.oia.controller;
 
 import com.hardlearner.oia.domain.Member;
+import com.hardlearner.oia.security.JwtUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,11 +26,17 @@ public class HomeControllerTest {
 
     @Test
     public void login() throws Exception {
-        mockMvc.perform(post("/login")
-                .param("email", "guest@gmail.com")
+        String email = "guest@gmail.com";
+        MvcResult result = mockMvc.perform(post("/login")
+                .param("email", email)
                 .param("password", Member.GUEST_MEMBER.getPassword())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String token = result.getResponse().getContentAsString();
+        String emailFromToken = JwtUtil.getEmailFromToken(token);
+        assertEquals(email, emailFromToken);
     }
 
     @Test
