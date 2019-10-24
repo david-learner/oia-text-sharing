@@ -1,24 +1,24 @@
 package com.hardlearner.oia.controller;
 
 import com.hardlearner.oia.domain.Article;
-import com.hardlearner.oia.domain.ArticleInfo;
 import com.hardlearner.oia.domain.DummyData;
 import com.hardlearner.oia.domain.Member;
+import com.hardlearner.oia.security.JwtUtil;
 import com.hardlearner.oia.service.ArticleService;
 import com.hardlearner.oia.service.MemberService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
+import java.time.Instant;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -29,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ApiArticleControllerTest {
+    private static String BEARER = "Bearer ";
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -36,18 +37,29 @@ public class ApiArticleControllerTest {
     @Autowired
     private MemberService memberService;
     private Member savedMember;
+    private Article savedArticle;
 
     @Before
     public void setUp() {
         savedMember = memberService.save(DummyData.dummyMember);
+        savedArticle = articleService.save(DummyData.dummyArticle);
+    }
+
+    @Test
+    public void getArticles() throws Exception {
+        String token = JwtUtil.generateToken(DummyData.dummyMember.getEmail(), Date.from(Instant.now()));
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("loginMember", savedMember);
+
+        mockMvc.perform(get("/api/articles/" + savedArticle.getId()).session(session)
+                .header(HttpHeaders.AUTHORIZATION, BEARER + token))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void getOwnArticles() throws Exception {
-        Article article = new Article(new ArticleInfo(DummyData.dummyMember, "테스트 아티클 제목", LocalDateTime.now()), DummyData.dummyContent);
-        Article savedArticle = articleService.save(article);
-
-        mockMvc.perform(get("/api/articles/members/" + savedMember.getId()).sessionAttr("loginMember", savedMember))
+        mockMvc.perform(get("/api/articles/members/" + savedMember.getId())
+                .sessionAttr("loginMember", savedMember))
                 .andExpect(jsonPath("$[0].id").value(savedArticle.getId()));
     }
 

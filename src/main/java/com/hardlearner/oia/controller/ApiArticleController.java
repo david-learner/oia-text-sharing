@@ -6,6 +6,7 @@ import com.hardlearner.oia.dto.ArticleDto;
 import com.hardlearner.oia.domain.Member;
 import com.hardlearner.oia.exception.AuthenticationException;
 import com.hardlearner.oia.security.LoginMember;
+import com.hardlearner.oia.security.VerifiedEmail;
 import com.hardlearner.oia.service.ArticleService;
 import com.hardlearner.oia.service.MemberService;
 import org.slf4j.Logger;
@@ -47,7 +48,8 @@ public class ApiArticleController {
     }
 
     @GetMapping("/{id}")
-    public Article getArticle(@PathVariable Long id, @LoginMember Member loginMember) {
+    public Article getArticle(@PathVariable Long id, @LoginMember Member loginMember, @VerifiedEmail String email) {
+        log.debug("EMAIL : {}", email);
         if (!articleService.isSameWriter(id, loginMember)) {
             throw new AuthenticationException();
         }
