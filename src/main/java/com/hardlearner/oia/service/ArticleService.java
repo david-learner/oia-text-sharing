@@ -19,12 +19,14 @@ public class ArticleService {
     private ArticleRepository articleRepository;
     private MainBlockService mainBlockService;
     private SubBlockService subBlockService;
+    private MemberService memberService;
 
     @Autowired
-    public ArticleService(ArticleRepository articleRepository, MainBlockService mainBlockService, SubBlockService subBlockService) {
+    public ArticleService(ArticleRepository articleRepository, MainBlockService mainBlockService, SubBlockService subBlockService, MemberService memberService) {
         this.articleRepository = articleRepository;
         this.mainBlockService = mainBlockService;
         this.subBlockService = subBlockService;
+        this.memberService = memberService;
     }
 
     public Article create(Member loginMember) {
@@ -52,9 +54,22 @@ public class ArticleService {
         return article.isSameWriter(loginMember);
     }
 
+    public boolean isSameWriter(Long id, String email) {
+        Member loginMember = memberService.findByEmail(email);
+        return isSameWriter(id, loginMember);
+    }
+
     // todo getArticles 기존 것 사용하는 것으로 만들기
     public List<Article> getArticles(Member loginMember) {
         return articleRepository.findAllByArticleInfo_Writer(loginMember);
+    }
+
+    public List<Article> getArticles(String email) {
+        return articleRepository.findAllByArticleInfo_Writer_Email(email);
+    }
+
+    public List<Article> getArticles(Long id) {
+        return articleRepository.findAllByArticleInfo_Writer_Id(id);
     }
 
     public List<Article> getArticles(Member loginMember, int page) {

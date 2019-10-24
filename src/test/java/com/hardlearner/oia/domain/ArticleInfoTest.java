@@ -20,13 +20,13 @@ public class ArticleInfoTest {
 
     @Test
     public void update() {
-        ArticleDto articleDto = new ArticleDto(1L, DummyData.dummyArticleInfo, DummyData.dummyContent);
+        ArticleDto articleDto = new ArticleDto(1L, DummyData.DUMMY_ARTICLE_INFO, DummyData.DUMMY_CONTENT);
         Article article = new Article(1L,
                 new ArticleInfo(Member.GUEST_MEMBER, "변경되기 전 제목", LocalDateTime.now()),
-                new Content(DummyData.dummyMainBlocks));
+                new Content(DummyData.DUMMY_MAIN_BLOCKS));
 
         Article updatedArticle = article.update(articleDto);
 
-        assertEquals(updatedArticle.getTitle(), DummyData.dummyArticleInfo.getTitle());
+        assertEquals(updatedArticle.getTitle(), DummyData.DUMMY_ARTICLE_INFO.getTitle());
     }
 }

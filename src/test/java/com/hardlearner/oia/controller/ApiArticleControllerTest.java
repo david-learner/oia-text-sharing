@@ -16,14 +16,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.sql.Date;
 import java.time.Instant;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -41,19 +44,20 @@ public class ApiArticleControllerTest {
 
     @Before
     public void setUp() {
-        savedMember = memberService.save(DummyData.dummyMember);
-        savedArticle = articleService.save(DummyData.dummyArticle);
+        savedMember = memberService.save(DummyData.DUMMY_MEMBER);
+        savedArticle = articleService.save(DummyData.DUMMY_ARTICLE);
     }
 
     @Test
     public void getArticles() throws Exception {
-        String token = JwtUtil.generateToken(DummyData.dummyMember.getEmail(), Date.from(Instant.now()));
+        String token = JwtUtil.generateToken(DummyData.DUMMY_MEMBER.getEmail(), Date.from(Instant.now()));
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("loginMember", savedMember);
 
-        mockMvc.perform(get("/api/articles/" + savedArticle.getId()).session(session)
+        mockMvc.perform(get("/api/articles/" + savedArticle.getId())
                 .header(HttpHeaders.AUTHORIZATION, BEARER + token))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value(savedArticle.getId()));
     }
 
     @Test
@@ -64,17 +68,44 @@ public class ApiArticleControllerTest {
     }
 
     @Test
+    public void getOwnArticlesUsingToken() throws Exception {
+        String token = JwtUtil.generateToken(DummyData.DUMMY_MEMBER.getEmail(), Date.from(Instant.now()));
+
+        mockMvc.perform(get("/api/articles/members/" + savedMember.getId())
+                .header(HttpHeaders.AUTHORIZATION, BEARER + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(savedArticle.getId()));
+    }
+
+    @Test
+    public void getArticleShareLink() throws Exception {
+        String token = JwtUtil.generateToken(DummyData.DUMMY_MEMBER.getEmail(), Date.from(Instant.now()));
+
+        mockMvc.perform(post("/api/articles/" + savedArticle.getId() + "/share")
+                .header(HttpHeaders.AUTHORIZATION, BEARER + token))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("share?key=")))
+                .andDo(print());
+    }
+
+    @Test
     public void getShareAllowedArticle() throws Exception {
-        MockHttpSession session = new MockHttpSession();
-        session.setAttribute("loginMember", savedMember);
-        Article savedDummyArticle = articleService.save(DummyData.dummyArticle);
+        String token = JwtUtil.generateToken(DummyData.DUMMY_MEMBER.getEmail(), Date.from(Instant.now()));
         // dummyArticle은 총 2개의 서브블록을 가지고 있다
-        mockMvc.perform(get("/api/articles/" + savedDummyArticle.getId()).session(session))
+        mockMvc.perform(get("/api/articles/" + savedArticle.getId())
+                .header(HttpHeaders.AUTHORIZATION, BEARER + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content.mainBlocks[0].subBlocks", hasSize(2)));
 
+        MvcResult result = mockMvc.perform(post("/api/articles/" + savedArticle.getId() + "/share")
+                .header(HttpHeaders.AUTHORIZATION, BEARER + token))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String articleShareLink = result.getResponse().getContentAsString();
+
         // dummyArticle이 가지고 있는 2개의 서브블록 중 공유 가능한 블록은 1개 뿐이다
-        mockMvc.perform(get("/api/articles/" + savedDummyArticle.getId() + "/share"))
+        mockMvc.perform(get("/api" + articleShareLink))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content.mainBlocks[0].subBlocks", hasSize(1)));
     }

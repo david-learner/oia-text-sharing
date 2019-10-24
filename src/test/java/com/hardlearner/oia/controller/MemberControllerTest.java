@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -49,10 +48,10 @@ public class MemberControllerTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     public void join() throws Exception {
         MemberJoinDto memberJoinDto = MemberJoinDto.builder()
-                .name(DummyData.dummyMember.getName())
-                .email(DummyData.dummyMember.getEmail())
-                .password(DummyData.dummyMember.getPassword())
-                .passwordConfirmed(DummyData.dummyMember.getPassword())
+                .name(DummyData.DUMMY_MEMBER.getName())
+                .email(DummyData.DUMMY_MEMBER.getEmail())
+                .password(DummyData.DUMMY_MEMBER.getPassword())
+                .passwordConfirmed(DummyData.DUMMY_MEMBER.getPassword())
                 .build();
 
         mockMvc.perform(post("/members/join")

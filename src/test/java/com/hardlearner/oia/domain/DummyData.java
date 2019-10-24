@@ -5,9 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DummyData {
-    public static Member dummyMember = new Member("dummydata@gmail.com", "dummypassword", "김더미");
+    public static Member DUMMY_MEMBER = new Member("dummydata@gmail.com", "dummypassword", "김더미");
 
-    public static List<SubBlock> dummySubBlocks = Arrays.asList(
+    public static String DUMMY_ARTICLE_SHARE_LINK_KEY = "dbbd78587f3031ea2fec3a9d0a40042b4e7bd4cdaddfc693c35f6211af66a25c";
+
+    public static List<SubBlock> DUMMY_SUB_BLOCKS = Arrays.asList(
             SubBlock.builder()
                     .pages(new Pages(8, 8))
                     .share(true)
@@ -23,11 +25,11 @@ public class DummyData {
                     .sequenceId(2).build()
     );
 
-    public static MainBlock dummyMainBlock = MainBlock.builder().sequenceId(1).subBlocks(dummySubBlocks).build();
-    public static List<MainBlock> dummyMainBlocks = Arrays.asList(dummyMainBlock);
+    public static MainBlock DUMMY_MAIN_BLOCK = MainBlock.builder().sequenceId(1).subBlocks(DUMMY_SUB_BLOCKS).build();
+    public static List<MainBlock> DUMMY_MAIN_BLOCKS = Arrays.asList(DUMMY_MAIN_BLOCK);
 
-    public static Content dummyContent = new Content(dummyMainBlocks);
+    public static Content DUMMY_CONTENT = new Content(DUMMY_MAIN_BLOCKS);
 
-    public static ArticleInfo dummyArticleInfo = new ArticleInfo(dummyMember, "Dummy Title", LocalDateTime.now());
-    public static Article dummyArticle = new Article(dummyArticleInfo, dummyContent);
+    public static ArticleInfo DUMMY_ARTICLE_INFO = new ArticleInfo(DUMMY_MEMBER, "Dummy Title", LocalDateTime.now());
+    public static Article DUMMY_ARTICLE = new Article(DUMMY_ARTICLE_INFO, DUMMY_CONTENT);
 }

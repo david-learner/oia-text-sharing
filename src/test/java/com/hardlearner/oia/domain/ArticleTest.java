@@ -8,8 +8,8 @@ import static org.junit.Assert.assertTrue;
 public class ArticleTest {
     @Test
     public void delete() {
-        assertFalse(DummyData.dummyArticle.isDeleted());
-        DummyData.dummyArticle.delete();
-        assertTrue(DummyData.dummyArticle.isDeleted());
+        assertFalse(DummyData.DUMMY_ARTICLE.isDeleted());
+        DummyData.DUMMY_ARTICLE.delete();
+        assertTrue(DummyData.DUMMY_ARTICLE.isDeleted());
     }
 }

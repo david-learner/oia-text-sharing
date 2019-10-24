@@ -16,6 +16,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     // Lazy
     List<Article> findAllByArticleInfo_Writer(Member member);
     List<Article> findAllByArticleInfo_Writer(Member member, Pageable pageable);
+    List<Article> findAllByArticleInfo_Writer_Email(String email);
+    List<Article> findAllByArticleInfo_Writer_Email(String email, Pageable pageable);
+    List<Article> findAllByArticleInfo_Writer_Id(Long id);
     // Eager
 //    List<Article> findAllByArticleInfo_Writer_Id(Long id);
 
