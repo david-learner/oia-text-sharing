@@ -47,7 +47,9 @@ function login() {
         data: $('#loginForm').serialize(),
         contentType: 'application/x-www-form-urlencoded',
         url: '/login'
-    }).done(function () {
+    }).done(function (data) {
+        // SAVE JWT
+        window.localStorage.setItem("token", data);
         window.location.href = "/main?page=1";
     }).fail(function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.responseText);

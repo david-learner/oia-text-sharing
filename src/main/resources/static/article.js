@@ -1,5 +1,6 @@
 var article;
 var sequence;
+var authorizationValue = "Bearer " + window.localStorage.getItem("token");
 
 window.onload = function () {
     // 메인블록 추가/제거 버튼에 온클릭 메소드 붙이기
@@ -15,7 +16,7 @@ window.onload = function () {
     addOnClickToBlockBtns(removeSubBlockBtns, removeSubBlock);
 
     // path(/articles/id 또는 /articles/id/share)를 전달해서 article data 요청
-    getArticle(window.location.pathname, fitToContent);
+    getArticle(new URL(window.location.href), fitToContent);
 };
 
 function fitToContent() {
@@ -201,6 +202,9 @@ function share(callback) {
     var shareLinkRequestUrl = "/api" + window.location.pathname + "/share";
     $.ajax({
         type: 'POST',
+        headers: {
+            "Authorization": authorizationValue
+        },
         url: shareLinkRequestUrl,
     }).done(function (data) {
         var temp = document.createElement("input");
@@ -284,6 +288,9 @@ function save(event) {
         contentType: 'application/json',
         data: JSON.stringify(article),
         url: apiSaveRequestUrl,
+        headers: {
+            "Authorization": authorizationValue
+        }
     }).done(function () {
         setTimeout(function () {
             document.querySelector("[name=save-icon]").classList.remove("saving");
@@ -298,15 +305,19 @@ function save(event) {
     });
 }
 
-function getArticle(articlePath, callback) {
+function getArticle(url, callback) {
+    var requestUrl = "/api" + url.pathname + url.search;
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: '/api' + articlePath,
+        url: requestUrl,
+        headers: {
+            "Authorization": authorizationValue
+        }
     }).done(function (data) {
         ConvertJsonToArticle(data);
         callback();
-    }).fail(function (jqXHR, textStatus, errorThrown) {
+    }).fail(function (jqXHR) {
         alert(jqXHR.responseText);
     });
 }

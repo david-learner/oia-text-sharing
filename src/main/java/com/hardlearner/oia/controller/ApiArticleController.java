@@ -22,8 +22,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/articles")
 public class ApiArticleController {
-    private static final Logger log = LoggerFactory.getLogger(ApiArticleController.class);
-
     private MemberService memberService;
     private ArticleService articleService;
 

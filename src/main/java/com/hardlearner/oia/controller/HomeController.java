@@ -6,6 +6,7 @@ import com.hardlearner.oia.security.HttpSessionUtils;
 import com.hardlearner.oia.security.JwtUtil;
 import com.hardlearner.oia.service.ArticleService;
 import com.hardlearner.oia.service.MemberService;
+import org.apache.catalina.manager.util.SessionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,12 +69,13 @@ public class HomeController {
     }
 
     @PostMapping("login")
-    public ResponseEntity login(@Valid MemberLoginDto memberLoginDto, Errors errors) throws UnsupportedEncodingException {
+    public ResponseEntity login(@Valid MemberLoginDto memberLoginDto, HttpSession session, Errors errors) throws UnsupportedEncodingException {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors);
         }
 
         Member loginMember = memberService.login(memberLoginDto);
+        session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginMember);
         return ResponseEntity.status(HttpStatus.OK).body(JwtUtil.generateToken(loginMember.getEmail(), Date.from(Instant.now())));
     }
 
