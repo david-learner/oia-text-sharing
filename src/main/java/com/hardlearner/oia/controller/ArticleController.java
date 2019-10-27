@@ -55,7 +55,7 @@ public class ArticleController {
         if (!ShareLinkUtils.authorize(request.getRequestURI(), key)) {
             throw new ArticleNotFoundException();
         }
-        return "articleForm";
+        return "shareArticleForm";
     }
 
     @DeleteMapping("/articles")

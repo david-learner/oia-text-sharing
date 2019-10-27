@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> header }}
+<body>
+<div class="container">
+    <div class="columns" style="text-align: center">
+        <div class="article-info column">
+            <div class="title">
+                <h1 class="article-title">
+                    <input id="title" class="input" type="text" value="">
+                </h1>
+            </div>
+            <div class="subtitle">
+                <!-- server로부터 제공받아야 하는 데이터 -->
+                <span id="writer-name" class="article-writer">David</span>
+                <span id="date" class="article-date">2019-09-20</span>
+            </div>
+        </div>
+    </div>
+    <div class="article-content" id="article-content">
+    </div>
+</div>
+</body>
+{{> article-templates/mainBlock }}
+{{> article-templates/observation }}
+{{> article-templates/interpretation }}
+{{> article-templates/application }}
+{{> footer }}
+</html>

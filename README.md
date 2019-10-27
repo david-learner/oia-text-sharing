@@ -33,9 +33,13 @@
 ## 화면
 * 로그인 후 메인
   * ![mainAfterLogin](./images/03.png)
-* 글쓰기(좌측) & 공유 페이지(우측)
-  * ![write](./images/06.png)
+* 글쓰기
+  * ![write](./images/06-1.png)
+공유된 페이지 (공유 및 저장버튼 없음)
+  * ![write](./images/06-2.png)
 * 메인
   * ![main](./images/01.png)
 * 로그인
   * ![login](./images/02.png)
+* 회원가입
+  * ![join](./images/10.png)
