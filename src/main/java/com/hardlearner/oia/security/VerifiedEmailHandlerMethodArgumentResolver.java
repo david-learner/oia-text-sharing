@@ -18,9 +18,15 @@ public class VerifiedEmailHandlerMethodArgumentResolver implements HandlerMethod
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String authHeaderValue = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (authHeaderValue == null && !authHeaderValue.startsWith("Bearer ")) {
+
+        if (authHeaderValue == null) {
             throw new NotFoundException("Not found Authorization in Http Header");
         }
+
+        if (!authHeaderValue.startsWith("Bearer ")) {
+            throw new IllegalStateException("Not Bearer type Authorization Header");
+        }
+
         String token = authHeaderValue.substring(7);
         return JwtUtil.getEmailFromToken(token);
     }

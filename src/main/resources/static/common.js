@@ -53,7 +53,8 @@ function login() {
         window.location.href = "/main?page=1";
     }).fail(function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.responseText);
-        alert(jqXHR.responseText);
+        var response = JSON.parse(jqXHR.responseText);
+        alert(response[0].defaultMessage);
     });
 }
 

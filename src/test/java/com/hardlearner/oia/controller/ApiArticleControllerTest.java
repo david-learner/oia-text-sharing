@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.time.Instant;
 
@@ -41,9 +42,13 @@ public class ApiArticleControllerTest {
     private MemberService memberService;
     private Member savedMember;
     private Article savedArticle;
+    private String authHeaderWithToken;
 
     @Before
-    public void setUp() {
+    public void setUp() throws UnsupportedEncodingException {
+        String token = JwtUtil.generateToken(DummyData.DUMMY_MEMBER.getEmail(), Date.from(Instant.now()));
+        authHeaderWithToken = BEARER + token;
+
         savedMember = memberService.save(DummyData.DUMMY_MEMBER);
         savedArticle = articleService.save(DummyData.DUMMY_ARTICLE);
     }
@@ -63,26 +68,23 @@ public class ApiArticleControllerTest {
     @Test
     public void getOwnArticles() throws Exception {
         mockMvc.perform(get("/api/articles/members/" + savedMember.getId())
+                .header(HttpHeaders.AUTHORIZATION, authHeaderWithToken)
                 .sessionAttr("loginMember", savedMember))
                 .andExpect(jsonPath("$[0].id").value(savedArticle.getId()));
     }
 
     @Test
     public void getOwnArticlesUsingToken() throws Exception {
-        String token = JwtUtil.generateToken(DummyData.DUMMY_MEMBER.getEmail(), Date.from(Instant.now()));
-
         mockMvc.perform(get("/api/articles/members/" + savedMember.getId())
-                .header(HttpHeaders.AUTHORIZATION, BEARER + token))
+                .header(HttpHeaders.AUTHORIZATION, authHeaderWithToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(savedArticle.getId()));
     }
 
     @Test
     public void getArticleShareLink() throws Exception {
-        String token = JwtUtil.generateToken(DummyData.DUMMY_MEMBER.getEmail(), Date.from(Instant.now()));
-
         mockMvc.perform(post("/api/articles/" + savedArticle.getId() + "/share")
-                .header(HttpHeaders.AUTHORIZATION, BEARER + token))
+                .header(HttpHeaders.AUTHORIZATION, authHeaderWithToken))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("share?key=")))
                 .andDo(print());
@@ -93,12 +95,12 @@ public class ApiArticleControllerTest {
         String token = JwtUtil.generateToken(DummyData.DUMMY_MEMBER.getEmail(), Date.from(Instant.now()));
         // dummyArticle은 총 2개의 서브블록을 가지고 있다
         mockMvc.perform(get("/api/articles/" + savedArticle.getId())
-                .header(HttpHeaders.AUTHORIZATION, BEARER + token))
+                .header(HttpHeaders.AUTHORIZATION, authHeaderWithToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content.mainBlocks[0].subBlocks", hasSize(2)));
 
         MvcResult result = mockMvc.perform(post("/api/articles/" + savedArticle.getId() + "/share")
-                .header(HttpHeaders.AUTHORIZATION, BEARER + token))
+                .header(HttpHeaders.AUTHORIZATION, authHeaderWithToken))
                 .andExpect(status().isOk())
                 .andReturn();
 

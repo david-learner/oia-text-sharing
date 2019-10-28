@@ -69,7 +69,7 @@ public class HomeController {
     }
 
     @PostMapping("login")
-    public ResponseEntity login(@Valid MemberLoginDto memberLoginDto, HttpSession session, Errors errors) throws UnsupportedEncodingException {
+    public ResponseEntity login(@Valid MemberLoginDto memberLoginDto, Errors errors, HttpSession session) throws UnsupportedEncodingException {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors);
         }
