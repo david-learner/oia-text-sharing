@@ -15,8 +15,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
@@ -32,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class ApiArticleControllerTest {
     private static String BEARER = "Bearer ";
     @Autowired
@@ -44,7 +47,7 @@ public class ApiArticleControllerTest {
     private Article savedArticle;
     private String authHeaderWithToken;
 
-    @Before
+    @BeforeTransaction
     public void setUp() throws UnsupportedEncodingException {
         String token = JwtUtil.generateToken(DummyData.DUMMY_MEMBER.getEmail(), Date.from(Instant.now()));
         authHeaderWithToken = BEARER + token;
