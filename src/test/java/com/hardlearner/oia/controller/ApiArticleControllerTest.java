@@ -7,13 +7,17 @@ import com.hardlearner.oia.security.JwtUtil;
 import com.hardlearner.oia.service.ArticleService;
 import com.hardlearner.oia.service.MemberService;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,18 +28,21 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.time.Instant;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional
 public class ApiArticleControllerTest {
+    private static final Logger log =  LoggerFactory.getLogger(ApiArticleControllerTest.class);
+
     private static String BEARER = "Bearer ";
     @Autowired
     private MockMvc mockMvc;
@@ -43,27 +50,27 @@ public class ApiArticleControllerTest {
     private ArticleService articleService;
     @Autowired
     private MemberService memberService;
-    private Member savedMember;
-    private Article savedArticle;
+    private static Member savedMember;
+    private static Article savedArticle;
     private String authHeaderWithToken;
 
-    @BeforeTransaction
+    @Before
     public void setUp() throws UnsupportedEncodingException {
         String token = JwtUtil.generateToken(DummyData.DUMMY_MEMBER.getEmail(), Date.from(Instant.now()));
         authHeaderWithToken = BEARER + token;
 
-        savedMember = memberService.save(DummyData.DUMMY_MEMBER);
-        savedArticle = articleService.save(DummyData.DUMMY_ARTICLE);
+        if (savedMember == null) {
+            savedMember = memberService.save(DummyData.DUMMY_MEMBER);
+        }
+        if (savedArticle == null) {
+            savedArticle = articleService.save(DummyData.DUMMY_ARTICLE);
+        }
     }
 
     @Test
     public void getArticles() throws Exception {
-        String token = JwtUtil.generateToken(DummyData.DUMMY_MEMBER.getEmail(), Date.from(Instant.now()));
-        MockHttpSession session = new MockHttpSession();
-        session.setAttribute("loginMember", savedMember);
-
         mockMvc.perform(get("/api/articles/" + savedArticle.getId())
-                .header(HttpHeaders.AUTHORIZATION, BEARER + token))
+                .header(HttpHeaders.AUTHORIZATION, authHeaderWithToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(savedArticle.getId()));
     }
